@@ -1,0 +1,42 @@
+package net.simpleframework.ctx.permission;
+
+import java.util.Collection;
+import java.util.Map;
+
+import net.simpleframework.common.ID;
+import net.simpleframework.common.object.ObjectEx;
+import net.simpleframework.common.th.NotImplementedException;
+
+/**
+ * Licensed under the Apache License, Version 2.0
+ * 
+ * @author 陈侃(cknet@126.com, 13910090885)
+ *         http://code.google.com/p/simpleframework/
+ *         http://www.simpleframework.net
+ */
+public class DefaultPermissionHandler extends ObjectEx implements IPermissionHandler {
+
+	private static PermissionUser NULL_USER = new PermissionUser();
+
+	@Override
+	public PermissionUser getUser(final Object user) {
+		return NULL_USER;
+	}
+
+	@Override
+	public Collection<ID> users(final Object role, final Map<String, Object> variables) {
+		throw NotImplementedException.of(getClass(), "users");
+	}
+
+	private static PermissionRole NULL_ROLE = new PermissionRole();
+
+	@Override
+	public PermissionRole getRole(final Object role) {
+		return NULL_ROLE;
+	}
+
+	@Override
+	public Collection<ID> roles(final Object user, final Map<String, Object> variables) {
+		throw NotImplementedException.of(getClass(), "roles");
+	}
+}
