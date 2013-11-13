@@ -1,6 +1,9 @@
 package net.simpleframework.ctx;
 
+import java.util.Map;
+
 import net.simpleframework.common.Version;
+import net.simpleframework.ctx.script.IScriptEval;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -17,6 +20,13 @@ public interface IApplicationContextBase {
 	 * @throws Exception
 	 */
 	void onInit() throws Exception;
+
+	/**
+	 * 获取脚本执行引擎
+	 * 
+	 * @return
+	 */
+	IScriptEval createScriptEval(Map<String, Object> variables);
 
 	/**
 	 * 获取扫描的包名

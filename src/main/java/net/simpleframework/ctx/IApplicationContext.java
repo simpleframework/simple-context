@@ -1,12 +1,10 @@
 package net.simpleframework.ctx;
 
 import java.util.Collection;
-import java.util.Map;
 
 import javax.sql.DataSource;
 
 import net.simpleframework.ado.IADOManagerFactory;
-import net.simpleframework.ctx.script.IScriptEval;
 import net.simpleframework.ctx.settings.ContextSettings;
 import net.simpleframework.ctx.task.ITaskExecutor;
 
@@ -51,13 +49,6 @@ public interface IApplicationContext extends IApplicationContextBase {
 	 * @return
 	 */
 	ITaskExecutor getTaskExecutor();
-
-	/**
-	 * 获取脚本执行引擎
-	 * 
-	 * @return
-	 */
-	IScriptEval createScriptEval(Map<String, Object> variables);
 
 	/**
 	 * 获取应用所在的域
