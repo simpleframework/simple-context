@@ -16,6 +16,10 @@ import net.simpleframework.common.StringUtils;
  */
 public class TimePeriod implements Serializable {
 
+	public static TimePeriod week = new TimePeriod(ETimePeriod.week);
+	public static TimePeriod month = new TimePeriod(ETimePeriod.month);
+	public static TimePeriod year = new TimePeriod(ETimePeriod.year);
+
 	private ETimePeriod timePeriod;
 
 	private String dateFormat = "yyyy-MM-dd";
