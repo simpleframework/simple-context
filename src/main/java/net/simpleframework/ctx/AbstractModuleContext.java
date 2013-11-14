@@ -2,6 +2,7 @@ package net.simpleframework.ctx;
 
 import static net.simpleframework.common.I18n.$m;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -122,6 +123,19 @@ public abstract class AbstractModuleContext extends ObjectEx implements IModuleC
 	@Override
 	public IScriptEval createScriptEval(final Map<String, Object> variables) {
 		return application.createScriptEval(variables);
+	}
+
+	private String tmpdir;
+
+	public String getTmpdir() {
+		if (tmpdir == null) {
+			final StringBuilder sb = new StringBuilder();
+			final String fs = File.separator;
+			sb.append(getContextSettings().getTmpFiledir().getAbsolutePath());
+			sb.append(fs).append(getModule().getName()).append(fs);
+			tmpdir = sb.toString();
+		}
+		return tmpdir;
 	}
 
 	@Override

@@ -103,6 +103,13 @@ public interface IModuleContext {
 	void onShutdown(IApplicationContext application) throws Exception;
 
 	/**
+	 * 获取模块的临时路径
+	 * 
+	 * @return
+	 */
+	String getTmpdir();
+
+	/**
 	 * 获取模块所在的域
 	 * 
 	 * @return
