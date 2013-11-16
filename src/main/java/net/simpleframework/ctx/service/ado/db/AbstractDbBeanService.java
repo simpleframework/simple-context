@@ -7,7 +7,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import net.simpleframework.ado.ADOException;
 import net.simpleframework.ado.ColumnData;
-import net.simpleframework.ado.EFilterRelation;
 import net.simpleframework.ado.EOrder;
 import net.simpleframework.ado.FilterItem;
 import net.simpleframework.ado.FilterItems;
@@ -35,13 +33,9 @@ import net.simpleframework.ado.db.common.TableColumn;
 import net.simpleframework.ado.db.event.DbEntityAdapter;
 import net.simpleframework.ado.query.DataQueryUtils;
 import net.simpleframework.ado.query.IDataQuery;
-import net.simpleframework.common.Convert;
 import net.simpleframework.common.ID;
-import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.object.ObjectFactory;
 import net.simpleframework.common.th.NotImplementedException;
-import net.simpleframework.ctx.common.bean.ETimePeriod;
-import net.simpleframework.ctx.common.bean.TimePeriod;
 import net.simpleframework.ctx.permission.LoginUser;
 import net.simpleframework.ctx.permission.LoginUser.LoginWrapper;
 import net.simpleframework.ctx.service.AbstractBaseService;
@@ -365,38 +359,6 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 
 	/* utils */
 
-	protected ExpressionValue toExpressionValue(final String column, final TimePeriod timePeriod) {
-		ETimePeriod tp;
-		if (timePeriod == null || (tp = timePeriod.getTimePeriod()) == ETimePeriod.none) {
-			return null;
-		}
-		final StringBuilder sql = new StringBuilder();
-		final ArrayList<Object> al = new ArrayList<Object>();
-		if (tp == ETimePeriod.custom) {
-			final Date from = timePeriod.getFrom();
-			final Date to = timePeriod.getTo();
-			if (from != null || to != null) {
-				sql.append("(").append(column);
-				if (from != null) {
-					sql.append(" > ?");
-					al.add(from);
-				}
-				if (to != null) {
-					if (from != null) {
-						sql.append(" and ").append(column);
-					}
-					sql.append(" < ?");
-					al.add(to);
-				}
-				sql.append(")");
-			}
-		} else {
-			sql.append(column).append(" > ?");
-			al.add(timePeriod.getTime());
-		}
-		return sql.length() == 0 ? null : new ExpressionValue(sql.toString(), al.toArray());
-	}
-
 	protected ExpressionValue toExpressionValue(final FilterItems params) {
 		if (params == null || params.size() == 0) {
 			return null;
@@ -405,38 +367,13 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		final ArrayList<Object> al = new ArrayList<Object>();
 		int i = 0;
 		for (final FilterItem item : params) {
-			final Object val = item.getValue();
-			if (val == null) {
-				continue;
-			}
-			final String key = item.getColumn();
-			if (val instanceof TimePeriod) {
-				final ExpressionValue ev = toExpressionValue(key, (TimePeriod) val);
-				if (ev != null) {
-					if (i++ > 0) {
-						sql.append(" ").append(item.getOpe()).append(" ");
-					}
-					sql.append(ev.getExpression());
-					al.addAll(Arrays.asList(ev.getValues()));
-				}
-			} else {
-				final EFilterRelation relation = item.getRelation();
-				if (relation == EFilterRelation.like) {
-					final String sVal = Convert.toString(val);
-					if (!StringUtils.hasText(sVal)) {
-						continue;
-					}
-				}
+			final ExpressionValue ev = ExpressionValue.toExpressionValue(item);
+			if (ev != null) {
 				if (i++ > 0) {
 					sql.append(" ").append(item.getOpe()).append(" ");
 				}
-				sql.append(key).append(" ").append(relation);
-				if (relation == EFilterRelation.like) {
-					sql.append(" '%").append(val).append("%'");
-				} else if (relation != EFilterRelation.isNull || relation != EFilterRelation.isNotNull) {
-					sql.append(" ?");
-					al.add(val);
-				}
+				sql.append(ev.getExpression());
+				al.addAll(Arrays.asList(ev.getValues()));
 			}
 		}
 		return new ExpressionValue(sql.toString(), al.toArray());
