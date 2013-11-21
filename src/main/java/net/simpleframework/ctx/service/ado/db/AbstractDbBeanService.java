@@ -282,7 +282,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		String sql = "parentid";
 		sql += parent == null ? " is null" : "=?";
 		if (IOrderBeanAware.class.isAssignableFrom(beanClass)) {
-			sql += " order by oorder desc";
+			sql += " order by oorder";
 		}
 		return (parent == null ? query(sql) : query(sql, ((IIdBeanAware) parent).getId()));
 	}
