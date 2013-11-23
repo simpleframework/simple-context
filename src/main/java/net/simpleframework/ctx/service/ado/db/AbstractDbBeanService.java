@@ -180,6 +180,11 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	}
 
 	@Override
+	public Object exchange(final T bean1, final T bean2, final boolean up) {
+		return exchange(bean1, bean2, new TableColumn("oorder"), up);
+	}
+
+	@Override
 	public int delete(final Object... ids) {
 		if (ids == null || ids.length == 0) {
 			return 0;

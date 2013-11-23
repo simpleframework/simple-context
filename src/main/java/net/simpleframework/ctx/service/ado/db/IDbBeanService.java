@@ -69,6 +69,8 @@ public interface IDbBeanService<T> extends IADOBeanService<T> {
 	 */
 	Object exchange(T bean1, T bean2, TableColumn order, boolean up);
 
+	Object exchange(T bean1, T bean2, boolean up);
+
 	/**
 	 * 获取实体表管理器
 	 * 
