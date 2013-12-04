@@ -70,7 +70,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 
 	@Override
 	public IDataQuery<T> queryByParams(final FilterItems params) {
-		return queryByParams(params, (ColumnData) null);
+		return queryByParams(params, new ColumnData[0]);
 	}
 
 	@Override
