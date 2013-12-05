@@ -34,9 +34,9 @@ public interface IModuleContext {
 	void onInit(IApplicationContext ctx) throws Exception;
 
 	/**
-	 * 获取配置信息
+	 * 获取环境参数的配置
 	 * 
-	 * @return
+	 * @return 单例模式
 	 */
 	ContextSettings getContextSettings();
 
