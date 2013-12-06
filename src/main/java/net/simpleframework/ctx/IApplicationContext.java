@@ -30,6 +30,22 @@ public interface IApplicationContext extends IApplicationContextBase {
 	 */
 	ContextSettings getContextSettings();
 
+	/**
+	 * 由类获取模块实例
+	 * 
+	 * @param mClass
+	 * @return
+	 */
+	<T extends IModuleContext> T getModuleContext(Class<T> mClass);
+
+	/**
+	 * 由名称获取模块实例
+	 * 
+	 * @param module
+	 * @return
+	 */
+	IModuleContext getModuleContext(String module);
+
 	Collection<IModuleContext> allModules();
 
 	/**
