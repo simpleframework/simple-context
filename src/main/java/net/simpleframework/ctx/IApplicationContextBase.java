@@ -21,7 +21,7 @@ public interface IApplicationContextBase {
 	void onInit() throws Exception;
 
 	/**
-	 * 获取脚本执行引擎
+	 * 创建脚本执行引擎
 	 * 
 	 * @return
 	 */
