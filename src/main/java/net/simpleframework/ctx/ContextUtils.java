@@ -30,7 +30,11 @@ public abstract class ContextUtils {
 						throws Exception {
 					final IModuleContext ctx = newInstance(loadClass(filepath), IModuleContext.class);
 					if (ctx != null) {
-						ctx.onCreated(application);
+						try {
+							ctx.onCreated(application);
+						} catch (final Exception e) {
+							throw ModuleException.of(e);
+						}
 						ModuleContextFactory.registered(ctx);
 					}
 				}
@@ -41,7 +45,11 @@ public abstract class ContextUtils {
 			if (callback != null) {
 				callback.doModuleContext(ctx);
 			}
-			ctx.onInit(application);
+			try {
+				ctx.onInit(application);
+			} catch (final Exception e) {
+				throw ModuleException.of(e);
+			}
 			final Module module = ctx.getModule();
 			System.out.println($m("ContextUtils.1", module.getText(), module.getName(),
 					module.getOrder()));

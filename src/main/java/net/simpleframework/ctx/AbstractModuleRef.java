@@ -9,6 +9,7 @@ import net.simpleframework.common.object.ObjectEx;
  *         http://www.simpleframework.net
  */
 public abstract class AbstractModuleRef extends ObjectEx implements IModuleRef {
+
 	@Override
 	public void onInit(final IModuleContext refContext) throws Exception {
 	}

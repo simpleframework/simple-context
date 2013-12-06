@@ -42,9 +42,13 @@ public abstract class AbstractModuleContext extends ObjectEx implements IModuleC
 		for (final Method method : getClass().getMethods()) {
 			final Class<?> type = method.getReturnType();
 			if (IModuleRef.class.isAssignableFrom(type) && method.getParameterTypes().length == 0) {
-				final IModuleRef ref = ((IModuleRef) method.invoke(this));
-				if (ref != null) {
-					ref.onInit(this);
+				try {
+					final IModuleRef ref = ((IModuleRef) method.invoke(this));
+					if (ref != null) {
+						ref.onInit(this);
+					}
+				} catch (final Exception e) {
+					throw ModuleRefException.of(e);
 				}
 			}
 		}

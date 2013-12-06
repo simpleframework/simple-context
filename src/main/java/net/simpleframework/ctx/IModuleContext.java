@@ -17,21 +17,29 @@ import net.simpleframework.ctx.task.ITaskExecutor;
 public interface IModuleContext {
 
 	/**
-	 * 实例创建后执行
+	 * 模块实例化时触发
 	 * 
 	 * @param ctx
 	 * @throws Exception
 	 */
-	void onCreated(IApplicationContext ctx) throws Exception;
+	void onCreated(IApplicationContext application) throws Exception;
 
 	/**
-	 * 初始化
+	 * 模块被应用容器加载时触发，一般情况下，实现此方法即可
 	 * 
 	 * 异常抛出，不处理
 	 * 
 	 * @throws Exception
 	 */
-	void onInit(IApplicationContext ctx) throws Exception;
+	void onInit(IApplicationContext application) throws Exception;
+
+	/**
+	 * 关闭时触发
+	 * 
+	 * @param ctx
+	 * @throws Exception
+	 */
+	void onShutdown(IApplicationContext application) throws Exception;
 
 	/**
 	 * 获取环境参数的配置
@@ -92,14 +100,6 @@ public interface IModuleContext {
 	ITaskExecutor getTaskExecutor();
 
 	IScriptEval createScriptEval(Map<String, Object> variables);
-
-	/**
-	 * 关闭时触发
-	 * 
-	 * @param ctx
-	 * @throws Exception
-	 */
-	void onShutdown(IApplicationContext application) throws Exception;
 
 	/**
 	 * 获取模块的临时路径

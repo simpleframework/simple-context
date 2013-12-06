@@ -138,6 +138,7 @@ public class ModuleContextFactory {
 					}
 				} catch (final Exception e) {
 					log.warn(e);
+					throw ModuleException.of(e);
 				}
 			}
 		});

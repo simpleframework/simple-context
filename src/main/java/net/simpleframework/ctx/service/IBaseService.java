@@ -9,15 +9,6 @@ import net.simpleframework.ctx.IModuleContext;
  *         http://www.simpleframework.net
  */
 public interface IBaseService {
-
-	/**
-	 * 初始化
-	 * 
-	 * @param ctx
-	 * @throws Exception
-	 */
-	void onInit() throws Exception;
-
 	/**
 	 * 获取模块的context环境
 	 * 
@@ -26,4 +17,12 @@ public interface IBaseService {
 	IModuleContext getModuleContext();
 
 	void setModuleContext(IModuleContext context);
+
+	/**
+	 * 初始化
+	 * 
+	 * @param ctx
+	 * @throws Exception
+	 */
+	void onInit() throws Exception;
 }
