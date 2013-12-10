@@ -78,6 +78,12 @@ public interface IDbBeanService<T> extends IADOBeanService<T> {
 	 */
 	IDbEntityManager<T> getEntityManager();
 
+	/**
+	 * 获取ADO模块的实体bean管理器
+	 * 
+	 * @param beanClass
+	 * @return
+	 */
 	<M> IDbEntityManager<M> getEntityManager(Class<M> beanClass);
 
 	/**

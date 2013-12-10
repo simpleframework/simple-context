@@ -23,6 +23,7 @@ import net.simpleframework.ado.IParamsValue.AbstractParamsValue;
 import net.simpleframework.ado.bean.IIdBeanAware;
 import net.simpleframework.ado.bean.IOrderBeanAware;
 import net.simpleframework.ado.bean.ITreeBeanAware;
+import net.simpleframework.ado.db.DbManagerFactory;
 import net.simpleframework.ado.db.IDbDataQuery;
 import net.simpleframework.ado.db.IDbEntityManager;
 import net.simpleframework.ado.db.IDbManager;
@@ -36,6 +37,7 @@ import net.simpleframework.ado.query.IDataQuery;
 import net.simpleframework.common.ID;
 import net.simpleframework.common.object.ObjectFactory;
 import net.simpleframework.common.th.NotImplementedException;
+import net.simpleframework.ctx.IADOModuleContext;
 import net.simpleframework.ctx.permission.LoginUser;
 import net.simpleframework.ctx.permission.LoginUser.LoginWrapper;
 import net.simpleframework.ctx.service.AbstractBaseService;
@@ -241,12 +243,18 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 
 	@Override
 	public <P> IDbEntityManager<P> getEntityManager(final Class<P> beanClass) {
-		return ((IDbModuleContext) getModuleContext()).getEntityManager(beanClass);
+		return ((DbManagerFactory) getModuleContext().getADOManagerFactory())
+				.getEntityManager(beanClass);
 	}
 
 	@Override
 	public IDbQueryManager getQueryManager() {
-		return ((IDbModuleContext) getModuleContext()).getQueryManager();
+		return ((DbManagerFactory) getModuleContext().getADOManagerFactory()).getQueryManager();
+	}
+
+	@Override
+	public IADOModuleContext getModuleContext() {
+		return (IADOModuleContext) super.getModuleContext();
 	}
 
 	@Override

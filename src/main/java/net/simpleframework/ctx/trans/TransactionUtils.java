@@ -10,11 +10,11 @@ import net.simpleframework.common.object.IMethodInterceptor;
 import net.simpleframework.common.object.MethodResult;
 import net.simpleframework.common.object.ProxyUtils;
 import net.simpleframework.ctx.ApplicationContextFactory;
+import net.simpleframework.ctx.IADOModuleContext;
 import net.simpleframework.ctx.IApplicationContext;
 import net.simpleframework.ctx.IApplicationContextBase;
 import net.simpleframework.ctx.IModuleContext;
 import net.simpleframework.ctx.ModuleContextFactory;
-import net.simpleframework.ctx.service.ado.db.IDbModuleContext;
 import net.simpleframework.lib.net.sf.cglib.proxy.MethodProxy;
 
 /**
@@ -64,9 +64,11 @@ public abstract class TransactionUtils {
 						}
 					}
 				} else {
+					IADOManagerFactory factory;
 					final IModuleContext context = ModuleContextFactory.get(ctxClass);
-					if (context instanceof IDbModuleContext) {
-						return new MethodResult(((IDbModuleContext) context).getQueryManager()
+					if (context instanceof IADOModuleContext
+							&& (factory = ((IADOModuleContext) context).getADOManagerFactory()) instanceof DbManagerFactory) {
+						return new MethodResult(((DbManagerFactory) factory).getQueryManager()
 								.doExecuteTransaction(callback(obj, args, proxy)));
 					}
 				}
