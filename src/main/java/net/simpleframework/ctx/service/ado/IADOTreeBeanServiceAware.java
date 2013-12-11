@@ -3,6 +3,7 @@ package net.simpleframework.ctx.service.ado;
 import java.util.Collection;
 import java.util.Map;
 
+import net.simpleframework.ado.ColumnData;
 import net.simpleframework.ado.bean.ITreeBeanAware;
 import net.simpleframework.ado.query.IDataQuery;
 import net.simpleframework.common.ID;
@@ -19,9 +20,10 @@ public interface IADOTreeBeanServiceAware<T extends ITreeBeanAware> {
 	 * 获取孩子列表
 	 * 
 	 * @param parent
+	 * @param orderColumns
 	 * @return
 	 */
-	IDataQuery<T> queryChildren(T parent);
+	IDataQuery<T> queryChildren(T parent, ColumnData... orderColumns);
 
 	/**
 	 * 用parentId和集合缓存树结构

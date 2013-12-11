@@ -21,7 +21,6 @@ import net.simpleframework.ado.IADOListener;
 import net.simpleframework.ado.IParamsValue;
 import net.simpleframework.ado.IParamsValue.AbstractParamsValue;
 import net.simpleframework.ado.bean.IIdBeanAware;
-import net.simpleframework.ado.bean.IOrderBeanAware;
 import net.simpleframework.ado.bean.ITreeBeanAware;
 import net.simpleframework.ado.db.DbManagerFactory;
 import net.simpleframework.ado.db.IDbDataQuery;
@@ -35,6 +34,7 @@ import net.simpleframework.ado.db.event.DbEntityAdapter;
 import net.simpleframework.ado.query.DataQueryUtils;
 import net.simpleframework.ado.query.IDataQuery;
 import net.simpleframework.common.ID;
+import net.simpleframework.common.coll.ArrayUtils;
 import net.simpleframework.common.object.ObjectFactory;
 import net.simpleframework.common.th.NotImplementedException;
 import net.simpleframework.ctx.IADOModuleContext;
@@ -71,15 +71,10 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	}
 
 	@Override
-	public IDataQuery<T> queryByParams(final FilterItems params) {
-		return queryByParams(params, ColumnData.BLANK);
-	}
-
-	@Override
 	public IDataQuery<T> queryByParams(final FilterItems params, final ColumnData... orderColumns) {
 		final ExpressionValue eVal = toExpressionValue(params);
 		final StringBuilder sql = new StringBuilder(eVal.getExpression());
-		if (orderColumns != null && orderColumns.length > 0) {
+		if (!ArrayUtils.isEmpty(orderColumns)) {
 			sql.append(" order by ");
 			int i = 0;
 			for (final ColumnData col : orderColumns) {
@@ -287,17 +282,19 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 
 	/* ITreeBeanServiceAware */
 
-	public IDataQuery<T> queryChildren(final T parent) {
+	public IDataQuery<T> queryChildren(final T parent, final ColumnData... orderColumns) {
 		final Class<?> beanClass = getBeanClass();
 		if (!IIdBeanAware.class.isAssignableFrom(beanClass)) {
-			throw NotImplementedException.of($m("AbstractDbBeanService.2"));
+			throw NotImplementedException.of($m("AbstractDbBeanService.2",
+					IIdBeanAware.class.getName()));
 		}
-		String sql = "parentid";
-		sql += parent == null ? " is null" : "=?";
-		if (IOrderBeanAware.class.isAssignableFrom(beanClass)) {
-			sql += " order by oorder";
+		final FilterItems items = FilterItems.of();
+		if (parent == null) {
+			items.addIsNull("parentid");
+		} else {
+			items.addEqual("parentid", ((IIdBeanAware) parent).getId());
 		}
-		return (parent == null ? query(sql) : query(sql, ((IIdBeanAware) parent).getId()));
+		return queryByParams(items, orderColumns);
 	}
 
 	public Map<ID, Collection<T>> queryAllTree() {

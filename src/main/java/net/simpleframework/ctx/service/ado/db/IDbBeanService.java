@@ -27,8 +27,6 @@ public interface IDbBeanService<T> extends IADOBeanService<T> {
 	 */
 	IDataQuery<T> queryByParams(FilterItems params, ColumnData... orderColumns);
 
-	IDataQuery<T> queryByParams(FilterItems params);
-
 	List<Object> list(String column);
 
 	/**
