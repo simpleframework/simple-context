@@ -2,7 +2,6 @@ package net.simpleframework.ctx.trans;
 
 import java.lang.reflect.Method;
 
-import net.simpleframework.ado.ADOException;
 import net.simpleframework.ado.IADOManagerFactory;
 import net.simpleframework.ado.db.DbManagerFactory;
 import net.simpleframework.ado.trans.TransactionObjectCallback;
@@ -80,12 +79,8 @@ public abstract class TransactionUtils {
 				final MethodProxy proxy) {
 			return new TransactionObjectCallback<Object>() {
 				@Override
-				public Object onTransactionCallback() {
-					try {
-						return proxy.invokeSuper(obj, args);
-					} catch (final Throwable e) {
-						throw ADOException.of(e);
-					}
+				public Object onTransactionCallback() throws Throwable {
+					return proxy.invokeSuper(obj, args);
 				}
 			};
 		}
