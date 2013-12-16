@@ -4,9 +4,9 @@ import java.util.List;
 
 import net.simpleframework.ado.ColumnData;
 import net.simpleframework.ado.FilterItems;
+import net.simpleframework.ado.db.DbTableColumn;
 import net.simpleframework.ado.db.IDbEntityManager;
 import net.simpleframework.ado.db.IDbQueryManager;
-import net.simpleframework.ado.db.common.TableColumn;
 import net.simpleframework.ado.query.IDataQuery;
 import net.simpleframework.ctx.service.ado.IADOBeanService;
 
@@ -65,7 +65,7 @@ public interface IDbBeanService<T> extends IADOBeanService<T> {
 	 * @param up
 	 * @return
 	 */
-	Object exchange(T bean1, T bean2, TableColumn order, boolean up);
+	Object exchange(T bean1, T bean2, DbTableColumn order, boolean up);
 
 	Object exchange(T bean1, T bean2, boolean up);
 

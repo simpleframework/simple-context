@@ -23,13 +23,13 @@ import net.simpleframework.ado.IParamsValue.AbstractParamsValue;
 import net.simpleframework.ado.bean.IIdBeanAware;
 import net.simpleframework.ado.bean.ITreeBeanAware;
 import net.simpleframework.ado.db.DbManagerFactory;
+import net.simpleframework.ado.db.DbTableColumn;
 import net.simpleframework.ado.db.IDbDataQuery;
 import net.simpleframework.ado.db.IDbEntityManager;
 import net.simpleframework.ado.db.IDbManager;
 import net.simpleframework.ado.db.IDbQueryManager;
 import net.simpleframework.ado.db.common.ExpressionValue;
 import net.simpleframework.ado.db.common.SqlUtils;
-import net.simpleframework.ado.db.common.TableColumn;
 import net.simpleframework.ado.db.event.DbEntityAdapter;
 import net.simpleframework.ado.query.DataQueryUtils;
 import net.simpleframework.ado.query.IDataQuery;
@@ -81,7 +81,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 				if (i++ > 0) {
 					sql.append(", ");
 				}
-				sql.append(col.getSqlName());
+				sql.append(col.getAlias());
 				final EOrder o = col.getOrder();
 				if (o != EOrder.normal) {
 					sql.append(" ").append(o);
@@ -172,13 +172,13 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	}
 
 	@Override
-	public Object exchange(final T bean1, final T bean2, final TableColumn order, final boolean up) {
+	public Object exchange(final T bean1, final T bean2, final DbTableColumn order, final boolean up) {
 		return getEntityManager().exchange(bean1, bean2, order, up);
 	}
 
 	@Override
 	public Object exchange(final T bean1, final T bean2, final boolean up) {
-		return exchange(bean1, bean2, new TableColumn("oorder"), up);
+		return exchange(bean1, bean2, new DbTableColumn("oorder"), up);
 	}
 
 	@Override
