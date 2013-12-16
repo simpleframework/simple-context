@@ -295,7 +295,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 			items.addEqual("parentid", ((IIdBeanAware) parent).getId());
 		}
 		if (ArrayUtils.isEmpty(orderColumns)) {
-			return queryByParams(items, ColumnData.ORDER);
+			return queryByParams(items, ColumnData.ASC("oorder"));
 		}
 		return queryByParams(items, orderColumns);
 	}
