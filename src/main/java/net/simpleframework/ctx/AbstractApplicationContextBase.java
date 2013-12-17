@@ -40,7 +40,7 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 
 	protected void onApplicationInit() throws Exception {
 		if (this instanceof IApplicationContext) {
-			ModuleContextFactory.doInit((IApplicationContext) this);
+			ContextUtils.doInit((IApplicationContext) this);
 		}
 	}
 

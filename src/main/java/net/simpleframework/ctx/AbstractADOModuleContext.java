@@ -1,6 +1,7 @@
 package net.simpleframework.ctx;
 
 import net.simpleframework.ado.IADOManagerFactory;
+import net.simpleframework.ado.IADOManagerFactoryAware;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -9,7 +10,7 @@ import net.simpleframework.ado.IADOManagerFactory;
  *         http://www.simpleframework.net
  */
 public abstract class AbstractADOModuleContext extends AbstractModuleContext implements
-		IADOModuleContext {
+		IModuleContext, IADOManagerFactoryAware {
 
 	private IADOManagerFactory adoManagerFactory;
 

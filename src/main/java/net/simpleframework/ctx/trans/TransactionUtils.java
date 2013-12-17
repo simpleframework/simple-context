@@ -3,13 +3,13 @@ package net.simpleframework.ctx.trans;
 import java.lang.reflect.Method;
 
 import net.simpleframework.ado.IADOManagerFactory;
+import net.simpleframework.ado.IADOManagerFactoryAware;
 import net.simpleframework.ado.db.DbManagerFactory;
 import net.simpleframework.ado.trans.TransactionObjectCallback;
 import net.simpleframework.common.object.IMethodInterceptor;
 import net.simpleframework.common.object.MethodResult;
 import net.simpleframework.common.object.ProxyUtils;
 import net.simpleframework.ctx.ApplicationContextFactory;
-import net.simpleframework.ctx.IADOModuleContext;
 import net.simpleframework.ctx.IApplicationContext;
 import net.simpleframework.ctx.IApplicationContextBase;
 import net.simpleframework.ctx.IModuleContext;
@@ -65,8 +65,8 @@ public abstract class TransactionUtils {
 				} else {
 					IADOManagerFactory factory;
 					final IModuleContext context = ModuleContextFactory.get(ctxClass);
-					if (context instanceof IADOModuleContext
-							&& (factory = ((IADOModuleContext) context).getADOManagerFactory()) instanceof DbManagerFactory) {
+					if (context instanceof IADOManagerFactoryAware
+							&& (factory = ((IADOManagerFactoryAware) context).getADOManagerFactory()) instanceof DbManagerFactory) {
 						return new MethodResult(((DbManagerFactory) factory).getQueryManager()
 								.doExecuteTransaction(callback(obj, args, proxy)));
 					}

@@ -1,6 +1,7 @@
 package net.simpleframework.ctx;
 
-import java.lang.reflect.Field;
+import static net.simpleframework.common.I18n.$m;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -9,21 +10,10 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import net.simpleframework.common.ClassUtils;
-import net.simpleframework.common.ClassUtils.IScanResourcesCallback;
 import net.simpleframework.common.ClassUtils.ScanClassResourcesCallback;
 import net.simpleframework.common.logger.Log;
 import net.simpleframework.common.logger.LogFactory;
-import net.simpleframework.common.object.ObjectFactory;
-import net.simpleframework.common.object.ObjectFactory.IObjectCreator;
-import net.simpleframework.common.object.ObjectFactory.IObjectCreatorListener;
-import net.simpleframework.common.object.ObjectInstanceException;
-import net.simpleframework.common.object.ProxyUtils;
-import net.simpleframework.common.th.ClassException;
-import net.simpleframework.ctx.common.ConsoleThread;
-import net.simpleframework.ctx.common.IDataImportHandler;
-import net.simpleframework.ctx.common.db.DeploySqlUtils;
-import net.simpleframework.ctx.service.IBaseService;
-import net.simpleframework.ctx.trans.TransactionUtils;
+import net.simpleframework.ctx.common.db.DbUtils;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -32,7 +22,6 @@ import net.simpleframework.ctx.trans.TransactionUtils;
  *         http://www.simpleframework.net
  */
 public class ModuleContextFactory {
-	private static final Log log = LogFactory.getLogger(ModuleContextFactory.class);
 
 	public static IModuleContext get(final String module) {
 		return moduleCache.get(module);
@@ -79,55 +68,43 @@ public class ModuleContextFactory {
 	}
 
 	public static void doInit(final IApplicationContext application) throws Exception {
-		// 定义代理对象
-		ObjectFactory.get().set(new IObjectCreator() {
-			@Override
-			public Object create(final Class<?> oClass) {
-				return ProxyUtils.create(oClass);
-			}
-		}).addListener(new IObjectCreatorListener() {
-			@Override
-			public void onBefore(final Class<?> oClass) {
-				ProxyUtils.registDefaults(oClass);
-				TransactionUtils.registTransaction(oClass);
-			}
-
-			@Override
-			public void onCreated(final Object o) {
-				final Field[] allFields = ClassUtils.getAllFields(o.getClass());
-
-				doInjectCtx(o, allFields);
-
-				if (o instanceof IBaseService) {
-					try {
-						((IBaseService) o).onInit();
-					} catch (final Exception e) {
-						throw ObjectInstanceException.of(e);
-					}
-				}
-			}
-		});
-
-		DeploySqlUtils.executeSqlScript(application);
-
-		ContextUtils.scanModuleContext(application);
-
-		final IScanResourcesCallback callback = new ScanClassResourcesCallback() {
-			@Override
-			public void doResources(final String filepath, final boolean isDirectory) throws Exception {
-				final IDataImportHandler hdl = newInstance(loadClass(filepath),
-						IDataImportHandler.class);
-				if (hdl != null) {
-					hdl.doImport(application);
-				}
-			}
-		};
-
-		for (final String packageName : application.getScanPackageNames()) {
-			ClassUtils.scanResources(packageName, callback);
+		final String[] packageNames = application.getScanPackageNames();
+		if (packageNames == null) {
+			return;
 		}
 
-		ConsoleThread.doInit();
+		System.out.println($m("ModuleContextFactory.0"));
+		for (final String packageName : packageNames) {
+			ClassUtils.scanResources(packageName, new ScanClassResourcesCallback() {
+				@Override
+				public void doResources(final String filepath, final boolean isDirectory)
+						throws Exception {
+					final IModuleContext ctx = newInstance(loadClass(filepath), IModuleContext.class);
+					if (ctx != null) {
+						try {
+							ctx.onCreated(application);
+						} catch (final Exception e) {
+							throw ModuleException.of(e);
+						}
+						registered(ctx);
+					}
+				}
+			});
+		}
+
+		// 注册EntityTable
+		DbUtils.doEntityTable(application);
+
+		for (final IModuleContext ctx : allModules()) {
+			try {
+				ctx.onInit(application);
+			} catch (final Exception e) {
+				throw ModuleException.of(e);
+			}
+			final Module module = ctx.getModule();
+			System.out.println($m("ModuleContextFactory.1", module.getText(), module.getName(),
+					module.getOrder()));
+		}
 
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
@@ -144,23 +121,5 @@ public class ModuleContextFactory {
 		});
 	}
 
-	@SuppressWarnings("unchecked")
-	private static void doInjectCtx(final Object o, final Field[] allFields) {
-		for (final Field f : allFields) {
-			Class<?> mType;
-			if (f.getAnnotation(InjectCtx.class) != null
-					&& IModuleContext.class.isAssignableFrom(mType = f.getType())) {
-				f.setAccessible(true);
-				try {
-					final IModuleContext ctx = get((Class<? extends IModuleContext>) mType);
-					f.set(o, ctx);
-					if (o instanceof IBaseService) {
-						((IBaseService) o).setModuleContext(ctx);
-					}
-				} catch (final Exception e) {
-					throw ClassException.of(e);
-				}
-			}
-		}
-	}
+	private static final Log log = LogFactory.getLogger(ModuleContextFactory.class);
 }

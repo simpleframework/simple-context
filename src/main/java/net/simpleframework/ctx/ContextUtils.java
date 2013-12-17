@@ -1,8 +1,20 @@
 package net.simpleframework.ctx;
 
-import static net.simpleframework.common.I18n.$m;
+import java.lang.reflect.Field;
+
 import net.simpleframework.common.ClassUtils;
 import net.simpleframework.common.ClassUtils.ScanClassResourcesCallback;
+import net.simpleframework.common.object.ObjectFactory;
+import net.simpleframework.common.object.ObjectFactory.IObjectCreator;
+import net.simpleframework.common.object.ObjectFactory.IObjectCreatorListener;
+import net.simpleframework.common.object.ObjectInstanceException;
+import net.simpleframework.common.object.ProxyUtils;
+import net.simpleframework.common.th.ClassException;
+import net.simpleframework.ctx.common.ConsoleThread;
+import net.simpleframework.ctx.common.IDataImportHandler;
+import net.simpleframework.ctx.common.db.DbUtils;
+import net.simpleframework.ctx.service.IBaseService;
+import net.simpleframework.ctx.trans.TransactionUtils;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -12,47 +24,86 @@ import net.simpleframework.common.ClassUtils.ScanClassResourcesCallback;
  */
 public abstract class ContextUtils {
 
-	public static void scanModuleContext(final IApplicationContext application) throws Exception {
-		scanModuleContext(application, null);
-	}
+	public static void doInit(final IApplicationContext application) throws Exception {
+		// 启动控制台线程
+		ConsoleThread.doInit();
 
-	public static void scanModuleContext(final IApplicationContext application,
-			final IModuleContextCallback callback) throws Exception {
-		final String[] packageNames = application.getScanPackageNames();
-		if (packageNames == null || packageNames.length == 0) {
-			return;
-		}
-		System.out.println($m("ContextUtils.0"));
-		for (final String packageName : packageNames) {
-			ClassUtils.scanResources(packageName, new ScanClassResourcesCallback() {
-				@Override
-				public void doResources(final String filepath, final boolean isDirectory)
-						throws Exception {
-					final IModuleContext ctx = newInstance(loadClass(filepath), IModuleContext.class);
-					if (ctx != null) {
-						try {
-							ctx.onCreated(application);
-						} catch (final Exception e) {
-							throw ModuleException.of(e);
-						}
-						ModuleContextFactory.registered(ctx);
+		// 定义代理对象
+		ObjectFactory.get().set(new IObjectCreator() {
+			@Override
+			public Object create(final Class<?> oClass) {
+				return ProxyUtils.create(oClass);
+			}
+		}).addListener(new IObjectCreatorListener() {
+			@Override
+			public void onBefore(final Class<?> oClass) {
+				ProxyUtils.registDefaults(oClass);
+				TransactionUtils.registTransaction(oClass);
+			}
+
+			@Override
+			public void onCreated(final Object o) {
+				final Field[] allFields = ClassUtils.getAllFields(o.getClass());
+
+				doInjectCtx(o, allFields);
+
+				if (o instanceof IBaseService) {
+					try {
+						((IBaseService) o).onInit();
+					} catch (final Exception e) {
+						throw ObjectInstanceException.of(e);
 					}
 				}
-			});
-		}
+			}
+		});
 
-		for (final IModuleContext ctx : ModuleContextFactory.allModules()) {
-			if (callback != null) {
-				callback.doModuleContext(ctx);
+		// 执行数据库相关初始化工作
+		DbUtils.doExecuteSql(application);
+		// 模块初始化
+		ModuleContextFactory.doInit(application);
+
+		// others
+		doUtils(application);
+	}
+
+	@SuppressWarnings("unchecked")
+	private static void doInjectCtx(final Object o, final Field[] allFields) {
+		for (final Field f : allFields) {
+			Class<?> mType;
+			if (f.getAnnotation(InjectCtx.class) != null
+					&& IModuleContext.class.isAssignableFrom(mType = f.getType())) {
+				f.setAccessible(true);
+				try {
+					final IModuleContext ctx = ModuleContextFactory
+							.get((Class<? extends IModuleContext>) mType);
+					f.set(o, ctx);
+					if (o instanceof IBaseService) {
+						((IBaseService) o).setModuleContext(ctx);
+					}
+				} catch (final Exception e) {
+					throw ClassException.of(e);
+				}
 			}
-			try {
-				ctx.onInit(application);
-			} catch (final Exception e) {
-				throw ModuleException.of(e);
+		}
+	}
+
+	public static void doUtils(final IApplicationContext application) throws Exception {
+		final String[] packageNames = application.getScanPackageNames();
+		if (packageNames != null) {
+			for (final String packageName : packageNames) {
+				// IDataImportHandler
+				ClassUtils.scanResources(packageName, new ScanClassResourcesCallback() {
+					@Override
+					public void doResources(final String filepath, final boolean isDirectory)
+							throws Exception {
+						final IDataImportHandler iHandler = newInstance(loadClass(filepath),
+								IDataImportHandler.class);
+						if (iHandler != null) {
+							iHandler.doImport(application);
+						}
+					}
+				});
 			}
-			final Module module = ctx.getModule();
-			System.out.println($m("ContextUtils.1", module.getText(), module.getName(),
-					module.getOrder()));
 		}
 	}
 }
