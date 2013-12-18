@@ -79,7 +79,7 @@ public class ModuleContextFactory {
 				@Override
 				public void doResources(final String filepath, final boolean isDirectory)
 						throws Exception {
-					final IModuleContext ctx = newInstance(loadClass(filepath), IModuleContext.class);
+					final IModuleContext ctx = getInstance(loadClass(filepath), IModuleContext.class);
 					if (ctx != null) {
 						try {
 							ctx.onCreated(application);

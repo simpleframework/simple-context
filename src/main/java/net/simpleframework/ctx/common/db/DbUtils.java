@@ -91,7 +91,7 @@ public abstract class DbUtils {
 					@Override
 					public void doResources(final String filepath, final boolean isDirectory)
 							throws Exception {
-						final IDbEntityTableRegistry registry = newInstance(loadClass(filepath),
+						final IDbEntityTableRegistry registry = getInstance(loadClass(filepath),
 								IDbEntityTableRegistry.class);
 						Object mFactory = null;
 						if (registry != null

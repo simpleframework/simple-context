@@ -96,7 +96,7 @@ public abstract class ContextUtils {
 					@Override
 					public void doResources(final String filepath, final boolean isDirectory)
 							throws Exception {
-						final IDataImportHandler iHandler = newInstance(loadClass(filepath),
+						final IDataImportHandler iHandler = getInstance(loadClass(filepath),
 								IDataImportHandler.class);
 						if (iHandler != null) {
 							iHandler.doImport(application);
