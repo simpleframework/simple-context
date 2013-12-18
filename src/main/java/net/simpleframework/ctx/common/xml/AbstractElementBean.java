@@ -22,15 +22,23 @@ import net.simpleframework.ctx.script.ScriptEvalUtils;
  *         http://www.simpleframework.net
  */
 public abstract class AbstractElementBean extends ObjectEx {
-	private final transient XmlElement beanElement;
+
+	private transient XmlElement beanElement;
+
+	public AbstractElementBean() {
+	}
 
 	public AbstractElementBean(final XmlElement beanElement) {
-		this.beanElement = beanElement;
-		enableAttributes();
+		setBeanElement(beanElement);
 	}
 
 	public XmlElement getBeanElement() {
 		return beanElement;
+	}
+
+	public AbstractElementBean setBeanElement(final XmlElement beanElement) {
+		this.beanElement = beanElement;
+		return this;
 	}
 
 	protected XmlElement child(final String name) {
@@ -248,5 +256,9 @@ public abstract class AbstractElementBean extends ObjectEx {
 
 	protected boolean isRemoveErrorAttribute() {
 		return false;
+	}
+
+	{
+		enableAttributes();
 	}
 }
