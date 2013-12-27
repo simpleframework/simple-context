@@ -31,7 +31,7 @@ public interface IADOBeanService<T> extends IBaseService {
 	 * 
 	 * @return
 	 */
-	IDataQuery<? extends T> queryAll();
+	IDataQuery<T> queryAll();
 
 	void addListener(IADOListener listener);
 }
