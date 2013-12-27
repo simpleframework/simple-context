@@ -111,6 +111,7 @@ public class XmlElement {
 							return true;
 						}
 					} else {
+						node = null;
 						continue;
 					}
 				}
@@ -119,7 +120,7 @@ public class XmlElement {
 
 			@Override
 			public XmlElement next() {
-				return node == null && !hasNext() ? null : new XmlElement((Element) node);
+				return node == null ? null : new XmlElement((Element) node);
 			}
 		};
 	}
