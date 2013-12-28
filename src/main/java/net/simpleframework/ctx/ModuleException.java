@@ -19,7 +19,7 @@ public class ModuleException extends RuntimeExceptionEx {
 	}
 
 	public static ModuleException of(final Throwable throwable) {
-		return (ModuleException) _of(ModuleException.class, null, throwable);
+		return _of(ModuleException.class, null, throwable);
 	}
 
 	private static final long serialVersionUID = 4778304178451841308L;
