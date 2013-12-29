@@ -1,6 +1,6 @@
 package net.simpleframework.ctx.permission;
 
-import java.util.Collection;
+import java.util.Enumeration;
 import java.util.Map;
 
 import net.simpleframework.common.ID;
@@ -23,7 +23,7 @@ public class DefaultPermissionHandler extends ObjectEx implements IPermissionHan
 	}
 
 	@Override
-	public Collection<ID> users(final Object role, final Map<String, Object> variables) {
+	public Enumeration<ID> users(final Object role, final Map<String, Object> variables) {
 		throw NotImplementedException.of(getClass(), "users");
 	}
 
@@ -35,7 +35,7 @@ public class DefaultPermissionHandler extends ObjectEx implements IPermissionHan
 	}
 
 	@Override
-	public Collection<ID> roles(final Object user, final Map<String, Object> variables) {
+	public Enumeration<ID> roles(final Object user, final Map<String, Object> variables) {
 		throw NotImplementedException.of(getClass(), "roles");
 	}
 }
