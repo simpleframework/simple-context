@@ -395,7 +395,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		return lw != null ? lw.getUser().getId() : null;
 	}
 
-	private final IDbEntityListener INSERT_LISTENER = new DbEntityAdapterEx() {
+	private final IDbEntityListener CONTEXT_LISTENER = new DbEntityAdapterEx() {
 		@Override
 		public void onBeforeInsert(final IDbEntityManager<?> manager, final Object[] beans) {
 			super.onBeforeInsert(manager, beans);
@@ -413,6 +413,6 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	};
 
 	{
-		addListener(INSERT_LISTENER);
+		addListener(CONTEXT_LISTENER);
 	}
 }
