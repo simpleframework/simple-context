@@ -92,6 +92,8 @@ public interface IModuleContext {
 	 */
 	ModuleFunctions getFunctions(ModuleFunction parent);
 
+	ModuleFunction getFunctionByName(String name);
+
 	/**
 	 * 任务池
 	 * 

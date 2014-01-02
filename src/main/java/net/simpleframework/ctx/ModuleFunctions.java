@@ -60,7 +60,7 @@ public class ModuleFunctions extends AbstractArrayListEx<ModuleFunctions, Module
 		return null;
 	}
 
-	private static ModuleFunction getFunctionByName(final IModuleContext ctx,
+	public static ModuleFunction getFunctionByName(final IModuleContext ctx,
 			final ModuleFunctions functions, final String name) {
 		if (functions == null) {
 			return null;

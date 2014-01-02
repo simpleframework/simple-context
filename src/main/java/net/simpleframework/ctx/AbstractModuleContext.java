@@ -59,12 +59,15 @@ public abstract class AbstractModuleContext extends ObjectEx implements IModuleC
 		return null;
 	}
 
-	private final Module module = createModule();
+	private Module module;
 
 	protected abstract Module createModule();
 
 	@Override
 	public Module getModule() {
+		if (module == null) {
+			module = createModule();
+		}
 		return module;
 	}
 
@@ -78,6 +81,11 @@ public abstract class AbstractModuleContext extends ObjectEx implements IModuleC
 
 	protected ModuleFunctions getFunctions() {
 		return null;
+	}
+
+	@Override
+	public ModuleFunction getFunctionByName(final String name) {
+		return ModuleFunctions.getFunctionByName(this, getFunctions(), name);
 	}
 
 	@Override
