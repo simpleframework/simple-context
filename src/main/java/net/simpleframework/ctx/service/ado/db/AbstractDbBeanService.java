@@ -21,6 +21,7 @@ import net.simpleframework.ado.IADOListener;
 import net.simpleframework.ado.IADOManagerFactoryAware;
 import net.simpleframework.ado.IParamsValue;
 import net.simpleframework.ado.IParamsValue.AbstractParamsValue;
+import net.simpleframework.ado.bean.IDomainBeanAware;
 import net.simpleframework.ado.bean.IIdBeanAware;
 import net.simpleframework.ado.bean.ITreeBeanAware;
 import net.simpleframework.ado.db.DbManagerFactory;
@@ -32,6 +33,7 @@ import net.simpleframework.ado.db.IDbQueryManager;
 import net.simpleframework.ado.db.common.ExpressionValue;
 import net.simpleframework.ado.db.common.SqlUtils;
 import net.simpleframework.ado.db.event.DbEntityAdapter;
+import net.simpleframework.ado.db.event.IDbEntityListener;
 import net.simpleframework.ado.query.DataQueryUtils;
 import net.simpleframework.ado.query.IDataQuery;
 import net.simpleframework.common.ID;
@@ -391,5 +393,26 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	protected ID getLoginId() {
 		final LoginWrapper lw = LoginUser.get();
 		return lw != null ? lw.getUser().getId() : null;
+	}
+
+	private final IDbEntityListener INSERT_LISTENER = new DbEntityAdapterEx() {
+		@Override
+		public void onBeforeInsert(final IDbEntityManager<?> manager, final Object[] beans) {
+			super.onBeforeInsert(manager, beans);
+			Integer _domain = null;
+			for (final Object t : beans) {
+				IDomainBeanAware bean;
+				if (t instanceof IDomainBeanAware && (bean = (IDomainBeanAware) t).getDomain() == 0) {
+					if (_domain == null) {
+						_domain = getModuleContext().getDomain();
+					}
+					bean.setDomain(_domain);
+				}
+			}
+		}
+	};
+
+	{
+		addListener(INSERT_LISTENER);
 	}
 }
