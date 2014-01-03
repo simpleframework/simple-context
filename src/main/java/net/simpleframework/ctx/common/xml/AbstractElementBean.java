@@ -11,7 +11,6 @@ import net.simpleframework.common.I18n;
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.coll.ArrayUtils;
 import net.simpleframework.common.object.ObjectEx;
-import net.simpleframework.ctx.common.xml.XmlElement.Attri;
 import net.simpleframework.ctx.script.IScriptEval;
 import net.simpleframework.ctx.script.ScriptEvalUtils;
 
@@ -127,7 +126,7 @@ public abstract class AbstractElementBean extends ObjectEx {
 		} else {
 			value = null;
 		}
-		final Attri attribute = xmlElement.attribute(name);
+		final XmlAttri attribute = xmlElement.attribute(name);
 		if (StringUtils.hasText(value)) {
 			if (attribute != null) {
 				attribute.setValue(value);
@@ -189,10 +188,10 @@ public abstract class AbstractElementBean extends ObjectEx {
 		if (xmlElement == null) {
 			return;
 		}
-		ArrayList<Attri> removes = null;
-		final Iterator<Attri> it = xmlElement.attributeIterator();
+		ArrayList<XmlAttri> removes = null;
+		final Iterator<XmlAttri> it = xmlElement.attributeIterator();
 		while (it.hasNext()) {
-			final Attri attribute = it.next();
+			final XmlAttri attribute = it.next();
 			final String name = attribute.getName();
 			if (name.contains(":")) {
 				continue;
@@ -207,14 +206,14 @@ public abstract class AbstractElementBean extends ObjectEx {
 				log.warn(e);
 				if (isRemoveErrorAttribute()) {
 					if (removes == null) {
-						removes = new ArrayList<Attri>();
+						removes = new ArrayList<XmlAttri>();
 					}
 					removes.add(attribute);
 				}
 			}
 		}
 		if (removes != null) {
-			for (final Attri attribute : removes) {
+			for (final XmlAttri attribute : removes) {
 				xmlElement.remove(attribute);
 			}
 		}
