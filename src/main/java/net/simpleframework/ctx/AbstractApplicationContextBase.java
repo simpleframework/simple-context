@@ -1,12 +1,14 @@
 package net.simpleframework.ctx;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import net.simpleframework.common.ClassUtils;
 import net.simpleframework.common.ClassUtils.IScanResourcesCallback;
 import net.simpleframework.common.Convert;
 import net.simpleframework.common.I18n;
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.Version;
-import net.simpleframework.common.coll.ArrayUtils;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.ctx.permission.IPermissionHandler;
 import net.simpleframework.ctx.permission.PermissionFactory;
@@ -55,12 +57,18 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 		}
 	}
 
-	private static String[] DEFAULT_SCANPACKAGENAMES = new String[] { "net.simpleframework" };
 	private String[] scanPackageNames;
 
 	@Override
 	public String[] getScanPackageNames() {
-		return !ArrayUtils.isEmpty(scanPackageNames) ? scanPackageNames : DEFAULT_SCANPACKAGENAMES;
+		final Set<String> set = new LinkedHashSet<String>();
+		set.add("net.simpleframework");
+		if (scanPackageNames != null) {
+			for (final String packageName : scanPackageNames) {
+				set.add(packageName);
+			}
+		}
+		return set.toArray(new String[set.size()]);
 	}
 
 	@Override
