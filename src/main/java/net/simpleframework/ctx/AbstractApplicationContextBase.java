@@ -6,6 +6,7 @@ import net.simpleframework.common.Convert;
 import net.simpleframework.common.I18n;
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.Version;
+import net.simpleframework.common.coll.ArrayUtils;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.ctx.permission.IPermissionHandler;
 import net.simpleframework.ctx.permission.PermissionFactory;
@@ -54,9 +55,17 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 		}
 	}
 
+	private static String[] DEFAULT_SCANPACKAGENAMES = new String[] { "net.simpleframework" };
+	private String[] scanPackageNames;
+
 	@Override
 	public String[] getScanPackageNames() {
-		return new String[] { "net.simpleframework" };
+		return !ArrayUtils.isEmpty(scanPackageNames) ? scanPackageNames : DEFAULT_SCANPACKAGENAMES;
+	}
+
+	@Override
+	public void setScanPackageNames(final String[] scanPackageNames) {
+		this.scanPackageNames = scanPackageNames;
 	}
 
 	@Override

@@ -34,6 +34,8 @@ public interface IApplicationContextBase {
 	 */
 	String[] getScanPackageNames();
 
+	void setScanPackageNames(String[] scanPackageNames);
+
 	/**
 	 * 获取异常的显示消息，子类覆盖添加友好消息
 	 * 
