@@ -54,11 +54,11 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 		enableAttributes();
 	}
 
-	public File getAttachment() {
+	public File getAttachment() throws IOException {
 		return attachment;
 	}
 
-	public String getTopic() {
+	public String getTopic() throws IOException {
 		if (StringUtils.hasText(topic)) {
 			return topic;
 		}
@@ -132,7 +132,7 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 		return this;
 	}
 
-	public long getSize() {
+	public long getSize() throws IOException {
 		return size > 0 ? size : getAttachment().length();
 	}
 
