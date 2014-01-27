@@ -20,7 +20,7 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 	public void run() {
 		try {
 			task();
-		} catch (final Exception ex) {
+		} catch (final Throwable ex) {
 			log.warn(ex);
 		}
 	}
