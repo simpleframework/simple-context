@@ -5,7 +5,6 @@ import static net.simpleframework.common.I18n.$m;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -388,7 +387,12 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 					sql.append(" ").append(item.getOpe()).append(" ");
 				}
 				sql.append(ev.getExpression());
-				al.addAll(Arrays.asList(ev.getValues()));
+				final Object[] vals = ev.getValues();
+				if (vals != null) {
+					for (final Object val : vals) {
+						al.add(val);
+					}
+				}
 			}
 		}
 		return new ExpressionValue(sql.toString(), al.toArray());
