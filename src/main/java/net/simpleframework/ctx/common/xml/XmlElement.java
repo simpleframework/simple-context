@@ -2,6 +2,7 @@ package net.simpleframework.ctx.common.xml;
 
 import java.util.Iterator;
 
+import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.coll.CollectionUtils.AbstractIterator;
 
 import org.w3c.dom.Attr;
@@ -9,6 +10,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -50,28 +52,47 @@ public class XmlElement {
 	}
 
 	public String elementText(final String elementName) {
-		final XmlElement xmlElement = element(elementName);
-		return xmlElement == null ? "" : xmlElement.getText();
+		final XmlElement element = element(elementName);
+		return element == null ? "" : element.getText();
 	}
 
 	public XmlElement getParent() {
 		return new XmlElement((Element) _element.getParentNode());
 	}
 
-	public void remove(final XmlElement removeElement) {
+	public XmlElement remove(final XmlElement removeElement) {
 		if (removeElement != null) {
-			_element.removeChild(removeElement.getElement());
+			final Element _element2 = removeElement.getElement();
+			Node node;
+			while ((node = _element2.getNextSibling()) instanceof Text) {
+				if (!StringUtils.hasText(node.getTextContent())) {
+					_element.removeChild(node);
+				}
+			}
+			while ((node = _element2.getPreviousSibling()) instanceof Text) {
+				if (!StringUtils.hasText(node.getTextContent())) {
+					_element.removeChild(node);
+				}
+			}
+			_element.removeChild(_element2);
 		}
+		return this;
 	}
 
-	public void clearContent() {
-		final NodeList nl = _element.getChildNodes();
-		if (nl == null) {
-			return;
+	public XmlElement remove(final String elementName) {
+		final Iterator<XmlElement> it = elementIterator(elementName);
+		while (it.hasNext()) {
+			remove(it.next());
 		}
+		return this;
+	}
+
+	public XmlElement clearContent() {
+		final NodeList nl = _element.getChildNodes();
 		while (nl.getLength() > 0) {
 			_element.removeChild(nl.item(0));
 		}
+		return this;
 	}
 
 	public XmlElement addElement(final String elementName) {
@@ -79,12 +100,14 @@ public class XmlElement {
 		return new XmlElement((Element) _element.appendChild(nElement));
 	}
 
-	public void add(final XmlElement xmlElement) {
-		_element.appendChild(xmlElement.getElement());
+	public XmlElement addElement(final XmlElement element) {
+		_element.appendChild(element.getElement());
+		return this;
 	}
 
-	public void addCDATA(final String cdata) {
+	public XmlElement addCDATA(final String cdata) {
 		_element.appendChild(_element.getOwnerDocument().createCDATASection(cdata));
+		return this;
 	}
 
 	public XmlElement element(final String elementName) {
@@ -133,8 +156,9 @@ public class XmlElement {
 		return attr == null ? null : new XmlAttri(attr);
 	}
 
-	public void remove(final XmlAttri attri) {
+	public XmlElement remove(final XmlAttri attri) {
 		_element.removeAttribute(attri.getName());
+		return this;
 	}
 
 	public Iterator<XmlAttri> attributeIterator() {

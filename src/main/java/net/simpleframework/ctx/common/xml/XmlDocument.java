@@ -161,6 +161,10 @@ public class XmlDocument extends ObjectEx {
 		}
 	}
 
+	private static Reader toReader(final String xString) {
+		return new StringReader(stripNonValidXMLCharacters(xString));
+	}
+
 	private static String stripNonValidXMLCharacters(final String in) {
 		final StringBuilder out = new StringBuilder();
 		char current;
@@ -177,10 +181,6 @@ public class XmlDocument extends ObjectEx {
 			}
 		}
 		return out.toString();
-	}
-
-	private static Reader toReader(final String xString) {
-		return new StringReader(stripNonValidXMLCharacters(xString));
 	}
 
 	public static class XmlDocumentException extends RuntimeExceptionEx {

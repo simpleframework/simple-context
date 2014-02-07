@@ -22,82 +22,49 @@ import net.simpleframework.ctx.script.ScriptEvalUtils;
  */
 public abstract class AbstractElementBean extends ObjectEx {
 
-	private transient XmlElement beanElement;
+	private transient XmlElement _element;
 
 	public AbstractElementBean() {
 	}
 
-	public AbstractElementBean(final XmlElement beanElement) {
-		setBeanElement(beanElement);
+	public AbstractElementBean(final XmlElement element) {
+		setElement(element);
 	}
 
-	public XmlElement getBeanElement() {
-		return beanElement;
+	public XmlElement getElement() {
+		return _element;
 	}
 
-	public AbstractElementBean setBeanElement(final XmlElement beanElement) {
-		this.beanElement = beanElement;
+	public AbstractElementBean setElement(final XmlElement element) {
+		_element = element;
 		return this;
 	}
 
-	protected XmlElement child(final String name) {
-		return child(getBeanElement(), name);
-	}
-
-	protected XmlElement child(final XmlElement parent, final String name) {
-		if (parent == null) {
-			return null;
-		}
-		return parent.element(name);
-	}
-
-	protected void removeChildren(final XmlElement parent, final String name) {
-		if (parent == null) {
-			return;
-		}
-		final Iterator<XmlElement> it = parent.elementIterator(name);
-		while (it.hasNext()) {
-			parent.remove(it.next());
-		}
-	}
-
-	protected void removeChildren(final String name) {
-		removeChildren(getBeanElement(), name);
-	}
-
 	protected void removeElement(final AbstractElementBean bean) {
-		XmlElement xmlElement;
-		if (bean == null || (xmlElement = bean.getBeanElement()) == null) {
+		XmlElement element;
+		if (bean == null || (element = bean.getElement()) == null) {
 			return;
 		}
-		final XmlElement parent = xmlElement.getParent();
+		final XmlElement parent = element.getParent();
 		if (parent != null) {
-			parent.remove(xmlElement);
+			parent.remove(element);
 		}
-	}
-
-	protected XmlElement addElement(final String name) {
-		return addElement(getBeanElement(), name);
-	}
-
-	protected XmlElement addElement(final XmlElement parent, final String name) {
-		return parent != null ? parent.addElement(name) : null;
 	}
 
 	protected XmlElement addElement(final AbstractElementBean bean) {
-		return addElement(getBeanElement(), bean);
+		return addElement(getElement(), bean);
 	}
 
 	protected XmlElement addElement(final XmlElement parent, final AbstractElementBean bean) {
 		if (parent == null || bean == null) {
 			return null;
 		}
-		final XmlElement xmlElement = bean.getBeanElement();
-		if (xmlElement != null) {
+		final XmlElement element = bean.getElement();
+		if (element != null) {
 			// element.setParent(null);
-			parent.add(xmlElement);
+			parent.addElement(element);
 		}
-		return xmlElement;
+		return element;
 	}
 
 	protected void setElementAttribute(final String[] names) {
@@ -110,12 +77,12 @@ public abstract class AbstractElementBean extends ObjectEx {
 	}
 
 	protected void setElementAttribute(final String name, final Object object) {
-		setElementAttribute(getBeanElement(), name, object);
+		setElementAttribute(getElement(), name, object);
 	}
 
-	protected void setElementAttribute(final XmlElement xmlElement, final String name,
+	protected void setElementAttribute(final XmlElement element, final String name,
 			final Object object) {
-		if (xmlElement == null) {
+		if (element == null) {
 			return;
 		}
 		String value;
@@ -126,34 +93,34 @@ public abstract class AbstractElementBean extends ObjectEx {
 		} else {
 			value = null;
 		}
-		final XmlAttri attribute = xmlElement.attribute(name);
+		final XmlAttri attribute = element.attribute(name);
 		if (StringUtils.hasText(value)) {
 			if (attribute != null) {
 				attribute.setValue(value);
 			} else {
-				xmlElement.addAttribute(name, value);
+				element.addAttribute(name, value);
 			}
 		} else if (attribute != null) {
-			xmlElement.remove(attribute);
+			element.remove(attribute);
 		}
 	}
 
 	protected void setElementContent(final String name, final Object object) {
-		final XmlElement xmlElement = getBeanElement();
-		if (xmlElement == null) {
+		final XmlElement element = getElement();
+		if (element == null) {
 			return;
 		}
 		final String value = Convert.toString(object);
-		final XmlElement ele = xmlElement.element(name);
+		final XmlElement ele = element.element(name);
 		if (StringUtils.hasText(value)) {
 			if (ele != null) {
 				ele.clearContent();
 				ele.addCDATA(value);
 			} else {
-				xmlElement.addElement(name).addCDATA(value);
+				element.addElement(name).addCDATA(value);
 			}
 		} else {
-			xmlElement.remove(ele);
+			element.remove(ele);
 		}
 	}
 
@@ -184,12 +151,12 @@ public abstract class AbstractElementBean extends ObjectEx {
 	}
 
 	public void parseElement(final IScriptEval scriptEval) {
-		final XmlElement xmlElement = getBeanElement();
-		if (xmlElement == null) {
+		final XmlElement element = getElement();
+		if (element == null) {
 			return;
 		}
 		ArrayList<XmlAttri> removes = null;
-		final Iterator<XmlAttri> it = xmlElement.attributeIterator();
+		final Iterator<XmlAttri> it = element.attributeIterator();
 		while (it.hasNext()) {
 			final XmlAttri attribute = it.next();
 			final String name = attribute.getName();
@@ -214,7 +181,7 @@ public abstract class AbstractElementBean extends ObjectEx {
 		}
 		if (removes != null) {
 			for (final XmlAttri attribute : removes) {
-				xmlElement.remove(attribute);
+				element.remove(attribute);
 			}
 		}
 		final String[] arr = elementAttributes();
@@ -231,11 +198,11 @@ public abstract class AbstractElementBean extends ObjectEx {
 		if (attributes == null) {
 			return;
 		}
-		final XmlElement xmlElement = getBeanElement();
+		final XmlElement element = getElement();
 		for (final String attribute : attributes) {
-			final XmlElement xmlElement2 = xmlElement.element(attribute);
+			final XmlElement element2 = element.element(attribute);
 			String text;
-			if (xmlElement2 == null || !StringUtils.hasText(text = xmlElement2.getText())) {
+			if (element2 == null || !StringUtils.hasText(text = element2.getText())) {
 				continue;
 			}
 			text = I18n.replaceI18n(text);
@@ -247,7 +214,7 @@ public abstract class AbstractElementBean extends ObjectEx {
 			} catch (final Exception e) {
 				log.warn(e);
 				if (isRemoveErrorAttribute()) {
-					xmlElement.remove(xmlElement2);
+					element.remove(element2);
 				}
 			}
 		}

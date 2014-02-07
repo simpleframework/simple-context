@@ -74,8 +74,8 @@ public abstract class DbCreator {
 		try {
 			final Iterator<?> it = document.sqlIterator();
 			while (it.hasNext()) {
-				final XmlElement xmlElement = (XmlElement) it.next();
-				final String state = xmlElement.attributeValue(stateAttri);
+				final XmlElement element = (XmlElement) it.next();
+				final String state = element.attributeValue(stateAttri);
 				if (state != null && (state.equals("update") || state.equals("ignore"))) {
 					continue;
 				}
@@ -83,9 +83,9 @@ public abstract class DbCreator {
 					connection = dataSource.getConnection();
 					stat = connection.createStatement();
 				}
-				final String sqlText = xmlElement.getText();
+				final String sqlText = element.getText();
 				final String[] sqlArr = StringUtils.split(sqlText,
-						StringUtils.text(xmlElement.attributeValue("delimiter"), ";"));
+						StringUtils.text(element.attributeValue("delimiter"), ";"));
 				if (sqlArr != null && sqlArr.length > 0) {
 					try {
 						final long l = System.currentTimeMillis();
@@ -96,15 +96,15 @@ public abstract class DbCreator {
 						}
 						if (callback != null) {
 							callback.execute(sqlText, System.currentTimeMillis() - l, null,
-									xmlElement.elementText("description"));
+									element.elementText("description"));
 						}
-						xmlElement.addAttribute(stateAttri, "update");
+						element.addAttribute(stateAttri, "update");
 					} catch (final SQLException e) {
 						if (callback != null) {
-							callback.execute(sqlText, 0, e, xmlElement.elementText("description"));
+							callback.execute(sqlText, 0, e, element.elementText("description"));
 						}
-						xmlElement.addAttribute(stateAttri, SQLSyntaxErrorException.class
-								.isAssignableFrom(e.getClass()) ? "ignore" : "exception");
+						element.addAttribute(stateAttri, SQLSyntaxErrorException.class.isAssignableFrom(e
+								.getClass()) ? "ignore" : "exception");
 					}
 				}
 			}
