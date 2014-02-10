@@ -265,7 +265,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	protected class DbEntityAdapterEx extends DbEntityAdapter {
 		@SuppressWarnings("unchecked")
 		protected Collection<T> coll(final IParamsValue paramsValue) {
-			final AbstractParamsValue val = (AbstractParamsValue) paramsValue;
+			final AbstractParamsValue<?> val = (AbstractParamsValue<?>) paramsValue;
 			Collection<T> coll = (Collection<T>) val.getAttr("coll");
 			if (coll == null) {
 				val.setAttr("coll",
