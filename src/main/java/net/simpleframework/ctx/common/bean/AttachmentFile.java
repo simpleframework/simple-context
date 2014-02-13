@@ -58,11 +58,16 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 		return attachment;
 	}
 
-	public String getTopic() throws IOException {
+	public String getTopic() {
 		if (StringUtils.hasText(topic)) {
 			return topic;
 		}
-		return getAttachment().getName();
+		try {
+			return getAttachment().getName();
+		} catch (final IOException e) {
+			log.warn(e);
+			return e.getMessage();
+		}
 	}
 
 	public AttachmentFile setTopic(final String topic) {
