@@ -51,6 +51,21 @@ public abstract class PermissionEntity<T extends PermissionEntity<T>> implements
 	}
 
 	@Override
+	public int hashCode() {
+		final ID id = getId();
+		return id != null ? id.hashCode() : super.hashCode();
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		final ID id = getId();
+		if (id != null && obj instanceof PermissionEntity) {
+			return id.equals(((PermissionEntity<?>) obj).getId());
+		}
+		return super.equals(obj);
+	}
+
+	@Override
 	public String toString() {
 		final String txt = getText();
 		if (!StringUtils.hasText(txt)) {
