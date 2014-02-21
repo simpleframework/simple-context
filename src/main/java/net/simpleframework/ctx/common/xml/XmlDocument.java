@@ -40,6 +40,10 @@ public class XmlDocument extends ObjectEx {
 
 	protected Document document;
 
+	public XmlDocument(final Document document) {
+		this.document = document;
+	}
+
 	public XmlDocument(final Reader reader) {
 		try {
 			this.document = parse(reader == null ? null : new InputSource(reader));
