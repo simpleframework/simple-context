@@ -26,6 +26,7 @@ import net.simpleframework.common.th.RuntimeExceptionEx;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -134,6 +135,10 @@ public class XmlDocument extends ObjectEx {
 
 	@Override
 	public String toString() {
+		return toString(document);
+	}
+
+	static String toString(final Node node) {
 		try {
 			final TransformerFactory tf = TransformerFactory.newInstance();
 			tf.setAttribute("indent-number", new Integer(2));
@@ -145,7 +150,7 @@ public class XmlDocument extends ObjectEx {
 
 			final StringWriter sWriter = new StringWriter();
 			final StreamResult result = new StreamResult(sWriter);
-			final DOMSource source = new DOMSource(document);
+			final DOMSource source = new DOMSource(node);
 			trans.transform(source, result);
 			return sWriter.toString();
 		} catch (final Throwable e) {

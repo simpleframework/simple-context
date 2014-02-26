@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.coll.CollectionUtils.AbstractIterator;
+import net.simpleframework.common.object.ObjectEx;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
@@ -18,7 +19,7 @@ import org.w3c.dom.Text;
  * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
-public class XmlElement {
+public class XmlElement extends ObjectEx {
 	private final Element _element;
 
 	public XmlElement(final Element element) {
@@ -38,7 +39,7 @@ public class XmlElement {
 		return this;
 	}
 
-	public String getName() {
+	public String getTagName() {
 		return _element.getTagName();
 	}
 
@@ -183,5 +184,10 @@ public class XmlElement {
 				return attr == null ? null : new XmlAttri(attr);
 			}
 		};
+	}
+
+	@Override
+	public String toString() {
+		return XmlDocument.toString(getElement());
 	}
 }
