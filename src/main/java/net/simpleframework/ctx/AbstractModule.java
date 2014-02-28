@@ -31,7 +31,8 @@ public abstract class AbstractModule<T extends AbstractModule<T>> extends TextNa
 
 	@Override
 	public String getText() {
-		return StringUtils.text(super.getText(), getName());
+		final String txt = super.getText();
+		return StringUtils.hasText(txt) ? txt : getName();
 	}
 
 	public String getDescription() {
