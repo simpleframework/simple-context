@@ -132,13 +132,13 @@ public class XmlElement extends ObjectEx {
 
 			@Override
 			public boolean hasNext() {
+				node = null;
 				while (++i < length) {
 					if ((node = nl.item(i)) instanceof Element) {
 						if (elementName == null || elementName.equals(((Element) node).getTagName())) {
 							return true;
 						}
 					} else {
-						node = null;
 						continue;
 					}
 				}
