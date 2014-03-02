@@ -3,6 +3,7 @@ package net.simpleframework.ctx;
 import java.util.Map;
 
 import net.simpleframework.common.Version;
+import net.simpleframework.ctx.permission.IPermissionHandler;
 import net.simpleframework.ctx.script.IScriptEval;
 
 /**
@@ -56,4 +57,6 @@ public interface IApplicationContextBase {
 	 * @return
 	 */
 	Version getVersion();
+
+	IPermissionHandler getPermission();
 }

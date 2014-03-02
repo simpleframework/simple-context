@@ -47,6 +47,11 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 		}
 	}
 
+	@Override
+	public IPermissionHandler getPermission() {
+		return PermissionFactory.get();
+	}
+
 	protected abstract Class<? extends IPermissionHandler> getPagePermissionHandler();
 
 	protected void doScanResources(final String[] packageNames) throws Exception {

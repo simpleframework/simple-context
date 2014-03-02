@@ -1,5 +1,7 @@
 package net.simpleframework.ctx.permission;
 
+import net.simpleframework.common.ID;
+
 /**
  * Licensed under the Apache License, Version 2.0
  * 
@@ -39,6 +41,10 @@ public abstract class LoginUser {
 			this.user = user;
 		}
 
+		public ID getUserId() {
+			return user != null ? user.getId() : null;
+		}
+
 		public PermissionUser getUser() {
 			return user;
 		}
@@ -55,6 +61,11 @@ public abstract class LoginUser {
 		public LoginWrapper setIp(final String ip) {
 			this.ip = ip;
 			return this;
+		}
+
+		@Override
+		public String toString() {
+			return user != null ? user.toString() : super.toString();
 		}
 	}
 }

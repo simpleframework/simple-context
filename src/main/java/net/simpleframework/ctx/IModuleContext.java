@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import net.simpleframework.ctx.permission.IPermissionHandler;
 import net.simpleframework.ctx.script.IScriptEval;
 import net.simpleframework.ctx.settings.ContextSettings;
 import net.simpleframework.ctx.task.ITaskExecutor;
@@ -83,6 +84,8 @@ public interface IModuleContext {
 	 * @return
 	 */
 	Module getModule();
+
+	IPermissionHandler getPermission();
 
 	/**
 	 * 获取模块的功能列表

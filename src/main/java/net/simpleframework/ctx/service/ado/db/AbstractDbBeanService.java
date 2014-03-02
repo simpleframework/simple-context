@@ -400,7 +400,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 
 	protected ID getLoginId() {
 		final LoginWrapper lw = LoginUser.get();
-		return lw != null ? lw.getUser().getId() : null;
+		return lw != null ? lw.getUserId() : null;
 	}
 
 	private final IDbEntityListener CONTEXT_LISTENER = new DbEntityAdapterEx() {
