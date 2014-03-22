@@ -25,7 +25,6 @@ import net.simpleframework.ado.bean.IIdBeanAware;
 import net.simpleframework.ado.bean.ITreeBeanAware;
 import net.simpleframework.ado.db.DbManagerFactory;
 import net.simpleframework.ado.db.DbTableColumn;
-import net.simpleframework.ado.db.IDbDataQuery;
 import net.simpleframework.ado.db.IDbEntityManager;
 import net.simpleframework.ado.db.IDbManager;
 import net.simpleframework.ado.db.IDbQueryManager;
@@ -67,7 +66,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		return getEntityManager().queryForBean(new ExpressionValue(expr, params));
 	}
 
-	public IDbDataQuery<T> query(final String expr, final Object... params) {
+	public IDataQuery<T> query(final String expr, final Object... params) {
 		return getEntityManager().queryBeans(new ExpressionValue(expr, params));
 	}
 
@@ -107,7 +106,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	 * @return
 	 */
 	public List<Object> list(final String column, final String expr, final Object... params) {
-		final IDbDataQuery<Map<String, Object>> qs = getEntityManager().queryMapSet(
+		final IDataQuery<Map<String, Object>> qs = getEntityManager().queryMapSet(
 				new String[] { column }, new ExpressionValue(expr, params));
 		final ArrayList<Object> al = new ArrayList<Object>();
 		Map<String, Object> kv;

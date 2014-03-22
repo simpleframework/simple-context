@@ -1,6 +1,6 @@
 package net.simpleframework.ctx.permission;
 
-import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Map;
 
 import net.simpleframework.common.ID;
@@ -28,7 +28,7 @@ public interface IPermissionHandler extends IPermissionConst {
 	 * @param variables
 	 * @return
 	 */
-	Enumeration<ID> users(Object role, Map<String, Object> variables);
+	Iterator<ID> users(Object role, Map<String, Object> variables);
 
 	/**
 	 * 得到权限角色对象
@@ -45,5 +45,5 @@ public interface IPermissionHandler extends IPermissionConst {
 	 * @param variables
 	 * @return
 	 */
-	Enumeration<ID> roles(Object user, Map<String, Object> variables);
+	Iterator<ID> roles(Object user, Map<String, Object> variables);
 }
