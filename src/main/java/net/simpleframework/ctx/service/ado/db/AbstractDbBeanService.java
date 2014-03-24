@@ -236,7 +236,8 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		return types.length == 1 ? (Class<T>) types[0] : (Class<T>) types[1];
 	}
 
-	protected String getTablename(final Class<?> beanClass) {
+	@Override
+	public String getTablename(final Class<?> beanClass) {
 		return getEntityManager(beanClass).getEntityTable().getName();
 	}
 

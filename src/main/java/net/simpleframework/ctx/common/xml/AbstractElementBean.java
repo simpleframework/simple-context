@@ -220,6 +220,11 @@ public abstract class AbstractElementBean extends ObjectEx {
 		}
 	}
 
+	@Override
+	public AbstractElementBean clone() {
+		return BeanUtils.clone(this);
+	}
+
 	protected boolean isRemoveErrorAttribute() {
 		return false;
 	}

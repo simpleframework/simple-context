@@ -90,4 +90,6 @@ public interface IDbBeanService<T> extends IADOBeanService<T> {
 	 * @return
 	 */
 	IDbQueryManager getQueryManager();
+
+	String getTablename(Class<?> beanClass);
 }
