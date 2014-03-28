@@ -86,7 +86,7 @@ public abstract class DbCreator {
 				final String sqlText = element.getText();
 				final String[] sqlArr = StringUtils.split(sqlText,
 						StringUtils.text(element.attributeValue("delimiter"), ";"));
-				if (sqlArr != null && sqlArr.length > 0) {
+				if (sqlArr.length > 0) {
 					try {
 						final long l = System.currentTimeMillis();
 						for (final String sql : sqlArr) {
