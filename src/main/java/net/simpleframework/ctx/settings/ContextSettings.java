@@ -4,6 +4,7 @@ import java.io.File;
 
 import net.simpleframework.common.FileUtils;
 import net.simpleframework.common.object.ObjectEx;
+import net.simpleframework.common.th.NotImplementedException;
 import net.simpleframework.ctx.IApplicationContextBase;
 import net.simpleframework.ctx.permission.IPermissionConst;
 
@@ -72,6 +73,10 @@ public abstract class ContextSettings extends ObjectEx {
 	 */
 	public String getDefaultRole() {
 		return IPermissionConst.ROLE_ANONYMOUS;
+	}
+
+	public String getProperty(final String key) {
+		throw NotImplementedException.of(getClass(), "getProperty");
 	}
 
 	{

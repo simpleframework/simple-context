@@ -52,6 +52,7 @@ public class PropertiesContextSettings extends ContextSettings {
 		properties.setProperty(key, String.valueOf(value));
 	}
 
+	@Override
 	public String getProperty(final String key) {
 		return getProperty(key, null);
 	}
