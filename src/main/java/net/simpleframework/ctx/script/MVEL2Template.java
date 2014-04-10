@@ -2,6 +2,7 @@ package net.simpleframework.ctx.script;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import net.simpleframework.common.AlgorithmUtils;
@@ -34,12 +35,12 @@ public abstract class MVEL2Template {
 	}
 
 	public static String replace(final Map<String, Object> variables, final String expr,
-			final Map<String, String> namedTemplates) {
+			final INamedTemplate namedTemplates) {
 		final CompiledTemplate compiledTemplate = getCompiledTemplate(expr);
 		final SimpleTemplateRegistry registry = new SimpleTemplateRegistry();
 		if (namedTemplates != null) {
-			for (final Map.Entry<String, String> e : namedTemplates.entrySet()) {
-				registry.addNamedTemplate(e.getKey(), getCompiledTemplate(e.getValue()));
+			for (final String key : namedTemplates.keySet()) {
+				registry.addNamedTemplate(key, getCompiledTemplate(namedTemplates.get(key)));
 			}
 		}
 		return TemplateRuntime.execute(compiledTemplate, null, variables, registry).toString();
@@ -56,5 +57,23 @@ public abstract class MVEL2Template {
 		} catch (final IOException e) {
 			throw ScriptEvalException.of(e);
 		}
+	}
+
+	public static interface INamedTemplate {
+
+		/**
+		 * 获取所有模板名称
+		 * 
+		 * @return
+		 */
+		Set<String> keySet();
+
+		/**
+		 * 获取指定模板的内容
+		 * 
+		 * @param key
+		 * @return
+		 */
+		String get(String key);
 	}
 }
