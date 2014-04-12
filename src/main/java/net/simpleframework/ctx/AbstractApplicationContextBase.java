@@ -37,6 +37,7 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 
 		// 初始化资源
 		doScanResources(getScanPackageNames());
+
 		// 初始化应用程序
 		onApplicationInit();
 	}
