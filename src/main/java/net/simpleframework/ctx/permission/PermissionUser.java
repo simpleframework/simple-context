@@ -1,6 +1,7 @@
 package net.simpleframework.ctx.permission;
 
 import java.io.InputStream;
+import java.util.Date;
 import java.util.Map;
 
 import net.simpleframework.common.ID;
@@ -38,6 +39,10 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	}
 
 	public String getEmail() {
+		return null;
+	}
+
+	public Date getBirthday() {
 		return null;
 	}
 
