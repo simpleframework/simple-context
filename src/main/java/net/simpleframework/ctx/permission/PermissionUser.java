@@ -29,6 +29,22 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 		return this;
 	}
 
+	public String getEmail() {
+		return null;
+	}
+
+	public String getSex() {
+		return null;
+	}
+
+	public Date getBirthday() {
+		return null;
+	}
+
+	public String getDescription() {
+		return null;
+	}
+
 	public ID getOrgId() {
 		return orgId;
 	}
@@ -38,11 +54,7 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 		return this;
 	}
 
-	public String getEmail() {
-		return null;
-	}
-
-	public Date getBirthday() {
+	public String toOrgText() {
 		return null;
 	}
 
@@ -90,10 +102,6 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	 */
 	public ID getRoleId() {
 		throw NotImplementedException.of(getClass(), "getRoleId");
-	}
-
-	public String toOrgText() {
-		return null;
 	}
 
 	private static final long serialVersionUID = -7880069050882902556L;
