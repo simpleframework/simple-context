@@ -38,6 +38,8 @@ import net.simpleframework.common.ID;
 import net.simpleframework.common.coll.ArrayUtils;
 import net.simpleframework.common.object.ObjectFactory;
 import net.simpleframework.common.th.NotImplementedException;
+import net.simpleframework.ctx.IModuleContext;
+import net.simpleframework.ctx.ModuleException;
 import net.simpleframework.ctx.permission.LoginUser;
 import net.simpleframework.ctx.permission.LoginUser.LoginWrapper;
 import net.simpleframework.ctx.service.AbstractBaseService;
@@ -51,6 +53,16 @@ import net.simpleframework.ctx.service.ado.IADOTreeBeanServiceAware;
  */
 public abstract class AbstractDbBeanService<T> extends AbstractBaseService implements
 		IDbBeanService<T> {
+
+	@Override
+	public IModuleContext getModuleContext() {
+		final IModuleContext context = super.getModuleContext();
+		if (context == null) {
+			throw ModuleException.of($m("AbstractDbBeanService.4"));
+		}
+		return context;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public T createBean() {
@@ -257,7 +269,11 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	public IDbEntityManager<T> getEntityManager() {
 		@SuppressWarnings("unchecked")
 		final Class<T> beanClass = (Class<T>) getBeanClass();
-		return getEntityManager(beanClass);
+		final IDbEntityManager<T> mgr = getEntityManager(beanClass);
+		if (mgr == null) {
+			throw ModuleException.of($m("AbstractDbBeanService.3"));
+		}
+		return mgr;
 	}
 
 	protected Map<String, Integer> COUNT_STATS = new ConcurrentHashMap<String, Integer>();
