@@ -29,7 +29,7 @@ public abstract class TransactionUtils {
 			return;
 		}
 		boolean mark = false;
-		for (final Method method : oClass.getMethods()) {
+		for (final Method method : oClass.getDeclaredMethods()) {
 			final Transaction trans = method.getAnnotation(Transaction.class);
 			if (trans != null) {
 				mark = true;
