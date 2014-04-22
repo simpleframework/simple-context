@@ -20,6 +20,7 @@ import net.simpleframework.ado.IADOListener;
 import net.simpleframework.ado.IADOManagerFactoryAware;
 import net.simpleframework.ado.IParamsValue;
 import net.simpleframework.ado.IParamsValue.AbstractParamsValue;
+import net.simpleframework.ado.bean.AbstractIdBean;
 import net.simpleframework.ado.bean.IDomainBeanAware;
 import net.simpleframework.ado.bean.IIdBeanAware;
 import net.simpleframework.ado.bean.ITreeBeanAware;
@@ -417,6 +418,10 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	protected ID getLoginId() {
 		final LoginWrapper lw = LoginUser.get();
 		return lw != null ? lw.getUserId() : null;
+	}
+
+	protected Object getParam(final Object bean) {
+		return bean instanceof AbstractIdBean ? ((AbstractIdBean) bean).getId() : bean;
 	}
 
 	private final IDbEntityListener CONTEXT_LISTENER = new DbEntityAdapterEx() {
