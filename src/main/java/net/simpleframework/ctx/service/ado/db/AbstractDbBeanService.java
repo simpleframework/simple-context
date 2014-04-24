@@ -76,9 +76,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	}
 
 	public T getBean(final String expr, final Object... params) {
-		return query(expr, params).next();
-		// return getEntityManager().queryForBean(new ExpressionValue(expr,
-		// params));
+		return getEntityManager().queryForBean(new ExpressionValue(expr, params));
 	}
 
 	public IDataQuery<T> query(final String expr, final Object... params) {
