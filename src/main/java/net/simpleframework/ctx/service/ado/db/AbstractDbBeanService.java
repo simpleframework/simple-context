@@ -35,6 +35,7 @@ import net.simpleframework.ado.db.event.DbEntityAdapter;
 import net.simpleframework.ado.db.event.IDbEntityListener;
 import net.simpleframework.ado.query.DataQueryUtils;
 import net.simpleframework.ado.query.IDataQuery;
+import net.simpleframework.common.BeanUtils;
 import net.simpleframework.common.ID;
 import net.simpleframework.common.coll.ArrayUtils;
 import net.simpleframework.common.object.ObjectFactory;
@@ -44,7 +45,7 @@ import net.simpleframework.ctx.ModuleException;
 import net.simpleframework.ctx.permission.LoginUser;
 import net.simpleframework.ctx.permission.LoginUser.LoginWrapper;
 import net.simpleframework.ctx.service.AbstractBaseService;
-import net.simpleframework.ctx.service.ado.IADOTreeBeanServiceAware;
+import net.simpleframework.ctx.service.ado.ITreeBeanServiceAware;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -87,10 +88,19 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	public IDataQuery<T> queryByParams(final FilterItems params, final ColumnData... orderColumns) {
 		final ExpressionValue eVal = toExpressionValue(params);
 		final StringBuilder sql = new StringBuilder(eVal.getExpression());
-		if (!ArrayUtils.isEmpty(orderColumns)) {
+		sql.append(toOrderSQL(orderColumns));
+		eVal.setExpression(sql.toString());
+		return getEntityManager().queryBeans(eVal);
+	}
+
+	protected String toOrderSQL(final ColumnData... orderColumns) {
+		final ColumnData[] _orderColumns = ArrayUtils.isEmpty(orderColumns) ? getDefaultOrderColumns()
+				: orderColumns;
+		final StringBuilder sql = new StringBuilder();
+		if (!ArrayUtils.isEmpty(_orderColumns)) {
 			sql.append(" order by ");
 			int i = 0;
-			for (final ColumnData col : orderColumns) {
+			for (final ColumnData col : _orderColumns) {
 				if (i++ > 0) {
 					sql.append(", ");
 				}
@@ -101,13 +111,18 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 				}
 			}
 		}
-		eVal.setExpression(sql.toString());
-		return getEntityManager().queryBeans(eVal);
+		return sql.toString();
+	}
+
+	protected final ColumnData[] DEFAULT_ORDER = new ColumnData[] { ColumnData.DESC("createdate") };
+
+	protected ColumnData[] getDefaultOrderColumns() {
+		return DEFAULT_ORDER;
 	}
 
 	@Override
 	public IDataQuery<T> queryAll() {
-		return query("1=1");
+		return query("1=1" + toOrderSQL());
 	}
 
 	/**
@@ -298,7 +313,71 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		}
 	}
 
-	/* ITreeBeanServiceAware */
+	/*------------------------------------utils--------------------------------------*/
+
+	protected ExpressionValue toExpressionValue(final FilterItems params) {
+		if (params == null || params.size() == 0) {
+			return null;
+		}
+		final StringBuilder sql = new StringBuilder();
+		final ArrayList<Object> al = new ArrayList<Object>();
+		int i = 0;
+		for (final FilterItem item : params) {
+			final ExpressionValue ev = ExpressionValue.toExpressionValue(item);
+			if (ev != null) {
+				if (i++ > 0) {
+					sql.append(" ").append(item.getOpe()).append(" ");
+				}
+				sql.append(ev.getExpression());
+				final Object[] vals = ev.getValues();
+				if (vals != null) {
+					for (final Object val : vals) {
+						al.add(getIdParam(val));
+					}
+				}
+			}
+		}
+		return new ExpressionValue(sql.toString(), al.toArray());
+	}
+
+	protected ID getLoginId() {
+		final LoginWrapper lw = LoginUser.get();
+		return lw != null ? lw.getUserId() : null;
+	}
+
+	protected Object getIdParam(final Object bean) {
+		if (bean instanceof String || bean instanceof ID) {
+			return bean;
+		} else if (bean instanceof IIdBeanAware) {
+			return ((AbstractIdBean) bean).getId();
+		} else {
+			final Object id = BeanUtils.getProperty(bean, "id");
+			return id != null ? id : bean;
+		}
+	}
+
+	private final IDbEntityListener CONTEXT_LISTENER = new DbEntityAdapterEx() {
+		@Override
+		public void onBeforeInsert(final IDbEntityManager<?> manager, final Object[] beans) {
+			super.onBeforeInsert(manager, beans);
+			Integer _domain = null;
+			for (final Object t : beans) {
+				IDomainBeanAware bean;
+				if (t instanceof IDomainBeanAware && (bean = (IDomainBeanAware) t).getDomain() == 0) {
+					if (_domain == null) {
+						_domain = getModuleContext().getDomain();
+					}
+					bean.setDomain(_domain);
+				}
+			}
+		}
+	};
+
+	{
+		addListener(CONTEXT_LISTENER);
+	}
+
+	/*------------------------------ITreeBeanServiceAware--------------------------*/
 
 	public IDataQuery<T> queryChildren(final T parent, final ColumnData... orderColumns) {
 		final Class<?> beanClass = getBeanClass();
@@ -363,7 +442,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	 * @param node
 	 */
 	public void assertParentId(final T node) {
-		if (!(this instanceof IADOTreeBeanServiceAware)) {
+		if (!(this instanceof ITreeBeanServiceAware)) {
 			return;
 		}
 		if (!(node instanceof IIdBeanAware) || !(node instanceof ITreeBeanAware)) {
@@ -388,60 +467,12 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		}
 	}
 
-	/* utils */
+	/*------------------------------IUserBeanServiceAware--------------------------*/
 
-	protected ExpressionValue toExpressionValue(final FilterItems params) {
-		if (params == null || params.size() == 0) {
-			return null;
+	public IDataQuery<T> queryByUser(final Object userId) {
+		if (userId == null) {
+			return DataQueryUtils.nullQuery();
 		}
-		final StringBuilder sql = new StringBuilder();
-		final ArrayList<Object> al = new ArrayList<Object>();
-		int i = 0;
-		for (final FilterItem item : params) {
-			final ExpressionValue ev = ExpressionValue.toExpressionValue(item);
-			if (ev != null) {
-				if (i++ > 0) {
-					sql.append(" ").append(item.getOpe()).append(" ");
-				}
-				sql.append(ev.getExpression());
-				final Object[] vals = ev.getValues();
-				if (vals != null) {
-					for (final Object val : vals) {
-						al.add(val);
-					}
-				}
-			}
-		}
-		return new ExpressionValue(sql.toString(), al.toArray());
-	}
-
-	protected ID getLoginId() {
-		final LoginWrapper lw = LoginUser.get();
-		return lw != null ? lw.getUserId() : null;
-	}
-
-	protected Object getParam(final Object bean) {
-		return bean instanceof AbstractIdBean ? ((AbstractIdBean) bean).getId() : bean;
-	}
-
-	private final IDbEntityListener CONTEXT_LISTENER = new DbEntityAdapterEx() {
-		@Override
-		public void onBeforeInsert(final IDbEntityManager<?> manager, final Object[] beans) {
-			super.onBeforeInsert(manager, beans);
-			Integer _domain = null;
-			for (final Object t : beans) {
-				IDomainBeanAware bean;
-				if (t instanceof IDomainBeanAware && (bean = (IDomainBeanAware) t).getDomain() == 0) {
-					if (_domain == null) {
-						_domain = getModuleContext().getDomain();
-					}
-					bean.setDomain(_domain);
-				}
-			}
-		}
-	};
-
-	{
-		addListener(CONTEXT_LISTENER);
+		return queryByParams(FilterItems.of().addEqual("userid", userId));
 	}
 }
