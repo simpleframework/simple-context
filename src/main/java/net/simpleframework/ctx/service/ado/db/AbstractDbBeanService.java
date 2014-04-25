@@ -473,6 +473,6 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		if (userId == null) {
 			return DataQueryUtils.nullQuery();
 		}
-		return queryByParams(FilterItems.of().addEqual("userid", userId));
+		return queryByParams(FilterItems.of("userid", userId));
 	}
 }
