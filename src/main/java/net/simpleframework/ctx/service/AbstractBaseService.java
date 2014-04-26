@@ -26,7 +26,7 @@ public abstract class AbstractBaseService extends ObjectEx implements IBaseServi
 		if (_context == null && this instanceof IModuleContextAware) {
 			for (final Class<?> iClass : ClassUtils.getAllInterfaces(getClass())) {
 				if (IModuleContextAware.class.isAssignableFrom(iClass)) {
-					for (final Field field : iClass.getDeclaredFields()) {
+					for (final Field field : iClass.getFields()) {
 						if (IModuleContext.class.isAssignableFrom(field.getType())) {
 							field.setAccessible(true);
 							try {
