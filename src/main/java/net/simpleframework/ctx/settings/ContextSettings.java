@@ -1,6 +1,7 @@
 package net.simpleframework.ctx.settings;
 
 import java.io.File;
+import java.lang.management.ManagementFactory;
 
 import net.simpleframework.common.FileUtils;
 import net.simpleframework.common.object.ObjectEx;
@@ -17,6 +18,17 @@ import net.simpleframework.ctx.permission.IPermissionConst;
 public abstract class ContextSettings extends ObjectEx {
 
 	public void onInit(final IApplicationContextBase context) throws Exception {
+	}
+
+	private static String pid;
+	static {
+		final String name = ManagementFactory.getRuntimeMXBean().getName();
+		pid = name.substring(0, name.indexOf("@"));
+	}
+
+	public String getContextNo() {
+		// 获取服务编号
+		return pid;
 	}
 
 	/**

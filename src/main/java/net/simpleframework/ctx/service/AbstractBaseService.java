@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 import net.simpleframework.common.ClassUtils;
 import net.simpleframework.common.object.ObjectEx;
+import net.simpleframework.ctx.IApplicationContext;
 import net.simpleframework.ctx.IModuleContext;
 import net.simpleframework.ctx.IModuleContextAware;
 
@@ -44,5 +45,9 @@ public abstract class AbstractBaseService extends ObjectEx implements IBaseServi
 	@Override
 	public void setModuleContext(final IModuleContext context) {
 		_context = context;
+	}
+
+	protected IApplicationContext getApplicationContext() {
+		return getModuleContext().getApplicationContext();
 	}
 }
