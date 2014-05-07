@@ -316,8 +316,11 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	/*------------------------------------utils--------------------------------------*/
 
 	protected ExpressionValue toExpressionValue(final FilterItems params) {
-		if (params == null || params.size() == 0) {
+		if (params == null) {
 			return null;
+		}
+		if (params.size() == 0) {
+			return new ExpressionValue("1=1");
 		}
 		final StringBuilder sql = new StringBuilder();
 		final ArrayList<Object> al = new ArrayList<Object>();
