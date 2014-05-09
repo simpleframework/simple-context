@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import net.simpleframework.common.AlgorithmUtils;
+import net.simpleframework.common.FileUtils;
 import net.simpleframework.common.ID;
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.object.DescriptionObject;
@@ -76,6 +77,12 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 	}
 
 	public String getType() {
+		if (type == null) {
+			final String ext = FileUtils.getFilenameExtension(getTopic());
+			if (StringUtils.hasText(ext)) {
+				type = ext.toLowerCase();
+			}
+		}
 		return type;
 	}
 
