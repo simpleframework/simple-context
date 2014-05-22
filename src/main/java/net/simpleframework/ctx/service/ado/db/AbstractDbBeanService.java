@@ -444,7 +444,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	 * 
 	 * @param node
 	 */
-	public void assertParentId(final T node) {
+	private void assertParentId(final T node) {
 		if (!(this instanceof ITreeBeanServiceAware)) {
 			return;
 		}
@@ -467,6 +467,25 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 				throw ADOException.of($m("AbstractDbBeanService.1"));
 			}
 			p = mgr.executeQuery(columns, new ExpressionValue("id=?", p.get("parentId")));
+		}
+	}
+
+	@Override
+	public void onInit() throws Exception {
+		super.onInit();
+
+		if (this instanceof ITreeBeanServiceAware) {
+			addListener(new DbEntityAdapterEx() {
+				@SuppressWarnings("unchecked")
+				@Override
+				public void onBeforeUpdate(final IDbEntityManager<?> manager, final String[] columns,
+						final Object[] beans) {
+					super.onBeforeUpdate(manager, columns, beans);
+					for (final Object o : beans) {
+						assertParentId((T) o);
+					}
+				}
+			});
 		}
 	}
 

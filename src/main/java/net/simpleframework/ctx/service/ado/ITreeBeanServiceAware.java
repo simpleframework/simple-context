@@ -39,6 +39,4 @@ public interface ITreeBeanServiceAware<T extends ITreeBeanAware> {
 	 * @return
 	 */
 	int getLevel(T node);
-
-	void assertParentId(T node);
 }
