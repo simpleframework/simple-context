@@ -84,7 +84,7 @@ public class ModuleContextFactory {
 						try {
 							ctx.onCreated(application);
 						} catch (final Exception e) {
-							throw ModuleException.of(e);
+							throw ModuleContextException.of(e);
 						}
 						registered(ctx);
 					}
@@ -99,7 +99,7 @@ public class ModuleContextFactory {
 			try {
 				ctx.onInit(application);
 			} catch (final Exception e) {
-				throw ModuleException.of(e);
+				throw ModuleContextException.of(e);
 			}
 			final Module module = ctx.getModule();
 			System.out.println($m("ModuleContextFactory.1", module.getText(), module.getName(),
@@ -115,7 +115,7 @@ public class ModuleContextFactory {
 					}
 				} catch (final Exception e) {
 					log.warn(e);
-					throw ModuleException.of(e);
+					throw ModuleContextException.of(e);
 				}
 			}
 		});

@@ -8,18 +8,18 @@ import net.simpleframework.common.th.RuntimeExceptionEx;
  * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
-public class ModuleException extends RuntimeExceptionEx {
+public class ModuleContextException extends RuntimeExceptionEx {
 
-	public ModuleException(final String msg, final Throwable cause) {
+	public ModuleContextException(final String msg, final Throwable cause) {
 		super(msg, cause);
 	}
 
-	public static ModuleException of(final String msg) {
-		return _of(ModuleException.class, msg);
+	public static ModuleContextException of(final String msg) {
+		return _of(ModuleContextException.class, msg);
 	}
 
-	public static ModuleException of(final Throwable throwable) {
-		return _of(ModuleException.class, null, throwable);
+	public static ModuleContextException of(final Throwable throwable) {
+		return _of(ModuleContextException.class, null, throwable);
 	}
 
 	private static final long serialVersionUID = 4778304178451841308L;

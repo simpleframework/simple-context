@@ -41,7 +41,7 @@ import net.simpleframework.common.coll.ArrayUtils;
 import net.simpleframework.common.object.ObjectFactory;
 import net.simpleframework.common.th.NotImplementedException;
 import net.simpleframework.ctx.IModuleContext;
-import net.simpleframework.ctx.ModuleException;
+import net.simpleframework.ctx.ModuleContextException;
 import net.simpleframework.ctx.permission.LoginUser;
 import net.simpleframework.ctx.permission.LoginUser.LoginWrapper;
 import net.simpleframework.ctx.service.AbstractBaseService;
@@ -60,7 +60,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	public IModuleContext getModuleContext() {
 		final IModuleContext context = super.getModuleContext();
 		if (context == null) {
-			throw ModuleException.of($m("AbstractDbBeanService.4"));
+			throw ModuleContextException.of($m("AbstractDbBeanService.4"));
 		}
 		return context;
 	}
@@ -287,7 +287,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		final Class<T> beanClass = (Class<T>) getBeanClass();
 		final IDbEntityManager<T> mgr = getEntityManager(beanClass);
 		if (mgr == null) {
-			throw ModuleException.of($m("AbstractDbBeanService.3"));
+			throw ModuleContextException.of($m("AbstractDbBeanService.3"));
 		}
 		return mgr;
 	}
