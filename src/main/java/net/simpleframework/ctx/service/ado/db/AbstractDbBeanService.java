@@ -115,6 +115,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	}
 
 	protected final ColumnData[] DEFAULT_ORDER = new ColumnData[] { ColumnData.DESC("createdate") };
+	protected final ColumnData[] ORDER_OORDER = new ColumnData[] { ColumnData.DESC("oorder") };
 
 	protected ColumnData[] getDefaultOrderColumns() {
 		return DEFAULT_ORDER;
