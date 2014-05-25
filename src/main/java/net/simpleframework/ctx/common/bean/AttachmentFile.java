@@ -28,7 +28,10 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 	private String topic;
 
 	/* 类型 */
-	private String type;
+	private int type;
+
+	/* 扩展名 */
+	private String ext;
 
 	/* 上传时间 */
 	private Date createDate;
@@ -76,18 +79,24 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 		return this;
 	}
 
-	public String getType() {
-		if (type == null) {
-			final String ext = FileUtils.getFilenameExtension(getTopic());
-			if (StringUtils.hasText(ext)) {
-				type = ext.toLowerCase();
-			}
-		}
+	public int getType() {
 		return type;
 	}
 
-	public AttachmentFile setType(final String type) {
+	public AttachmentFile setType(final int type) {
 		this.type = type;
+		return this;
+	}
+
+	public String getExt() {
+		if (ext == null) {
+			ext = FileUtils.getFilenameExtension(getTopic()).toLowerCase();
+		}
+		return ext;
+	}
+
+	public AttachmentFile setExt(final String ext) {
+		this.ext = ext;
 		return this;
 	}
 
@@ -151,6 +160,15 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 	public AttachmentFile setSize(final long size) {
 		this.size = size;
 		return this;
+	}
+
+	public String toFilename() {
+		String topic = getTopic();
+		final String ext = "." + getExt();
+		if (!topic.toLowerCase().endsWith(ext)) {
+			topic += ext;
+		}
+		return topic;
 	}
 
 	private static final long serialVersionUID = -7838133087121815920L;
