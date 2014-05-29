@@ -98,7 +98,7 @@ public abstract class ContextUtils {
 							throws Exception {
 						final IDataImportHandler iHandler = getInstance(loadClass(filepath),
 								IDataImportHandler.class);
-						if (iHandler != null) {
+						if (iHandler != null && iHandler.isEnable()) {
 							iHandler.doImport(application);
 						}
 					}

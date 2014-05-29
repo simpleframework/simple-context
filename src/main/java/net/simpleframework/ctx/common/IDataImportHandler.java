@@ -16,4 +16,6 @@ public interface IDataImportHandler {
 	 * @throws Exception
 	 */
 	void doImport(IApplicationContext application) throws Exception;
+
+	boolean isEnable();
 }
