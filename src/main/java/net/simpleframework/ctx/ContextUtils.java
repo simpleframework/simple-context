@@ -10,7 +10,6 @@ import net.simpleframework.common.object.ObjectFactory.IObjectCreatorListener;
 import net.simpleframework.common.object.ObjectInstanceException;
 import net.simpleframework.common.object.ProxyUtils;
 import net.simpleframework.common.th.ClassException;
-import net.simpleframework.ctx.common.ConsoleThread;
 import net.simpleframework.ctx.common.IDataImportHandler;
 import net.simpleframework.ctx.common.db.DbUtils;
 import net.simpleframework.ctx.service.IBaseService;
@@ -26,8 +25,7 @@ public abstract class ContextUtils {
 
 	public static void doInit(final IApplicationContext application) throws Exception {
 		// 启动控制台线程
-		ConsoleThread.doInit();
-
+		// ConsoleThread.doInit();
 		// 定义代理对象
 		ObjectFactory.get().set(new IObjectCreator() {
 			@Override
