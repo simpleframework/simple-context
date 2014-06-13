@@ -64,7 +64,9 @@ public abstract class DbUtils {
 										.append("/").append(SCRIPT_FILENAME);
 								final String target = settings.getHomeFileDir().getAbsoluteFile()
 										+ sb.toString().replace("/", File.separator);
-								FileUtils.unzip(inputStream, target, false);
+								if (!new File(target).exists()) {
+									FileUtils.unzip(inputStream, target, false);
+								}
 								sqlFiles.add(target);
 							}
 						}
