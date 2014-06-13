@@ -43,7 +43,7 @@ public abstract class DbCreator {
 		try {
 			System.out.println("loading: " + filepath);
 			document = new SqlScriptDocument(new File(filepath));
-		} catch (final FileNotFoundException e) {
+		} catch (final Exception e) {
 			log.warn(e);
 			return;
 		}
