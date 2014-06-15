@@ -58,6 +58,8 @@ public interface IDbBeanService<T> extends IADOBeanService<T> {
 
 	int max(String column);
 
+	float avg(String column);
+
 	/**
 	 * @param bean1
 	 * @param bean2

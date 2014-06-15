@@ -9,6 +9,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import net.simpleframework.common.NumberUtils;
 import net.simpleframework.common.object.ObjectEx;
 
 /**
@@ -58,7 +59,7 @@ public class TaskExecutor extends ObjectEx implements ITaskExecutor {
 
 	@Override
 	public void addScheduledTask(final long period, final ExecutorRunnable task) {
-		addScheduledTask(0, period, task);
+		addScheduledTask(NumberUtils.randomInt(0, 60 * 60), period, task);
 	}
 
 	@Override

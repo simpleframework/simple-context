@@ -200,6 +200,15 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		return max(column, "1=1");
 	}
 
+	public float avg(final String column, final String expr, final Object... params) {
+		return getEntityManager().avg(column, new ExpressionValue(expr, params));
+	}
+
+	@Override
+	public float avg(final String column) {
+		return avg(column, "1=1");
+	}
+
 	@Override
 	public Object exchange(final T bean1, final T bean2, final DbTableColumn order, final boolean up) {
 		return getEntityManager().exchange(bean1, bean2, order, up);
