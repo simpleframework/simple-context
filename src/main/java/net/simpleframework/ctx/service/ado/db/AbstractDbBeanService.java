@@ -30,7 +30,6 @@ import net.simpleframework.ado.db.IDbEntityManager;
 import net.simpleframework.ado.db.IDbManager;
 import net.simpleframework.ado.db.IDbQueryManager;
 import net.simpleframework.ado.db.common.ExpressionValue;
-import net.simpleframework.ado.db.common.SqlUtils;
 import net.simpleframework.ado.db.event.DbEntityAdapter;
 import net.simpleframework.ado.db.event.IDbEntityListener;
 import net.simpleframework.ado.query.DataQueryUtils;
@@ -224,7 +223,11 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		if (ids == null || ids.length == 0) {
 			return 0;
 		}
-		return deleteWith(SqlUtils.getIdsSQLParam("id", ids.length), ids);
+		int ret = 0;
+		for (final Object id : ids) {
+			ret += deleteWith("id=?", id);
+		}
+		return ret;
 	}
 
 	/**
