@@ -1,5 +1,8 @@
 package net.simpleframework.ctx.task;
 
+import java.util.Date;
+
+import net.simpleframework.common.Convert;
 import net.simpleframework.common.object.ObjectEx;
 
 /**
@@ -19,7 +22,12 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 	@Override
 	public void run() {
 		try {
+			final Date n = new Date();
+			final long l1 = n.getTime();
+			System.out.println("[" + Convert.toDateString(n, "yyyy-MM-dd HH:mm:ss") + "] - ["
+					+ getTaskname() + "] - task start.");
 			task();
+			System.out.println("[" + (System.currentTimeMillis() - l1) + "ms] - task end.");
 		} catch (final Throwable ex) {
 			log.warn(ex);
 		}
