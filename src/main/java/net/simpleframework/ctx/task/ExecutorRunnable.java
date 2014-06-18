@@ -24,10 +24,10 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 		try {
 			final Date n = new Date();
 			final long l1 = n.getTime();
-			System.out.println("[" + Convert.toDateString(n, "yyyy-MM-dd HH:mm:ss") + "] - ["
-					+ getTaskname() + "] - task start.");
 			task();
-			System.out.println("[" + (System.currentTimeMillis() - l1) + "ms] - task end.");
+			System.out.println("=============================================== "
+					+ Convert.toDateString(n, "yyyy-MM-dd HH:mm:ss") + " ["
+					+ (System.currentTimeMillis() - l1) + "ms] - Task: \"" + getTaskname() + "\".");
 		} catch (final Throwable ex) {
 			log.warn(ex);
 		}
