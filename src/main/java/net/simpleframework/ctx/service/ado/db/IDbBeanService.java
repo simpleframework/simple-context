@@ -54,11 +54,11 @@ public interface IDbBeanService<T> extends IADOBeanService<T> {
 
 	int count();
 
-	int sum(String column);
+	Number sum(String column);
 
-	int max(String column);
+	Number max(String column);
 
-	float avg(String column);
+	Number avg(String column);
 
 	/**
 	 * @param bean1

@@ -173,12 +173,12 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	 * @param params
 	 * @return
 	 */
-	public int sum(final String column, final String expr, final Object... params) {
+	public Number sum(final String column, final String expr, final Object... params) {
 		return getEntityManager().sum(column, new ExpressionValue(expr, params));
 	}
 
 	@Override
-	public int sum(final String column) {
+	public Number sum(final String column) {
 		return sum(column, "1=1");
 	}
 
@@ -190,21 +190,21 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	 * @param params
 	 * @return
 	 */
-	public int max(final String column, final String expr, final Object... params) {
+	public Number max(final String column, final String expr, final Object... params) {
 		return getEntityManager().max(column, new ExpressionValue(expr, params));
 	}
 
 	@Override
-	public int max(final String column) {
+	public Number max(final String column) {
 		return max(column, "1=1");
 	}
 
-	public float avg(final String column, final String expr, final Object... params) {
+	public Number avg(final String column, final String expr, final Object... params) {
 		return getEntityManager().avg(column, new ExpressionValue(expr, params));
 	}
 
 	@Override
-	public float avg(final String column) {
+	public Number avg(final String column) {
 		return avg(column, "1=1");
 	}
 
