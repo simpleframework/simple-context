@@ -15,8 +15,30 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 
 	protected abstract void task() throws Exception;
 
-	protected String getTaskname() {
-		return getClass().getName();
+	private String taskname, tasktext = getClass().getName();
+
+	public ExecutorRunnable() {
+	}
+
+	public ExecutorRunnable(final String taskname, final String tasktext) {
+		this.taskname = taskname;
+		this.tasktext = tasktext;
+	}
+
+	public String getTaskname() {
+		return taskname;
+	}
+
+	public void setTaskname(final String taskname) {
+		this.taskname = taskname;
+	}
+
+	public String getTasktext() {
+		return tasktext;
+	}
+
+	public void setTasktext(final String tasktext) {
+		this.tasktext = tasktext;
 	}
 
 	@Override
@@ -27,7 +49,7 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 			task();
 			System.out.println("=============================================================");
 			System.out.println("= " + Convert.toDateString(n, "yyyy-MM-dd HH:mm:ss") + " ["
-					+ (System.currentTimeMillis() - l1) + "ms] - Task: \"" + getTaskname() + "\".");
+					+ (System.currentTimeMillis() - l1) + "ms] - Task: \"" + getTasktext() + "\".");
 			System.out.println("=============================================================");
 		} catch (final Throwable ex) {
 			log.warn(ex);
