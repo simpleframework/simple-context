@@ -59,7 +59,7 @@ public class TaskExecutor extends ObjectEx implements ITaskExecutor {
 
 	@Override
 	public void addScheduledTask(final long period, final ExecutorRunnable task) {
-		addScheduledTask(NumberUtils.randomInt(0, 60 * 60 * 2), period, task);
+		addScheduledTask(NumberUtils.randomInt(0, 60 * 30), period, task);
 	}
 
 	@Override
