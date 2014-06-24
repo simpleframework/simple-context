@@ -53,8 +53,8 @@ public class TaskExecutor extends ObjectEx implements ITaskExecutor {
 		if (coll == null) {
 			scheduledTasksCache.put(taskname, coll = new ArrayList<ScheduledFuture<?>>());
 		}
-		coll.add(getExecutorService().scheduleAtFixedRate(task, initialDelay, period,
-				TimeUnit.SECONDS));
+		coll.add(getExecutorService().scheduleAtFixedRate(task.setPeriod(period), initialDelay,
+				period, TimeUnit.SECONDS));
 	}
 
 	@Override

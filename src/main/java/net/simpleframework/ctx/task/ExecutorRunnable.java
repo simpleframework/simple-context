@@ -1,5 +1,6 @@
 package net.simpleframework.ctx.task;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import net.simpleframework.common.Convert;
@@ -15,6 +16,8 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 
 	protected abstract void task() throws Exception;
 
+	private long period;
+
 	private String taskname, tasktext = getClass().getName();
 
 	public ExecutorRunnable() {
@@ -29,16 +32,27 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 		return taskname;
 	}
 
-	public void setTaskname(final String taskname) {
+	public ExecutorRunnable setTaskname(final String taskname) {
 		this.taskname = taskname;
+		return this;
 	}
 
 	public String getTasktext() {
 		return tasktext;
 	}
 
-	public void setTasktext(final String tasktext) {
+	public ExecutorRunnable setTasktext(final String tasktext) {
 		this.tasktext = tasktext;
+		return this;
+	}
+
+	public long getPeriod() {
+		return period;
+	}
+
+	public ExecutorRunnable setPeriod(final long period) {
+		this.period = period;
+		return this;
 	}
 
 	@Override
@@ -47,11 +61,18 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 			final Date n = new Date();
 			final long l1 = n.getTime();
 			task();
-			System.out.println("=============================================================");
+			System.out.println("====================================================================");
 			System.out.println("= " + Convert.toDateString(n, "yyyy-MM-dd HH:mm:ss") + " ["
-					+ (System.currentTimeMillis() - l1) + "ms] - Task: \"[" + getTaskname() + "]"
+					+ (System.currentTimeMillis() - l1) + "ms] - Task: \"[" + getTaskname() + "] "
 					+ getTasktext() + "\".");
-			System.out.println("=============================================================");
+			final long period = getPeriod();
+			if (period > 0) {
+				final Calendar cal = Calendar.getInstance();
+				cal.add(Calendar.SECOND, Long.valueOf(period).intValue());
+				System.out.println("= " + Convert.toDateString(cal.getTime(), "yyyy-MM-dd HH:mm:ss")
+						+ " [" + period + "s] - run again.");
+			}
+			System.out.println("====================================================================");
 		} catch (final Throwable ex) {
 			log.warn(ex);
 		}
