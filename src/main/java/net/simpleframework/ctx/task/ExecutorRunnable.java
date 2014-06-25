@@ -18,7 +18,7 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 
 	private long period;
 
-	private String taskname, tasktext = getClass().getName();
+	private String taskname = getClass().getName(), tasktext;
 
 	public ExecutorRunnable() {
 	}
