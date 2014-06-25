@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import net.simpleframework.common.Convert;
+import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.object.ObjectEx;
 
 /**
@@ -18,7 +19,7 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 
 	private long period;
 
-	private String taskname = getClass().getName(), tasktext;
+	private String taskname, tasktext;
 
 	public ExecutorRunnable() {
 	}
@@ -29,6 +30,9 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 	}
 
 	public String getTaskname() {
+		if (taskname == null) {
+			taskname = getClass().getName();
+		}
 		return taskname;
 	}
 
@@ -63,8 +67,8 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 			task();
 			System.out.println("====================================================================");
 			System.out.println("= " + Convert.toDateString(n, "yyyy-MM-dd HH:mm:ss") + " ["
-					+ (System.currentTimeMillis() - l1) + "ms] - Task: \"[" + getTaskname() + "] "
-					+ getTasktext() + "\".");
+					+ (System.currentTimeMillis() - l1) + "ms] - Task: [" + getTaskname() + "] "
+					+ StringUtils.blank(getTasktext()));
 			final long period = getPeriod();
 			if (period > 0) {
 				final Calendar cal = Calendar.getInstance();
