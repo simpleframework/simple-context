@@ -7,6 +7,7 @@ import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.ctx.IApplicationContext;
 import net.simpleframework.ctx.IModuleContext;
 import net.simpleframework.ctx.IModuleContextAware;
+import net.simpleframework.ctx.task.ITaskExecutor;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -49,5 +50,9 @@ public abstract class AbstractBaseService extends ObjectEx implements IBaseServi
 
 	protected IApplicationContext getApplicationContext() {
 		return getModuleContext().getApplicationContext();
+	}
+
+	protected ITaskExecutor getTaskExecutor() {
+		return getModuleContext().getTaskExecutor();
 	}
 }
