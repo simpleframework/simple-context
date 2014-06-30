@@ -59,7 +59,7 @@ public interface IConsoleCommand {
 		@Override
 		public boolean execute(final String command) {
 			final String[] cmds = StringUtils.split(command, " ");
-			if (cmds[0].equalsIgnoreCase("db")) {
+			if (cmds[0].equalsIgnoreCase("db") && cmds.length > 1) {
 				// final Map<Class<?>, IDbEntityManager> cache =
 				// DataManagerFactory.entityManagerCache;
 				// final PrintStream stream =
