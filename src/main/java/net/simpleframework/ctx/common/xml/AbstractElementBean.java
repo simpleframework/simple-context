@@ -228,8 +228,4 @@ public abstract class AbstractElementBean extends ObjectEx {
 	protected boolean isRemoveErrorAttribute() {
 		return false;
 	}
-
-	{
-		enableAttributes();
-	}
 }

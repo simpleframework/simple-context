@@ -55,7 +55,6 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 		this.attachment = attachment;
 		this.md5 = StringUtils.hasText(md5) ? md5 : AlgorithmUtils.md5Hex(new FileInputStream(
 				attachment));
-		enableAttributes();
 	}
 
 	public File getAttachment() throws IOException {

@@ -90,8 +90,4 @@ public abstract class ContextSettings extends ObjectEx {
 	public String getProperty(final String key) {
 		throw NotImplementedException.of(getClass(), "getProperty");
 	}
-
-	{
-		enableAttributes();
-	}
 }

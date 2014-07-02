@@ -20,9 +20,9 @@ public interface ITaskExecutor {
 	/**
 	 * 
 	 * @param initialDelay
-	 *           延迟
+	 *        延迟
 	 * @param period
-	 *           周期,秒
+	 *        周期,秒
 	 * @param task
 	 */
 	void addScheduledTask(long initialDelay, long period, ExecutorRunnable task);
