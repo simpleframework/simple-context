@@ -208,6 +208,10 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		return avg(column, "1=1");
 	}
 
+	public Object queryFor(final String column, final String expr, final Object... params) {
+		return getEntityManager().queryFor(column, new ExpressionValue(expr, params));
+	}
+
 	@Override
 	public Object exchange(final T bean1, final T bean2, final DbTableColumn order, final boolean up) {
 		return getEntityManager().exchange(bean1, bean2, order, up);
