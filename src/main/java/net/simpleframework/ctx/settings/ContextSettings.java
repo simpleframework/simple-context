@@ -69,7 +69,7 @@ public abstract class ContextSettings extends ObjectEx {
 	 */
 	public File getTmpFiledir() {
 		if (tmpDir == null) {
-			tmpDir = new File(getHomeFileDir().getAbsoluteFile() + File.separator + "$temp"
+			tmpDir = new File(getHomeFileDir().getAbsoluteFile() + File.separator + "_temp"
 					+ File.separator);
 			if (!tmpDir.exists()) {
 				FileUtils.createDirectoryRecursively(tmpDir);
