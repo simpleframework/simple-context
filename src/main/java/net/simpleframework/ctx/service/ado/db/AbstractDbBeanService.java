@@ -64,11 +64,6 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		return context;
 	}
 
-	protected boolean isMember(final Object user) {
-		final IModuleContext ctx = getModuleContext();
-		return ctx.getPermission().getUser(user).isMember(ctx.getManagerRole());
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public T createBean() {
@@ -336,6 +331,11 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	}
 
 	/*------------------------------------utils--------------------------------------*/
+
+	protected boolean isManager(final Object user) {
+		final IModuleContext ctx = getModuleContext();
+		return ctx.getPermission().getUser(user).isMember(ctx.getManagerRole());
+	}
 
 	protected ExpressionValue toExpressionValue(final FilterItems params) {
 		if (params == null) {
