@@ -41,7 +41,6 @@ import net.simpleframework.common.object.ObjectFactory;
 import net.simpleframework.common.th.NotImplementedException;
 import net.simpleframework.ctx.IModuleContext;
 import net.simpleframework.ctx.ModuleContextException;
-import net.simpleframework.ctx.permission.IPermissionHandler;
 import net.simpleframework.ctx.permission.LoginUser;
 import net.simpleframework.ctx.permission.LoginUser.LoginWrapper;
 import net.simpleframework.ctx.service.AbstractBaseService;
@@ -65,8 +64,9 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		return context;
 	}
 
-	protected IPermissionHandler getPermission() {
-		return getApplicationContext().getPermission();
+	protected boolean isMember(final Object user) {
+		final IModuleContext ctx = getModuleContext();
+		return ctx.getPermission().getUser(user).isMember(ctx.getManagerRole());
 	}
 
 	@SuppressWarnings("unchecked")
