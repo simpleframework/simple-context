@@ -187,7 +187,7 @@ public abstract class AbstractModuleContext extends ObjectEx implements IModuleC
 
 	protected void logGetRef(final String refClass, final Throwable e) {
 		if (ERRs.get(refClass) == null) {
-			log.warn($m("AbstractModuleContext.0", refClass));
+			getLog().warn($m("AbstractModuleContext.0", refClass));
 			ERRs.put(refClass, Boolean.TRUE);
 		}
 	}

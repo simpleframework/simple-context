@@ -68,7 +68,7 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 		try {
 			return getAttachment().getName();
 		} catch (final IOException e) {
-			log.warn(e);
+			getLog().warn(e);
 			return e.getMessage();
 		}
 	}

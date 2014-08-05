@@ -19,8 +19,8 @@ public class DbCreatorCallback extends ObjectEx {
 	public void execute(final String sql, final long timeMillis, final Exception exception,
 			final String description) {
 		if (exception != null) {
-			log.info("execute: [" + sql + "]");
-			log.info("Fail");
+			getLog().info("execute: [" + sql + "]");
+			getLog().info("Fail");
 		}
 	}
 }

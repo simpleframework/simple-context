@@ -63,7 +63,7 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 			task();
 			print(n);
 		} catch (final Throwable ex) {
-			log.warn(ex);
+			getLog().warn(ex);
 		}
 	}
 

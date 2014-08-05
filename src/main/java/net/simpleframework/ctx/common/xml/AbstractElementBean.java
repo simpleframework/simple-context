@@ -170,7 +170,7 @@ public abstract class AbstractElementBean extends ObjectEx {
 			try {
 				BeanUtils.setProperty(this, name, val);
 			} catch (final Exception e) {
-				log.warn(e);
+				getLog().warn(e);
 				if (isRemoveErrorAttribute()) {
 					if (removes == null) {
 						removes = new ArrayList<XmlAttri>();
@@ -212,7 +212,7 @@ public abstract class AbstractElementBean extends ObjectEx {
 			try {
 				BeanUtils.setProperty(this, attribute, text);
 			} catch (final Exception e) {
-				log.warn(e);
+				getLog().warn(e);
 				if (isRemoveErrorAttribute()) {
 					element.remove(element2);
 				}
