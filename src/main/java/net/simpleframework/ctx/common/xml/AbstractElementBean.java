@@ -22,7 +22,7 @@ import net.simpleframework.ctx.script.ScriptEvalUtils;
  */
 public abstract class AbstractElementBean extends ObjectEx {
 
-	private transient XmlElement _element;
+	private XmlElement _element;
 
 	public AbstractElementBean() {
 	}
