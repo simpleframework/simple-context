@@ -13,7 +13,7 @@ public class ScriptEvalException extends RuntimeExceptionEx {
 		super(msg, cause);
 	}
 
-	public static RuntimeException of(final Throwable throwable) {
+	public static ScriptEvalException of(final Throwable throwable) {
 		return _of(ScriptEvalException.class, null, throwable);
 	}
 

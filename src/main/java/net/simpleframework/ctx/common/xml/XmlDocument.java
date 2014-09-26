@@ -199,7 +199,7 @@ public class XmlDocument extends ObjectEx {
 			super(msg, cause);
 		}
 
-		public static RuntimeException of(final Throwable throwable) {
+		public static XmlDocumentException of(final Throwable throwable) {
 			return _of(XmlDocumentException.class, null, throwable);
 		}
 	}
