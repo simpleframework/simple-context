@@ -5,11 +5,10 @@ import java.util.Set;
 
 import net.simpleframework.common.ClassUtils;
 import net.simpleframework.common.ClassUtils.IScanResourcesCallback;
-import net.simpleframework.common.Convert;
 import net.simpleframework.common.I18n;
-import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.Version;
 import net.simpleframework.common.object.ObjectEx;
+import net.simpleframework.common.th.ThrowableUtils;
 import net.simpleframework.ctx.permission.IPermissionHandler;
 import net.simpleframework.ctx.permission.PermissionFactory;
 
@@ -84,26 +83,7 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 
 	@Override
 	public String getThrowableMessage(final Throwable th) {
-		String message = null;
-		Throwable th0 = th;
-		while (th0 != null) {
-			message = th0.getMessage();
-			if (StringUtils.hasText(message)) {
-				break;
-			}
-			th0 = th0.getCause();
-		}
-		if (!StringUtils.hasText(message)) {
-			message = Convert.toString(th);
-			int pos = message.indexOf("\r");
-			if (pos < 0) {
-				pos = message.indexOf("\n");
-			}
-			if (pos > 0) {
-				message = message.substring(0, pos);
-			}
-		}
-		return message.trim();
+		return ThrowableUtils.getThrowableMessage(th, true);
 	}
 
 	@Override
