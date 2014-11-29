@@ -69,7 +69,7 @@ public abstract class LoginUser {
 
 		@Override
 		public String toString() {
-			return user != null ? user.toString() : super.toString();
+			return user != null ? user.toString() + " [" + getIp() + "]" : super.toString();
 		}
 	}
 }
