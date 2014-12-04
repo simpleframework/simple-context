@@ -19,6 +19,8 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 
 	/* 机构id */
 	private ID orgId;
+	/* 部门id */
+	private ID deptId;
 
 	public InputStream getPhotoStream() {
 		return photoStream;
@@ -42,6 +44,19 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	}
 
 	public String getDescription() {
+		return null;
+	}
+
+	public ID getDeptId() {
+		return deptId;
+	}
+
+	public PermissionUser setDeptId(final ID deptId) {
+		this.deptId = deptId;
+		return this;
+	}
+
+	public String toDeptText() {
 		return null;
 	}
 
