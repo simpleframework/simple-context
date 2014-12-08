@@ -25,10 +25,11 @@ public interface IPermissionHandler extends IPermissionConst {
 	 * 获取指定角色名的所有用户
 	 * 
 	 * @param role
+	 * @param deptId
 	 * @param variables
 	 * @return
 	 */
-	Iterator<ID> users(Object role, Map<String, Object> variables);
+	Iterator<ID> users(Object role, ID deptId, Map<String, Object> variables);
 
 	/**
 	 * 得到权限角色对象
