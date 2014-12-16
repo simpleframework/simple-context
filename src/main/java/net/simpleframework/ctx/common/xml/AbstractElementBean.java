@@ -146,15 +146,8 @@ public abstract class AbstractElementBean extends ObjectEx {
 		}
 	}
 
-	public void parseElement() {
-		parseElement(null);
-	}
-
 	public void parseElement(final IScriptEval scriptEval) {
 		final XmlElement element = getElement();
-		if (element == null) {
-			return;
-		}
 		ArrayList<XmlAttri> removes = null;
 		final Iterator<XmlAttri> it = element.attributeIterator();
 		while (it.hasNext()) {
