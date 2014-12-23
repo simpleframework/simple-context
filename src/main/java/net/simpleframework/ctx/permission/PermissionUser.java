@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Map;
 
 import net.simpleframework.common.ID;
+import net.simpleframework.common.coll.KVMap;
 import net.simpleframework.common.th.NotImplementedException;
 
 /**
@@ -91,7 +92,7 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	 * @return
 	 */
 	public boolean isMember(final Object role) {
-		return isMember(role, null);
+		return isMember(role, new KVMap());
 	}
 
 	/**
@@ -106,7 +107,7 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	}
 
 	public boolean isManager() {
-		return isManager(null);
+		return isManager(new KVMap());
 	}
 
 	/**
