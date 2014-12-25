@@ -410,15 +410,8 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 			throw NotImplementedException.of($m("AbstractDbBeanService.2",
 					IIdBeanAware.class.getName()));
 		}
-		final FilterItems items = FilterItems.of();
-		if (parent == null) {
-			items.addIsNull("parentid");
-		} else {
-			items.addEqual("parentid", ((IIdBeanAware) parent).getId());
-		}
-		if (ArrayUtils.isEmpty(orderColumns)) {
-			return queryByParams(items, ColumnData.ASC("oorder"));
-		}
+		final FilterItems items = FilterItems.of().addEqual("parentid",
+				parent == null ? null : ((IIdBeanAware) parent).getId());
 		return queryByParams(items, orderColumns);
 	}
 
