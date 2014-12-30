@@ -50,4 +50,6 @@ public interface IPermissionHandler extends IPermissionConst {
 	 * @return
 	 */
 	Iterator<ID> roles(Object user, Map<String, Object> variables);
+
+	Dept getDept(Object dept);
 }

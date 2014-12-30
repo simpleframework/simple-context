@@ -13,20 +13,20 @@ import net.simpleframework.common.ID;
  *         http://www.simpleframework.net
  */
 @SuppressWarnings("rawtypes")
-public class DepartmentWrapper {
+public class Dept {
 	private Collection users;
 
-	private Collection<DepartmentWrapper> children;
+	private Collection<Dept> children;
 
 	private final ID id;
 
 	private final Object dept;
 
-	public DepartmentWrapper(final Object dept) {
+	public Dept(final Object dept) {
 		this((ID) BeanUtils.getProperty(dept, "id"), dept);
 	}
 
-	public DepartmentWrapper(final ID id, final Object dept) {
+	public Dept(final ID id, final Object dept) {
 		this.id = id;
 		this.dept = dept;
 	}
@@ -39,9 +39,9 @@ public class DepartmentWrapper {
 		return dept;
 	}
 
-	public Collection<DepartmentWrapper> getChildren() {
+	public Collection<Dept> getChildren() {
 		if (children == null) {
-			children = new ArrayList<DepartmentWrapper>();
+			children = new ArrayList<Dept>();
 		}
 		return children;
 	}
@@ -57,7 +57,7 @@ public class DepartmentWrapper {
 		if (getUsers().size() > 0) {
 			return true;
 		}
-		for (final DepartmentWrapper wrapper : getChildren()) {
+		for (final Dept wrapper : getChildren()) {
 			if (wrapper.hasUser()) {
 				return true;
 			}
