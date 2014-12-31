@@ -51,5 +51,11 @@ public interface IPermissionHandler extends IPermissionConst {
 	 */
 	Iterator<ID> roles(Object user, Map<String, Object> variables);
 
-	Dept getDept(Object dept);
+	/**
+	 * 获取权限部门对象
+	 * 
+	 * @param dept
+	 * @return
+	 */
+	PermissionDept getDept(Object dept);
 }

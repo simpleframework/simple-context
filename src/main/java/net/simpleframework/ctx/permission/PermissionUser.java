@@ -18,10 +18,8 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	/* 头像 */
 	private InputStream photoStream;
 
-	/* 机构id */
-	private ID orgId;
-	/* 部门id */
-	private ID deptId;
+	/* 部门 */
+	private PermissionDept dept;
 
 	public InputStream getPhotoStream() {
 		return photoStream;
@@ -48,30 +46,13 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 		return null;
 	}
 
-	public ID getDeptId() {
-		return deptId;
+	public PermissionDept getDept() {
+		return dept;
 	}
 
-	public PermissionUser setDeptId(final ID deptId) {
-		this.deptId = deptId;
+	public PermissionUser setDept(final PermissionDept dept) {
+		this.dept = dept;
 		return this;
-	}
-
-	public String toDeptText() {
-		return null;
-	}
-
-	public ID getOrgId() {
-		return orgId;
-	}
-
-	public PermissionUser setOrgId(final ID orgId) {
-		this.orgId = orgId;
-		return this;
-	}
-
-	public String toOrgText() {
-		return null;
 	}
 
 	/**

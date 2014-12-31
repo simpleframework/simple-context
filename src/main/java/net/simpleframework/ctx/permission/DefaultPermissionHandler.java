@@ -23,11 +23,6 @@ public class DefaultPermissionHandler extends ObjectEx implements IPermissionHan
 	}
 
 	@Override
-	public Dept getDept(final Object dept) {
-		return null;
-	}
-
-	@Override
 	public Iterator<ID> users(final Object role, final ID deptId, final Map<String, Object> variables) {
 		throw NotImplementedException.of(getClass(), "users");
 	}
@@ -37,6 +32,13 @@ public class DefaultPermissionHandler extends ObjectEx implements IPermissionHan
 	@Override
 	public PermissionRole getRole(final Object role) {
 		return NULL_ROLE;
+	}
+
+	private static PermissionDept NULL_DEPT = new PermissionDept();
+
+	@Override
+	public PermissionDept getDept(final Object dept) {
+		return NULL_DEPT;
 	}
 
 	@Override
