@@ -32,10 +32,6 @@ public class ModuleFunctions extends AbstractArrayListEx<ModuleFunctions, Module
 		return null;
 	}
 
-	public static void main(final String[] args) {
-		getFunctionByName("a-b-v;i-u-r");
-	}
-
 	public static ModuleFunction getFunctionByName(final String name) {
 		if (!StringUtils.hasText(name)) {
 			return null;
