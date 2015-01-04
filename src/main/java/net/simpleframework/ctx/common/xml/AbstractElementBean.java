@@ -128,12 +128,16 @@ public abstract class AbstractElementBean extends ObjectEx {
 		return null;
 	}
 
+	protected boolean syncElement_exclude(final Object o) {
+		return o instanceof AbstractElementBean || o instanceof XmlElement || o instanceof Collection
+				|| o instanceof Map;
+	}
+
 	public void syncElement() {
 		final Map<String, Object> data = BeanUtils.toMap(this);
 		for (final Map.Entry<?, ?> entry : data.entrySet()) {
 			final Object o = entry.getValue();
-			if (o instanceof AbstractElementBean || o instanceof XmlElement || o instanceof Collection
-					|| o instanceof Map) {
+			if (syncElement_exclude(o)) {
 				continue;
 			}
 			final String key = (String) entry.getKey();
