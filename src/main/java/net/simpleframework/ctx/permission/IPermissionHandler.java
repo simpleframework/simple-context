@@ -15,6 +15,7 @@ public interface IPermissionHandler extends IPermissionConst {
 
 	/* 当前用户直接的角色 */
 	static final String CTX_ROLEID = "roleId";
+	static final String CTX_DEPTID = "deptId";
 
 	/**
 	 * 得到权限用户对象
