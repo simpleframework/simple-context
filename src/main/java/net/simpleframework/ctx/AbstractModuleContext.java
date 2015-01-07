@@ -11,7 +11,6 @@ import javax.sql.DataSource;
 
 import net.simpleframework.common.ClassUtils;
 import net.simpleframework.common.object.ObjectEx;
-import net.simpleframework.ctx.permission.IPermissionConst;
 import net.simpleframework.ctx.permission.IPermissionHandler;
 import net.simpleframework.ctx.script.IScriptEval;
 import net.simpleframework.ctx.settings.ContextSettings;
@@ -54,11 +53,6 @@ public abstract class AbstractModuleContext extends ObjectEx implements IModuleC
 				}
 			}
 		}
-	}
-
-	@Override
-	public String getManagerRole() {
-		return IPermissionConst.ROLE_MANAGER;
 	}
 
 	private Module module;

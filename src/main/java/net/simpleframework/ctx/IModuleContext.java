@@ -72,13 +72,6 @@ public interface IModuleContext {
 	void setDataSource(DataSource dataSource);
 
 	/**
-	 * 获取系统管理员的角色名字
-	 * 
-	 * @return
-	 */
-	String getManagerRole();
-
-	/**
 	 * 获取Module定义
 	 * 
 	 * @return
