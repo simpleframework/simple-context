@@ -8,5 +8,33 @@ package net.simpleframework.ctx;
  */
 public class ModuleFunction extends AbstractModule<ModuleFunction> {
 
+	protected final IModuleContext moduleContext;
+
+	public ModuleFunction(final IModuleContext moduleContext) {
+		this.moduleContext = moduleContext;
+	}
+
+	public IModuleContext getModuleContext() {
+		return moduleContext;
+	}
+
+	@Override
+	public String getRole() {
+		String role = super.getRole();
+		if (role == null) {
+			role = getModuleContext().getModule().getRole();
+		}
+		return role;
+	}
+
+	@Override
+	public String getManagerRole() {
+		String role = super.getManagerRole();
+		if (role == null) {
+			role = getModuleContext().getModule().getManagerRole();
+		}
+		return role;
+	}
+
 	private static final long serialVersionUID = -5396854627783234010L;
 }

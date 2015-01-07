@@ -1,6 +1,7 @@
 package net.simpleframework.ctx;
 
 import net.simpleframework.common.Version;
+import net.simpleframework.ctx.permission.IPermissionConst;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -15,6 +16,8 @@ public class Module extends AbstractModule<Module> {
 	private Version version;
 
 	public Module() {
+		setRole(IPermissionConst.ROLE_ALL_ACCOUNT);
+		setManagerRole(IPermissionConst.ROLE_MANAGER);
 	}
 
 	public ModuleFunction getDefaultFunction() {
