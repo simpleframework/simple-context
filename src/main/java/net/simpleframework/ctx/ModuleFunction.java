@@ -8,17 +8,5 @@ package net.simpleframework.ctx;
  */
 public class ModuleFunction extends AbstractModule<ModuleFunction> {
 
-	/* 功能的管理员角色 */
-	private String role;
-
-	public String getRole() {
-		return role;
-	}
-
-	public ModuleFunction setRole(final String role) {
-		this.role = role;
-		return this;
-	}
-
 	private static final long serialVersionUID = -5396854627783234010L;
 }

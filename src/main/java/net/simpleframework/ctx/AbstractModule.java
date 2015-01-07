@@ -5,6 +5,7 @@ import java.io.Serializable;
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.object.IObjectOrderAware;
 import net.simpleframework.common.object.TextNamedObject;
+import net.simpleframework.ctx.permission.IPermissionConst;
 import net.simpleframework.ctx.permission.IPermissionHandler;
 import net.simpleframework.ctx.permission.LoginUser;
 import net.simpleframework.ctx.permission.PermissionFactory;
@@ -20,6 +21,11 @@ import net.simpleframework.ctx.permission.PermissionUser;
 public abstract class AbstractModule<T extends AbstractModule<T>> extends TextNamedObject<T>
 		implements IObjectOrderAware, Serializable {
 
+	/* 定义模块使用者的角色名字 */
+	private String role = IPermissionConst.ROLE_ALL_ACCOUNT;
+	/* 定义模块管理员的角色名字 */
+	private String managerRole = IPermissionConst.ROLE_MANAGER;
+
 	/* 功能描述 */
 	private String description;
 
@@ -28,6 +34,24 @@ public abstract class AbstractModule<T extends AbstractModule<T>> extends TextNa
 
 	/* 是否有效 */
 	private boolean disabled;
+
+	public String getRole() {
+		return role;
+	}
+
+	public T setRole(final String role) {
+		this.role = role;
+		return (T) this;
+	}
+
+	public String getManagerRole() {
+		return managerRole;
+	}
+
+	public T setManagerRole(final String managerRole) {
+		this.managerRole = managerRole;
+		return (T) this;
+	}
 
 	@Override
 	public String getText() {
