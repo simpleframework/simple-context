@@ -375,10 +375,11 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 			return bean;
 		} else if (bean instanceof IIdBeanAware) {
 			return ((AbstractIdBean) bean).getId();
-		} else {
+		} else if (bean != null) {
 			final Object id = BeanUtils.getProperty(bean, "id");
 			return id != null ? id : bean;
 		}
+		return null;
 	}
 
 	private final IDbEntityListener CONTEXT_LISTENER = new DbEntityAdapterEx() {
