@@ -26,6 +26,7 @@ import net.simpleframework.ado.bean.IIdBeanAware;
 import net.simpleframework.ado.bean.ITreeBeanAware;
 import net.simpleframework.ado.db.DbManagerFactory;
 import net.simpleframework.ado.db.DbTableColumn;
+import net.simpleframework.ado.db.IDbDataQuery;
 import net.simpleframework.ado.db.IDbEntityManager;
 import net.simpleframework.ado.db.IDbManager;
 import net.simpleframework.ado.db.IDbQueryManager;
@@ -81,6 +82,10 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 
 	public IDataQuery<T> query(final String expr, final Object... params) {
 		return getEntityManager().queryBeans(new ExpressionValue(expr, params));
+	}
+
+	public IDbDataQuery<T> query(final IParamsValue paramsValue) {
+		return getEntityManager().queryBeans(paramsValue);
 	}
 
 	@Override
