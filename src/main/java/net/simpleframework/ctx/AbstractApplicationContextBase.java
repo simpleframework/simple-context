@@ -1,6 +1,8 @@
 package net.simpleframework.ctx;
 
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import net.simpleframework.common.ClassUtils;
@@ -83,7 +85,18 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 
 	@Override
 	public String getThrowableMessage(final Throwable th) {
-		return ThrowableUtils.getThrowableMessage(th, true);
+		return ThrowableUtils.getThrowableMessage(th, msgs, true);
+	}
+
+	private Map<Class<? extends Throwable>, String> msgs;
+
+	protected void addThrowableMessage(final Class<? extends Throwable> cls, final String message) {
+		if (msgs == null) {
+			msgs = new HashMap<Class<? extends Throwable>, String>();
+		}
+		if (message != null) {
+			msgs.put(cls, message);
+		}
 	}
 
 	@Override
