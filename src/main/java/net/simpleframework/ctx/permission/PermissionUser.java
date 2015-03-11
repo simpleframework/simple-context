@@ -63,7 +63,7 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	 * @return
 	 */
 	public boolean isMember(final Object role, final Map<String, Object> variables) {
-		return IPermissionConst.ROLE_ANONYMOUS.equals(role);
+		return PermissionConst.ROLE_ANONYMOUS.equals(role);
 	}
 
 	/**

@@ -1,7 +1,5 @@
 package net.simpleframework.ctx.permission;
 
-import net.simpleframework.common.StringUtils;
-
 /**
  * Licensed under the Apache License, Version 2.0
  * 
@@ -9,14 +7,6 @@ import net.simpleframework.common.StringUtils;
  *         http://www.simpleframework.net
  */
 public class PermissionRole extends PermissionEntity<PermissionRole> {
-
-	public static String toUniqueRolename(final String chart, final String role) {
-		return chart + ":" + role;
-	}
-
-	public static String[] split(final String role) {
-		return StringUtils.split(role, ":");
-	}
 
 	private static final long serialVersionUID = 8929394091976218058L;
 }

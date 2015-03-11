@@ -7,7 +7,7 @@ import net.simpleframework.common.FileUtils;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.common.th.NotImplementedException;
 import net.simpleframework.ctx.IApplicationContextBase;
-import net.simpleframework.ctx.permission.IPermissionConst;
+import net.simpleframework.ctx.permission.PermissionConst;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -84,7 +84,7 @@ public abstract class ContextSettings extends ObjectEx {
 	 * @return
 	 */
 	public String getDefaultRole() {
-		return IPermissionConst.ROLE_ANONYMOUS;
+		return PermissionConst.ROLE_ANONYMOUS;
 	}
 
 	public String getProperty(final String key) {

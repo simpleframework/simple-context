@@ -8,7 +8,7 @@ import net.simpleframework.common.object.ObjectEx;
  * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
-public abstract class PermissionFactory extends ObjectEx implements IPermissionConst {
+public abstract class PermissionFactory extends ObjectEx {
 
 	private static final IPermissionHandler defaultPermission = new DefaultPermissionHandler();
 
@@ -27,6 +27,6 @@ public abstract class PermissionFactory extends ObjectEx implements IPermissionC
 	}
 
 	public static PermissionUser getAdmin() {
-		return get().getUser(ADMIN);
+		return get().getUser(PermissionConst.ADMIN);
 	}
 }

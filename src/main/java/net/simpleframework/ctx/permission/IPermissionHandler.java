@@ -11,11 +11,7 @@ import net.simpleframework.common.ID;
  * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
-public interface IPermissionHandler extends IPermissionConst {
-
-	/* 当前用户直接的角色 */
-	static final String CTX_ROLEID = "roleId";
-	static final String CTX_DEPTID = "deptId";
+public interface IPermissionHandler {
 
 	/**
 	 * 得到权限用户对象
