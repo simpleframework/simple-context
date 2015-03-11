@@ -7,6 +7,7 @@ import java.util.Set;
 
 import net.simpleframework.common.ClassUtils;
 import net.simpleframework.common.ClassUtils.IScanResourcesCallback;
+import net.simpleframework.common.ClassUtils.ScanClassResourcesCallback;
 import net.simpleframework.common.I18n;
 import net.simpleframework.common.Version;
 import net.simpleframework.common.object.ObjectEx;
@@ -58,9 +59,23 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 
 	protected void doScanResources(final String[] packageNames) throws Exception {
 		// i18n
-		final IScanResourcesCallback callback = I18n.getBasenamesCallback();
+		final IScanResourcesCallback i18nCallback = I18n.getBasenamesCallback();
+		// 启动类
+		final IApplicationContext application = (IApplicationContext) this;
+		final IScanResourcesCallback startupCallback = new ScanClassResourcesCallback() {
+			@Override
+			public void doResources(final String filepath, final boolean isDirectory) throws Exception {
+				final IApplicationStartup startupHdl = getInstance(loadClass(filepath),
+						IApplicationStartup.class);
+				if (startupHdl != null) {
+					startupHdl.onStartup(application);
+				}
+			}
+		};
+
 		for (final String packageName : packageNames) {
-			ClassUtils.scanResources(packageName, callback);
+			ClassUtils.scanResources(packageName, i18nCallback);
+			ClassUtils.scanResources(packageName, startupCallback);
 		}
 	}
 
