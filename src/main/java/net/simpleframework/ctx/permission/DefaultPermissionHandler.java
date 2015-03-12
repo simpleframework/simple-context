@@ -30,7 +30,7 @@ public class DefaultPermissionHandler extends ObjectEx implements IPermissionHan
 	private static PermissionRole NULL_ROLE = new PermissionRole();
 
 	@Override
-	public PermissionRole getRole(final Object role) {
+	public PermissionRole getRole(final Object role, final Map<String, Object> variables) {
 		return NULL_ROLE;
 	}
 

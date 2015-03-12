@@ -19,7 +19,8 @@ public class PermissionConst {
 	/* 系统管理员 */
 	public static String ROLE_MANAGER;
 
-	/* 当前用户直接的角色 */
-	public static final String CTX_ROLEID = "roleId";
-	public static final String CTX_DEPTID = "deptId";
+	/* 环境变量key定义 */
+	public static final String VAL_USERID = "userId";
+	public static final String VAR_ROLEID = "roleId";
+	public static final String VAR_DEPTID = "deptId";
 }
