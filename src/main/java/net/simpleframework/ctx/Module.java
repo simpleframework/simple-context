@@ -39,6 +39,4 @@ public class Module extends AbstractModule<Module> {
 	}
 
 	private static Version DEFAULT_VERSION = new Version(1, 0, 0);
-
-	private static final long serialVersionUID = -1782660713880740440L;
 }

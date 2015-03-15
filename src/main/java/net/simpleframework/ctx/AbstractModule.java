@@ -1,7 +1,5 @@
 package net.simpleframework.ctx;
 
-import java.io.Serializable;
-
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.object.IObjectOrderAware;
 import net.simpleframework.common.object.TextNamedObject;
@@ -16,9 +14,9 @@ import net.simpleframework.ctx.permission.PermissionUser;
  * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
-@SuppressWarnings({ "unchecked", "serial" })
+@SuppressWarnings({ "unchecked" })
 public abstract class AbstractModule<T extends AbstractModule<T>> extends TextNamedObject<T>
-		implements IObjectOrderAware, Serializable {
+		implements IObjectOrderAware {
 
 	/* 定义模块使用者的角色名字 */
 	private String role;

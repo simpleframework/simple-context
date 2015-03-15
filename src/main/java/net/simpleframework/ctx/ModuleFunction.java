@@ -35,6 +35,4 @@ public class ModuleFunction extends AbstractModule<ModuleFunction> {
 		}
 		return role;
 	}
-
-	private static final long serialVersionUID = -5396854627783234010L;
 }
