@@ -27,7 +27,7 @@ public class ModuleFunctions extends AbstractArrayListEx<ModuleFunctions, Module
 		final IModuleContext ctx = ModuleContextFactory.get(module);
 		Module oModule;
 		if (ctx != null && (oModule = ctx.getModule()) != null) {
-			return oModule.getDefaultFunction();
+			return getFunctionByName(oModule.getDefaultFunction());
 		}
 		return null;
 	}
@@ -43,7 +43,7 @@ public class ModuleFunctions extends AbstractArrayListEx<ModuleFunctions, Module
 		for (final IModuleContext ctx : ModuleContextFactory.allModules()) {
 			function = getFunctionByName(ctx, ctx.getFunctions(null), name);
 			if (function == null) {
-				final ModuleFunction function2 = ctx.getModule().getDefaultFunction();
+				final ModuleFunction function2 = getFunctionByName(ctx.getModule().getDefaultFunction());
 				if (function2 != null && name.equals(function2.getName())) {
 					function = function2;
 				}

@@ -11,7 +11,7 @@ import net.simpleframework.ctx.permission.PermissionConst;
  */
 public class Module extends AbstractModule<Module> {
 	/* 模块的缺省功能 */
-	private ModuleFunction defaultFunction;
+	private String defaultFunction;
 
 	private Version version;
 
@@ -20,11 +20,11 @@ public class Module extends AbstractModule<Module> {
 		setManagerRole(PermissionConst.ROLE_MANAGER);
 	}
 
-	public ModuleFunction getDefaultFunction() {
+	public String getDefaultFunction() {
 		return defaultFunction;
 	}
 
-	public Module setDefaultFunction(final ModuleFunction defaultFunction) {
+	public Module setDefaultFunction(final String defaultFunction) {
 		this.defaultFunction = defaultFunction;
 		return this;
 	}
