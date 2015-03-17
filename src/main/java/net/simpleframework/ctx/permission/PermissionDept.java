@@ -21,6 +21,11 @@ public class PermissionDept extends PermissionEntity<PermissionDept> {
 		return this;
 	}
 
+	/* 用户数 */
+	public int getUsers() {
+		return 0;
+	}
+
 	public String getDomainText() {
 		return null;
 	}
