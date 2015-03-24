@@ -15,6 +15,8 @@ import net.simpleframework.common.th.NotImplementedException;
  *         http://www.simpleframework.net
  */
 public class PermissionUser extends PermissionEntity<PermissionUser> {
+	private static PermissionDept NULL_DEPT = new PermissionDept();
+
 	/* 头像 */
 	private InputStream photoStream;
 
@@ -47,7 +49,7 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	}
 
 	public PermissionDept getDept() {
-		return dept;
+		return dept != null ? dept : NULL_DEPT;
 	}
 
 	public PermissionUser setDept(final PermissionDept dept) {
