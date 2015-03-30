@@ -18,6 +18,17 @@ public class ModuleFunctions extends AbstractArrayListEx<ModuleFunctions, Module
 		return new ModuleFunctions().append(functions);
 	}
 
+	@Override
+	public boolean add(final ModuleFunction element) {
+		for (final ModuleFunction _element : this) {
+			if (_element.getName().equals(element.getName())) {
+				remove(_element);
+				break;
+			}
+		}
+		return super.add(element);
+	}
+
 	private static Map<String, ModuleFunction> funcCache;
 	static {
 		funcCache = new ConcurrentHashMap<String, ModuleFunction>();
