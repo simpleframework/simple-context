@@ -1,6 +1,5 @@
 package net.simpleframework.ctx;
 
-import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.object.IObjectOrderAware;
 import net.simpleframework.common.object.TextNamedObject;
 import net.simpleframework.ctx.permission.IPermissionHandler;
@@ -17,7 +16,6 @@ import net.simpleframework.ctx.permission.PermissionUser;
 @SuppressWarnings({ "unchecked" })
 public abstract class AbstractModule<T extends AbstractModule<T>> extends TextNamedObject<T>
 		implements IObjectOrderAware {
-
 	/* 定义模块使用者的角色名字 */
 	private String role;
 	/* 定义模块管理员的角色名字 */
@@ -48,12 +46,6 @@ public abstract class AbstractModule<T extends AbstractModule<T>> extends TextNa
 	public T setManagerRole(final String managerRole) {
 		this.managerRole = managerRole;
 		return (T) this;
-	}
-
-	@Override
-	public String getText() {
-		final String txt = super.getText();
-		return StringUtils.hasText(txt) ? txt : getName();
 	}
 
 	public String getDescription() {
