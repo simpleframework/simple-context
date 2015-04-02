@@ -317,15 +317,15 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	protected Map<String, Integer> COUNT_STATS = new ConcurrentHashMap<String, Integer>();
 
 	protected class DbEntityAdapterEx extends DbEntityAdapter {
-		@SuppressWarnings("unchecked")
+
 		protected Collection<T> coll(final IParamsValue paramsValue) {
-			final AbstractParamsValue<?> val = (AbstractParamsValue<?>) paramsValue;
-			Collection<T> coll = (Collection<T>) val.getAttr("coll");
-			if (coll == null) {
-				val.setAttr("coll",
-						coll = DataQueryUtils.toList(getEntityManager().queryBeans(paramsValue)));
-			}
-			return coll;
+			return ((AbstractParamsValue<?>) paramsValue).getAttrCache("coll",
+					new IVal<Collection<T>>() {
+						@Override
+						public Collection<T> get() {
+							return DataQueryUtils.toList(getEntityManager().queryBeans(paramsValue));
+						}
+					});
 		}
 
 		@Override
