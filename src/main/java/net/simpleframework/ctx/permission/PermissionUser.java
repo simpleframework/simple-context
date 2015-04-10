@@ -57,6 +57,10 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 		return this;
 	}
 
+	public ID getDomainId() {
+		return getDept().getDomainId();
+	}
+
 	/**
 	 * 指定用户是否为某一指定角色的成员
 	 * 
