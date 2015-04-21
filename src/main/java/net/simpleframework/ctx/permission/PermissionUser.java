@@ -74,12 +74,12 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 
 	/**
 	 * 指定用户是否为某一指定角色的成员，默认环境变量=null
-	 * 
+	 *
 	 * @param role
 	 * @return
 	 */
 	public boolean isMember(final Object role) {
-		return isMember(role, new KVMap().add(PermissionConst.VAL_USERID, this.getId()));
+		return isMember(role, new KVMap().add(PermissionConst.VAR_USERID, this.getId()));
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	}
 
 	public boolean isManager() {
-		return isManager(new KVMap().add(PermissionConst.VAL_USERID, this.getId()));
+		return isManager(new KVMap().add(PermissionConst.VAR_USERID, this.getId()));
 	}
 
 	/**

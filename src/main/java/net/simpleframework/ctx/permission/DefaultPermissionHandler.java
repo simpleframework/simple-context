@@ -27,6 +27,11 @@ public class DefaultPermissionHandler extends ObjectEx implements IPermissionHan
 		throw NotImplementedException.of(getClass(), "users");
 	}
 
+	@Override
+	public Iterator<ID> users(final Object role, final Map<String, Object> variables) {
+		return users(role, null, variables);
+	}
+
 	private static PermissionRole NULL_ROLE = new PermissionRole();
 
 	@Override

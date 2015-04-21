@@ -22,7 +22,7 @@ public class PermissionConst {
 	public static String ROLE_MANAGER;
 
 	/* 环境变量key定义 */
-	public static final String VAL_USERID = "userId";
+	public static final String VAR_USERID = "userId";
 	public static final String VAR_ROLEID = "roleId";
 	public static final String VAR_DEPTID = "deptId";
 }
