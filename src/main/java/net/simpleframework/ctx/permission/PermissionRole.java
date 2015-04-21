@@ -1,6 +1,5 @@
 package net.simpleframework.ctx.permission;
 
-
 /**
  * Licensed under the Apache License, Version 2.0
  * 
