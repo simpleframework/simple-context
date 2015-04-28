@@ -320,7 +320,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 
 		protected Collection<T> coll(final IParamsValue paramsValue) {
 			return ((AbstractParamsValue<?>) paramsValue).getAttrCache("coll",
-					new IVal<Collection<T>>() {
+					new CacheV<Collection<T>>() {
 						@Override
 						public Collection<T> get() {
 							return DataQueryUtils.toList(getEntityManager().queryBeans(paramsValue));
