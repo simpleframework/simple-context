@@ -6,7 +6,7 @@ import java.lang.management.ManagementFactory;
 import net.simpleframework.common.FileUtils;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.common.th.NotImplementedException;
-import net.simpleframework.ctx.IApplicationContextBase;
+import net.simpleframework.ctx.IApplicationContext;
 import net.simpleframework.ctx.permission.PermissionConst;
 
 /**
@@ -17,18 +17,7 @@ import net.simpleframework.ctx.permission.PermissionConst;
  */
 public abstract class ContextSettings extends ObjectEx {
 
-	public void onInit(final IApplicationContextBase context) throws Exception {
-	}
-
-	private static String pid;
-	static {
-		final String name = ManagementFactory.getRuntimeMXBean().getName();
-		pid = name.substring(0, name.indexOf("@"));
-	}
-
-	public String getContextNo() {
-		// 获取服务编号
-		return pid;
+	public void onInit(final IApplicationContext context) throws Exception {
 	}
 
 	/**
@@ -54,6 +43,9 @@ public abstract class ContextSettings extends ObjectEx {
 	public File getHomeFileDir() {
 		if (homeDir == null) {
 			homeDir = new File(System.getProperty("java.home"));
+			if (!homeDir.exists()) {
+				FileUtils.createDirectoryRecursively(homeDir);
+			}
 		}
 		return homeDir;
 	}
@@ -85,6 +77,17 @@ public abstract class ContextSettings extends ObjectEx {
 	 */
 	public String getDefaultRole() {
 		return PermissionConst.ROLE_ANONYMOUS;
+	}
+
+	private static String pid;
+	static {
+		final String name = ManagementFactory.getRuntimeMXBean().getName();
+		pid = name.substring(0, name.indexOf("@"));
+	}
+
+	public String getContextNo() {
+		// 获取服务编号
+		return pid;
 	}
 
 	public String getProperty(final String key) {

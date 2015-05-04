@@ -28,26 +28,22 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 	public void onInit() throws Exception {
 		ApplicationContextFactory.get().setApplicationContextBase(this);
 
-		// 初始化app的配置信息
-		if (this instanceof IApplicationContext) {
-			final IApplicationContext ctx = (IApplicationContext) this;
-			ctx.getContextSettings().onInit(ctx);
-		}
+		// 初始化应用程序
+		onBeforeInit();
 
 		// 设置权限的实现类，子类需要覆盖
 		PermissionFactory.set(getPagePermissionHandler().getName());
-
 		// 初始化资源
 		doScanResources(getScanPackageNames());
 
 		// 初始化应用程序
-		onApplicationInit();
+		onAfterInit();
 	}
 
-	protected void onApplicationInit() throws Exception {
-		if (this instanceof IApplicationContext) {
-			ContextUtils.doInit((IApplicationContext) this);
-		}
+	protected void onBeforeInit() throws Exception {
+	}
+
+	protected void onAfterInit() throws Exception {
 	}
 
 	@Override
