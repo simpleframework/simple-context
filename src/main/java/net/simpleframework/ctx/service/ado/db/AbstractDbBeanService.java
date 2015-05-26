@@ -408,56 +408,76 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		addListener(CONTEXT_LISTENER);
 	}
 
+	@Override
+	public void onInit() throws Exception {
+		super.onInit();
+
+		if (this instanceof ITreeBeanServiceAware) {
+			addListener(new DbEntityAdapterEx() {
+				@SuppressWarnings("unchecked")
+				@Override
+				public void onBeforeUpdate(final IDbEntityManager<?> manager, final String[] columns,
+						final Object[] beans) {
+					super.onBeforeUpdate(manager, columns, beans);
+					for (final Object o : beans) {
+						assertParentId((T) o);
+					}
+				}
+			});
+		}
+	}
+
 	/*------------------------------ITreeBeanServiceAware--------------------------*/
 
 	public IDataQuery<T> queryChildren(final T parent, final ColumnData... orderColumns) {
-		final Class<?> beanClass = getBeanClass();
-		if (!IIdBeanAware.class.isAssignableFrom(beanClass)) {
-			throw NotImplementedException.of($m("AbstractDbBeanService.2",
-					IIdBeanAware.class.getName()));
-		}
+		assertTreeBean();
 		final FilterItems items = FilterItems.of().addEqual("parentid",
-				parent == null ? null : ((IIdBeanAware) parent).getId());
+				parent == null ? null : BeanUtils.getProperty(parent, "id"));
 		return queryByParams(items, orderColumns);
 	}
 
-	public Map<ID, Collection<T>> queryAllTree() {
-		final Class<?> beanClass = getBeanClass();
-		if (!ITreeBeanAware.class.isAssignableFrom(beanClass)) {
-			throw NotImplementedException.of($m("AbstractDbBeanService.2"));
-		}
-		return treeToMap(queryAll().setFetchSize(0));
+	public boolean hasChild(final T parent) {
+		assertTreeBean();
+		final int c = parent == null ? count("parentid is null") : count("parentid=?",
+				BeanUtils.getProperty(parent, "id"));
+		return c > 0;
 	}
 
-	protected Map<ID, Collection<T>> treeToMap(final IDataQuery<T> dq) {
-		final Map<ID, Collection<T>> map = new HashMap<ID, Collection<T>>();
-		T t;
-		while ((t = dq.next()) != null) {
-			ID k = ((ITreeBeanAware) t).getParentId();
-			if (k == null) {
-				k = ID.NULL_ID;
-			}
-			Collection<T> coll = map.get(k);
-			if (coll == null) {
-				map.put(k, coll = new ArrayList<T>());
-			}
-			coll.add(t);
-		}
-		return map;
+	public Map<ID, Collection<T>> queryAllTree() {
+		assertTreeBean();
+		return toTreeMap(queryAll());
 	}
 
 	public int getLevel(final T node) {
-		final Class<?> beanClass = getBeanClass();
-		if (!ITreeBeanAware.class.isAssignableFrom(beanClass)) {
-			throw NotImplementedException.of($m("AbstractDbBeanService.2"));
-		}
-		final IDbEntityManager<?> mgr = getEntityManager();
+		assertTreeBean();
 		int l = 1;
 		ITreeBeanAware p = (ITreeBeanAware) node;
-		while ((p = (ITreeBeanAware) mgr.getBean(p.getParentId())) != null) {
+		while ((p = (ITreeBeanAware) getBean(p.getParentId())) != null) {
 			l++;
 		}
 		return l;
+	}
+
+	protected Map<ID, Collection<T>> toTreeMap(final IDataQuery<T> dq) {
+		dq.setFetchSize(0);
+		final Map<ID, Collection<T>> _map = new HashMap<ID, Collection<T>>();
+		T t;
+		while ((t = dq.next()) != null) {
+			final ID k = ((ITreeBeanAware) t).getParentId();
+			Collection<T> coll = k != null ? _map.get(k) : _map.get(ID.NULL_ID);
+			if (coll == null) {
+				_map.put(k, coll = new ArrayList<T>());
+			}
+			coll.add(t);
+		}
+		return _map;
+	}
+
+	protected void assertTreeBean() {
+		if (!ITreeBeanAware.class.isAssignableFrom(getBeanClass())) {
+			throw NotImplementedException.of($m("AbstractDbBeanService.2",
+					ITreeBeanAware.class.getName()));
+		}
 	}
 
 	/**
@@ -488,25 +508,6 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 				throw ADOException.of($m("AbstractDbBeanService.1"));
 			}
 			p = mgr.executeQuery(columns, new ExpressionValue("id=?", p.get("parentId")));
-		}
-	}
-
-	@Override
-	public void onInit() throws Exception {
-		super.onInit();
-
-		if (this instanceof ITreeBeanServiceAware) {
-			addListener(new DbEntityAdapterEx() {
-				@SuppressWarnings("unchecked")
-				@Override
-				public void onBeforeUpdate(final IDbEntityManager<?> manager, final String[] columns,
-						final Object[] beans) {
-					super.onBeforeUpdate(manager, columns, beans);
-					for (final Object o : beans) {
-						assertParentId((T) o);
-					}
-				}
-			});
 		}
 	}
 

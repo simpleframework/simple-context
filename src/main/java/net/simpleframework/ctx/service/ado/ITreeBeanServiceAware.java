@@ -25,6 +25,8 @@ public interface ITreeBeanServiceAware<T extends ITreeBeanAware> {
 	 */
 	IDataQuery<T> queryChildren(T parent, ColumnData... orderColumns);
 
+	boolean hasChild(T parent);
+
 	/**
 	 * 用parentId和集合缓存树结构
 	 * 
