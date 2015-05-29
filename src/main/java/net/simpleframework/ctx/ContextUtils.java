@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 import net.simpleframework.common.ClassUtils;
 import net.simpleframework.common.ClassUtils.ScanClassResourcesCallback;
+import net.simpleframework.common.Convert;
 import net.simpleframework.common.object.ObjectFactory;
 import net.simpleframework.common.object.ObjectFactory.IObjectCreator;
 import net.simpleframework.common.object.ObjectFactory.IObjectCreatorListener;
@@ -14,6 +15,7 @@ import net.simpleframework.ctx.common.ConsoleThread;
 import net.simpleframework.ctx.common.IDataImportHandler;
 import net.simpleframework.ctx.common.db.DbUtils;
 import net.simpleframework.ctx.service.IBaseService;
+import net.simpleframework.ctx.settings.IContextSettingsConst;
 import net.simpleframework.ctx.trans.TransactionUtils;
 
 /**
@@ -57,10 +59,13 @@ public abstract class ContextUtils {
 		});
 
 		// 执行数据库相关初始化工作
-		DbUtils.doExecuteSql(application);
+		if (Convert.toBool(application.getContextSettings().getProperty(
+				IContextSettingsConst.CTX_DEPLOY_DB))) {
+			DbUtils.doExecuteSql(application);
+		}
+
 		// 模块初始化
 		ModuleContextFactory.doInit(application);
-
 		// others
 		doUtils(application);
 	}
