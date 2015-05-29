@@ -92,7 +92,7 @@ public class PropertiesContextSettings extends ContextSettings {
 
 	private void print(final String key, final Object val) {
 		if (mark.get(key) == null && val != null) {
-			System.out.println("[load property] " + key + "=>" + val);
+			System.out.println("[load property] " + key + " => " + val);
 			mark.put(key, Boolean.TRUE);
 		}
 	}
