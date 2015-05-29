@@ -2,6 +2,8 @@ package net.simpleframework.ctx.settings;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -59,7 +61,9 @@ public class PropertiesContextSettings extends ContextSettings {
 
 	public String getProperty(final String key, final String defaultValue) {
 		final String ret = properties.getProperty(key);
-		return ret != null ? ret : defaultValue;
+		final String val = ret != null ? ret : defaultValue;
+		print(key, val);
+		return val;
 	}
 
 	public void remove(final String key) {
@@ -67,7 +71,9 @@ public class PropertiesContextSettings extends ContextSettings {
 	}
 
 	public int getIntProperty(final String key, final int defaultValue) {
-		return Convert.toInt(properties.getProperty(key), defaultValue);
+		final int val = Convert.toInt(properties.getProperty(key), defaultValue);
+		print(key, val);
+		return val;
 	}
 
 	public int getIntProperty(final String key) {
@@ -75,10 +81,21 @@ public class PropertiesContextSettings extends ContextSettings {
 	}
 
 	public boolean getBoolProperty(final String key, final boolean defaultValue) {
-		return Convert.toBool(properties.getProperty(key), defaultValue);
+		final boolean val = Convert.toBool(properties.getProperty(key), defaultValue);
+		print(key, val);
+		return val;
 	}
 
 	public boolean getBoolProperty(final String key) {
 		return getBoolProperty(key, false);
 	}
+
+	private void print(final String key, final Object val) {
+		if (mark.get(key) == null && val != null) {
+			System.out.println("[load property] " + key + "=>" + val);
+			mark.put(key, Boolean.TRUE);
+		}
+	}
+
+	private final Map<String, Boolean> mark = new HashMap<String, Boolean>();
 }
