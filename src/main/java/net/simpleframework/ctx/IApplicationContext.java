@@ -19,8 +19,11 @@ public interface IApplicationContext extends IApplicationContextBase {
 	/**
 	 * 获取数据源
 	 * 
+	 * @param key
 	 * @return
 	 */
+	DataSource getDataSource(String key);
+
 	DataSource getDataSource();
 
 	/**
@@ -55,6 +58,8 @@ public interface IApplicationContext extends IApplicationContextBase {
 	 * @return
 	 */
 	IADOManagerFactory getADOManagerFactory(DataSource dataSource);
+
+	IADOManagerFactory getADOManagerFactory(String key);
 
 	IADOManagerFactory getADOManagerFactory();
 
