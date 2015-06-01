@@ -389,7 +389,8 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 
 	private final IDbEntityListener CONTEXT_LISTENER = new DbEntityAdapterEx() {
 		@Override
-		public void onBeforeInsert(final IDbEntityManager<?> manager, final Object[] beans) {
+		public void onBeforeInsert(final IDbEntityManager<?> manager, final Object[] beans)
+				throws Exception {
 			super.onBeforeInsert(manager, beans);
 			Integer _domain = null;
 			for (final Object t : beans) {
@@ -417,7 +418,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 				@SuppressWarnings("unchecked")
 				@Override
 				public void onBeforeUpdate(final IDbEntityManager<?> manager, final String[] columns,
-						final Object[] beans) {
+						final Object[] beans) throws Exception {
 					super.onBeforeUpdate(manager, columns, beans);
 					for (final Object o : beans) {
 						assertParentId((T) o);
