@@ -1,5 +1,7 @@
 package net.simpleframework.ctx.settings;
 
+import static net.simpleframework.common.I18n.$m;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -92,7 +94,7 @@ public class PropertiesContextSettings extends ContextSettings {
 
 	private void print(final String key, final Object val) {
 		if (mark.get(key) == null && val != null) {
-			System.out.println("[load property] " + key + " => " + val);
+			System.out.println("[" + $m("PropertiesContextSettings.0") + "] " + key + " => " + val);
 			mark.put(key, Boolean.TRUE);
 		}
 	}
