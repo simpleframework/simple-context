@@ -30,12 +30,8 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 
 		// 初始化应用程序
 		onBeforeInit();
-
-		// 设置权限的实现类，子类需要覆盖
-		PermissionFactory.set(getPagePermissionHandler().getName());
 		// 初始化资源
-		doScanResources(getScanPackageNames());
-
+		doInternalInit(getScanPackageNames());
 		// 初始化应用程序
 		onAfterInit();
 	}
@@ -53,7 +49,7 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 
 	protected abstract Class<? extends IPermissionHandler> getPagePermissionHandler();
 
-	protected void doScanResources(final String[] packageNames) throws Exception {
+	protected void doInternalInit(final String[] packageNames) throws Exception {
 		// i18n
 		final IScanResourcesCallback i18nCallback = I18n.getBasenamesCallback();
 		// 启动类
@@ -73,6 +69,9 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 			ClassUtils.scanResources(packageName, i18nCallback);
 			ClassUtils.scanResources(packageName, startupCallback);
 		}
+
+		// 设置权限的实现类
+		PermissionFactory.set(getPagePermissionHandler().getName());
 	}
 
 	private String[] scanPackageNames;
