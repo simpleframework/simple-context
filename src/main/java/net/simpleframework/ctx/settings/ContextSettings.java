@@ -1,6 +1,7 @@
 package net.simpleframework.ctx.settings;
 
 import java.io.File;
+import java.util.Locale;
 
 import net.simpleframework.common.FileUtils;
 import net.simpleframework.common.object.ObjectEx;
@@ -32,6 +33,15 @@ public abstract class ContextSettings extends ObjectEx {
 	 */
 	public boolean isDebug() {
 		return applicationSettings != null ? applicationSettings.isDebug() : true;
+	}
+
+	/**
+	 * 语言
+	 * 
+	 * @return
+	 */
+	public Locale getLocale() {
+		return applicationSettings != null ? applicationSettings.getLocale() : Locale.getDefault();
 	}
 
 	/**

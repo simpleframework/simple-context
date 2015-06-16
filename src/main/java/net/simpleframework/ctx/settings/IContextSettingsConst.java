@@ -14,6 +14,7 @@ public interface IContextSettingsConst {
 	static final String DBPOOL_ENTITYMANAGER = "entitymanager";
 
 	static final String CTX_CHARSET = "ctx.charset";
+	static final String CTX_LOCALE = "ctx.locale";
 	static final String CTX_RESOURCECOMPRESS = "ctx.resourcecompress";
 	static final String CTX_PERMISSIONHANDLER = "ctx.permissionhandler";
 	static final String CTX_DEBUG = "ctx.debug";
