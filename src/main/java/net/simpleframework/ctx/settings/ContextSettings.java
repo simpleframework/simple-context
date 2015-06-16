@@ -1,7 +1,6 @@
 package net.simpleframework.ctx.settings;
 
 import java.io.File;
-import java.lang.management.ManagementFactory;
 
 import net.simpleframework.common.FileUtils;
 import net.simpleframework.common.object.ObjectEx;
@@ -17,7 +16,13 @@ import net.simpleframework.ctx.permission.PermissionConst;
  */
 public abstract class ContextSettings extends ObjectEx {
 
+	protected ContextSettings applicationSettings;
+
 	public void onInit(final IApplicationContext context) throws Exception {
+	}
+
+	public void setApplicationSettings(final ContextSettings applicationSettings) {
+		this.applicationSettings = applicationSettings;
 	}
 
 	/**
@@ -26,7 +31,7 @@ public abstract class ContextSettings extends ObjectEx {
 	 * @return
 	 */
 	public boolean isDebug() {
-		return true;
+		return applicationSettings != null ? applicationSettings.isDebug() : true;
 	}
 
 	/**
@@ -35,23 +40,31 @@ public abstract class ContextSettings extends ObjectEx {
 	 * @return
 	 */
 	public String getCharset() {
-		return "UTF-8";
+		return applicationSettings != null ? applicationSettings.getCharset() : "UTF-8";
 	}
 
 	protected File homeDir, tmpDir;
 
 	public File getHomeFileDir() {
-		if (homeDir == null) {
-			homeDir = new File(System.getProperty("java.home"));
-			if (!homeDir.exists()) {
-				FileUtils.createDirectoryRecursively(homeDir);
+		if (applicationSettings != null) {
+			return applicationSettings.getHomeFileDir();
+		} else {
+			if (homeDir == null) {
+				homeDir = new File(System.getProperty("java.home"));
+				if (!homeDir.exists()) {
+					FileUtils.createDirectoryRecursively(homeDir);
+				}
 			}
+			return homeDir;
 		}
-		return homeDir;
 	}
 
 	public void setHomeFileDir(final File homeDir) {
-		this.homeDir = homeDir;
+		if (applicationSettings != null) {
+			applicationSettings.setHomeFileDir(homeDir);
+		} else {
+			this.homeDir = homeDir;
+		}
 	}
 
 	/**
@@ -60,14 +73,18 @@ public abstract class ContextSettings extends ObjectEx {
 	 * @return
 	 */
 	public File getTmpFiledir() {
-		if (tmpDir == null) {
-			tmpDir = new File(getHomeFileDir().getAbsoluteFile() + File.separator + "$temp"
-					+ File.separator);
-			if (!tmpDir.exists()) {
-				FileUtils.createDirectoryRecursively(tmpDir);
+		if (applicationSettings != null) {
+			return applicationSettings.getTmpFiledir();
+		} else {
+			if (tmpDir == null) {
+				tmpDir = new File(getHomeFileDir().getAbsoluteFile() + File.separator + "$temp"
+						+ File.separator);
+				if (!tmpDir.exists()) {
+					FileUtils.createDirectoryRecursively(tmpDir);
+				}
 			}
+			return tmpDir;
 		}
-		return tmpDir;
 	}
 
 	/**
@@ -76,18 +93,12 @@ public abstract class ContextSettings extends ObjectEx {
 	 * @return
 	 */
 	public String getDefaultRole() {
-		return PermissionConst.ROLE_ANONYMOUS;
-	}
-
-	private static String pid;
-	static {
-		final String name = ManagementFactory.getRuntimeMXBean().getName();
-		pid = name.substring(0, name.indexOf("@"));
+		return applicationSettings != null ? applicationSettings.getDefaultRole()
+				: PermissionConst.ROLE_ANONYMOUS;
 	}
 
 	public String getContextNo() {
-		// 获取服务编号
-		return pid;
+		return applicationSettings != null ? applicationSettings.getContextNo() : "0";
 	}
 
 	public String getProperty(final String key) {
