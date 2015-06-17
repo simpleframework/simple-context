@@ -19,6 +19,7 @@ public interface IContextSettingsConst {
 	static final String CTX_PERMISSIONHANDLER = "ctx.permissionhandler";
 	static final String CTX_DEBUG = "ctx.debug";
 	static final String CTX_DEPLOY_DB = "ctx.deploydb";
+	static final String CTX_CONSOLE_THREAD = "ctx.console.thread";
 	static final String CTX_NO = "ctx.no";
 
 	static final String MVC_SERVERPORT = "mvc.serverport";

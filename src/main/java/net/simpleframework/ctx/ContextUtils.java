@@ -1,5 +1,7 @@
 package net.simpleframework.ctx;
 
+import static net.simpleframework.common.I18n.$m;
+
 import java.lang.reflect.Field;
 
 import net.simpleframework.common.ClassUtils;
@@ -15,6 +17,7 @@ import net.simpleframework.ctx.common.ConsoleThread;
 import net.simpleframework.ctx.common.IDataImportHandler;
 import net.simpleframework.ctx.common.db.DbUtils;
 import net.simpleframework.ctx.service.IBaseService;
+import net.simpleframework.ctx.settings.ContextSettings;
 import net.simpleframework.ctx.settings.IContextSettingsConst;
 import net.simpleframework.ctx.trans.TransactionUtils;
 
@@ -24,11 +27,17 @@ import net.simpleframework.ctx.trans.TransactionUtils;
  * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
-public abstract class ContextUtils {
+public abstract class ContextUtils implements IContextSettingsConst {
 
 	public static void doInit(final IApplicationContext application) throws Exception {
+		final ContextSettings settings = application.getContextSettings();
+
 		// 启动控制台线程
-		ConsoleThread.doInit();
+		if (Convert.toBool(settings.getProperty(CTX_CONSOLE_THREAD))) {
+			ConsoleThread.doInit();
+			System.out.println($m("ContextUtils.0"));
+		}
+
 		// 定义代理对象
 		ObjectFactory.get().set(new IObjectCreator() {
 			@Override
@@ -59,9 +68,9 @@ public abstract class ContextUtils {
 		});
 
 		// 执行数据库相关初始化工作
-		if (Convert.toBool(application.getContextSettings().getProperty(
-				IContextSettingsConst.CTX_DEPLOY_DB))) {
+		if (Convert.toBool(settings.getProperty(CTX_DEPLOY_DB))) {
 			DbUtils.doExecuteSql(application);
+			System.out.println($m("ContextUtils.1"));
 		}
 
 		// 模块初始化
