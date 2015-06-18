@@ -17,6 +17,7 @@ import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.Version;
 import net.simpleframework.common.logger.Log;
 import net.simpleframework.common.logger.LogFactory;
+import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.ctx.common.xml.XmlDocument;
 import net.simpleframework.ctx.common.xml.XmlDocument.XmlDocumentException;
 import net.simpleframework.ctx.common.xml.XmlElement;
@@ -41,7 +42,7 @@ public abstract class DbCreator {
 			final String filepath) throws IOException {
 		SqlScriptDocument document;
 		try {
-			System.out.println("loading: " + filepath);
+			ObjectEx.oprintln("loading: " + filepath);
 			document = new SqlScriptDocument(new File(filepath));
 		} catch (final Exception e) {
 			log.warn(e);

@@ -17,6 +17,7 @@ import net.simpleframework.common.ClassUtils;
 import net.simpleframework.common.ClassUtils.IScanResourcesCallback;
 import net.simpleframework.common.ClassUtils.ScanClassResourcesCallback;
 import net.simpleframework.common.FileUtils;
+import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.common.object.ObjectUtils;
 import net.simpleframework.ctx.IApplicationContext;
 import net.simpleframework.ctx.settings.ContextSettings;
@@ -39,7 +40,7 @@ public abstract class DbUtils {
 
 		final String[] packageNames = application.getScanPackageNames();
 		if (packageNames != null) {
-			System.out.println($m("DbUtils.0"));
+			ObjectEx.oprintln($m("DbUtils.0"));
 
 			final List<String> sqlFiles = new ArrayList<String>();
 			for (final String packageName : packageNames) {

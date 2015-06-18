@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import net.simpleframework.common.ClassUtils;
 import net.simpleframework.common.ClassUtils.ScanClassResourcesCallback;
 import net.simpleframework.common.Convert;
+import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.common.object.ObjectFactory;
 import net.simpleframework.common.object.ObjectFactory.IObjectCreator;
 import net.simpleframework.common.object.ObjectFactory.IObjectCreatorListener;
@@ -35,7 +36,7 @@ public abstract class ContextUtils implements IContextSettingsConst {
 		// 启动控制台线程
 		if (Convert.toBool(settings.getProperty(CTX_CONSOLE_THREAD))) {
 			ConsoleThread.doInit();
-			System.out.println($m("ContextUtils.0"));
+			ObjectEx.oprintln($m("ContextUtils.0"));
 		}
 
 		// 定义代理对象
@@ -70,7 +71,7 @@ public abstract class ContextUtils implements IContextSettingsConst {
 		// 执行数据库相关初始化工作
 		if (Convert.toBool(settings.getProperty(CTX_DEPLOY_DB))) {
 			DbUtils.doExecuteSql(application);
-			System.out.println($m("ContextUtils.1"));
+			ObjectEx.oprintln($m("ContextUtils.1"));
 		}
 
 		// 模块初始化

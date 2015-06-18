@@ -4,6 +4,7 @@ import java.io.PrintStream;
 
 import net.simpleframework.common.FileUtils;
 import net.simpleframework.common.StringUtils;
+import net.simpleframework.common.object.ObjectEx;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -45,7 +46,7 @@ public interface IConsoleCommand {
 				stream.println("free memory before gc: " + size);
 				stream.println();
 				System.gc();
-				System.out.println("garbage collection ok.");
+				ObjectEx.oprintln("garbage collection ok.");
 				stream.println();
 				size = FileUtils.toFileSize(Runtime.getRuntime().freeMemory());
 				stream.println("free memory after gc: " + size);

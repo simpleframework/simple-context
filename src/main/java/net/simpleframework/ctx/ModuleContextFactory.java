@@ -13,6 +13,7 @@ import net.simpleframework.common.ClassUtils;
 import net.simpleframework.common.ClassUtils.ScanClassResourcesCallback;
 import net.simpleframework.common.logger.Log;
 import net.simpleframework.common.logger.LogFactory;
+import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.ctx.common.db.DbUtils;
 
 /**
@@ -73,7 +74,7 @@ public class ModuleContextFactory {
 			return;
 		}
 
-		System.out.println($m("ModuleContextFactory.0"));
+		ObjectEx.oprintln($m("ModuleContextFactory.0"));
 		for (final String packageName : packageNames) {
 			ClassUtils.scanResources(packageName, new ScanClassResourcesCallback() {
 				@Override
