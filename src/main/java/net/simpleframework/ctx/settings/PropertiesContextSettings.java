@@ -93,9 +93,11 @@ public class PropertiesContextSettings extends ContextSettings {
 	}
 
 	private void print(final String key, final Object val) {
-		if (!IContextSettingsConst.CTX_LOCALE.equals(key) && mark.get(key) == null && val != null) {
-			System.out.println("[" + $m("PropertiesContextSettings.0") + "] " + key + " => " + val);
-			mark.put(key, Boolean.TRUE);
+		synchronized (mark) {
+			if (!IContextSettingsConst.CTX_LOCALE.equals(key) && mark.get(key) == null && val != null) {
+				System.out.println("[" + $m("PropertiesContextSettings.0") + "] " + key + " => " + val);
+				mark.put(key, Boolean.TRUE);
+			}
 		}
 	}
 
