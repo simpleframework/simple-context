@@ -82,6 +82,16 @@ public class PropertiesContextSettings extends ContextSettings {
 		return getIntProperty(key, 0);
 	}
 
+	public double getDoubleProperty(final String key, final double defaultValue) {
+		final double val = Convert.toDouble(properties.getProperty(key), defaultValue);
+		print(key, val);
+		return val;
+	}
+
+	public double getDoubleProperty(final String key) {
+		return getDoubleProperty(key, 0d);
+	}
+
 	public boolean getBoolProperty(final String key, final boolean defaultValue) {
 		final boolean val = Convert.toBool(properties.getProperty(key), defaultValue);
 		print(key, val);
