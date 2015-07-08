@@ -2,6 +2,7 @@ package net.simpleframework.ctx.task;
 
 import java.util.Date;
 
+import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.object.ObjectEx;
 
 /**
@@ -39,7 +40,7 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 	}
 
 	public String getTasktext() {
-		return tasktext;
+		return StringUtils.text(tasktext, getTaskname());
 	}
 
 	public ExecutorRunnable setTasktext(final String tasktext) {
