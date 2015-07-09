@@ -61,8 +61,8 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 	public void run() {
 		try {
 			final Date n = new Date();
-			task();
 			print(n);
+			task();
 		} catch (final Throwable ex) {
 			getLog().warn(ex);
 		}
