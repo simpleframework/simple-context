@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.simpleframework.common.NumberUtils;
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.object.ObjectEx;
 
@@ -17,6 +18,9 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 
 	protected abstract void task(Map<String, Object> cache) throws Exception;
 
+	/* 延迟，单位秒 */
+	private long initialDelay;
+	/* 周期，单位秒 */
 	private long period;
 
 	private String taskname, tasktext;
@@ -56,6 +60,15 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 
 	public ExecutorRunnable setPeriod(final long period) {
 		this.period = period;
+		return this;
+	}
+
+	public long getInitialDelay() {
+		return initialDelay > 0 ? initialDelay : NumberUtils.randomLong(0, getPeriod());
+	}
+
+	public ExecutorRunnable setInitialDelay(final long initialDelay) {
+		this.initialDelay = initialDelay;
 		return this;
 	}
 

@@ -15,8 +15,6 @@ public interface ITaskExecutor {
 	 */
 	void execute(ExecutorRunnable task);
 
-	void addScheduledTask(long period, ExecutorRunnable task);
-
 	/**
 	 * 
 	 * @param initialDelay
@@ -26,6 +24,8 @@ public interface ITaskExecutor {
 	 * @param task
 	 */
 	void addScheduledTask(long initialDelay, long period, ExecutorRunnable task);
+
+	void addScheduledTask(ExecutorRunnable task);
 
 	void removeScheduledTask(ExecutorRunnable task);
 

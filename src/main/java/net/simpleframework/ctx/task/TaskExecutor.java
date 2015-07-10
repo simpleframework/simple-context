@@ -9,7 +9,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import net.simpleframework.common.NumberUtils;
 import net.simpleframework.common.object.ObjectEx;
 
 /**
@@ -53,13 +52,14 @@ public class TaskExecutor extends ObjectEx implements ITaskExecutor {
 		if (coll == null) {
 			scheduledTasksCache.put(taskname, coll = new ArrayList<ScheduledFuture<?>>());
 		}
-		coll.add(getExecutorService().scheduleAtFixedRate(task.setPeriod(period), initialDelay,
-				period, TimeUnit.SECONDS));
+		coll.add(getExecutorService().scheduleAtFixedRate(
+				task.setPeriod(period).setInitialDelay(initialDelay), initialDelay, period,
+				TimeUnit.SECONDS));
 	}
 
 	@Override
-	public void addScheduledTask(final long period, final ExecutorRunnable task) {
-		addScheduledTask(NumberUtils.randomLong(0, period), period, task);
+	public void addScheduledTask(final ExecutorRunnable task) {
+		addScheduledTask(task.getInitialDelay(), task.getPeriod(), task);
 	}
 
 	@Override
