@@ -1,6 +1,8 @@
 package net.simpleframework.ctx.task;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.object.ObjectEx;
@@ -13,7 +15,7 @@ import net.simpleframework.common.object.ObjectEx;
  */
 public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 
-	protected abstract void task() throws Exception;
+	protected abstract void task(Map<String, Object> cache) throws Exception;
 
 	private long period;
 
@@ -57,17 +59,24 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 		return this;
 	}
 
+	protected boolean isRun(final Map<String, Object> cache) throws Exception {
+		return true;
+	}
+
 	@Override
 	public void run() {
 		try {
-			final Date n = new Date();
-			print(n);
-			task();
+			final Map<String, Object> cache = new HashMap<String, Object>();
+			if (!isRun(cache)) {
+				return;
+			}
+			print(cache, new Date());
+			task(cache);
 		} catch (final Throwable ex) {
 			getLog().warn(ex);
 		}
 	}
 
-	protected void print(final Date n) {
+	protected void print(final Map<String, Object> cache, final Date n) {
 	}
 }
