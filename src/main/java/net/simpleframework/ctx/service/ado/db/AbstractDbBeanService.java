@@ -76,7 +76,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		return getEntityManager().getBean(id);
 	}
 
-	public T getBean(final String expr, final Object... params) {
+	public T getBean(final CharSequence expr, final Object... params) {
 		return getEntityManager().queryForBean(new ExpressionValue(expr, params));
 	}
 
@@ -367,7 +367,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 				}
 			}
 		}
-		return new ExpressionValue(sql.toString(), al.toArray());
+		return new ExpressionValue(sql, al.toArray());
 	}
 
 	protected ID getLoginId() {
