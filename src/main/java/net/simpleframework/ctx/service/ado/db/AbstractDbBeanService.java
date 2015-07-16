@@ -60,7 +60,8 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	public IModuleContext getModuleContext() {
 		final IModuleContext context = super.getModuleContext();
 		if (context == null) {
-			throw ModuleContextException.of($m("AbstractDbBeanService.4"));
+			throw ModuleContextException.of("[" + getClass().getSimpleName() + "] "
+					+ $m("AbstractDbBeanService.4"));
 		}
 		return context;
 	}
