@@ -83,13 +83,18 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 			if (!isRun(cache)) {
 				return;
 			}
-			print(cache, new Date());
+			final Date s = new Date();
+			prints(cache, s);
 			task(cache);
+			printe(cache, s);
 		} catch (final Throwable ex) {
 			getLog().warn(ex);
 		}
 	}
 
-	protected void print(final Map<String, Object> cache, final Date n) {
+	protected void prints(final Map<String, Object> cache, final Date n) {
+	}
+
+	protected void printe(final Map<String, Object> cache, final Date n) {
 	}
 }
