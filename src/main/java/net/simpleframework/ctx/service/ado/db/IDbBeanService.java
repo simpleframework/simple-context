@@ -52,13 +52,21 @@ public interface IDbBeanService<T> extends IADOBeanService<T> {
 	 */
 	void insert(T... beans);
 
+	int count(CharSequence expr, Object... params);
+
 	int count();
 
+	Number sum(String column, CharSequence expr, Object... params);
+
 	Number sum(String column);
+
+	Number max(String column, CharSequence expr, Object... params);
 
 	Number max(String column);
 
 	Number avg(String column);
+
+	Number avg(String column, CharSequence expr, Object... params);
 
 	/**
 	 * @param bean1

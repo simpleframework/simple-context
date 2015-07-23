@@ -162,7 +162,8 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	 * @param params
 	 * @return
 	 */
-	public int count(final String expr, final Object... params) {
+	@Override
+	public int count(final CharSequence expr, final Object... params) {
 		return getEntityManager().count(new ExpressionValue(expr, params));
 	}
 
@@ -179,7 +180,8 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	 * @param params
 	 * @return
 	 */
-	public Number sum(final String column, final String expr, final Object... params) {
+	@Override
+	public Number sum(final String column, final CharSequence expr, final Object... params) {
 		return getEntityManager().sum(column, new ExpressionValue(expr, params));
 	}
 
@@ -196,7 +198,8 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	 * @param params
 	 * @return
 	 */
-	public Number max(final String column, final String expr, final Object... params) {
+	@Override
+	public Number max(final String column, final CharSequence expr, final Object... params) {
 		return getEntityManager().max(column, new ExpressionValue(expr, params));
 	}
 
@@ -205,7 +208,8 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		return max(column, "1=1");
 	}
 
-	public Number avg(final String column, final String expr, final Object... params) {
+	@Override
+	public Number avg(final String column, final CharSequence expr, final Object... params) {
 		return getEntityManager().avg(column, new ExpressionValue(expr, params));
 	}
 
