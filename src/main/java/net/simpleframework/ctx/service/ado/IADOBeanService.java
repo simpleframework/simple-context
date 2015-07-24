@@ -1,6 +1,6 @@
 package net.simpleframework.ctx.service.ado;
 
-import net.simpleframework.ado.IADOListener;
+import net.simpleframework.ado.db.event.IDbEntityListener;
 import net.simpleframework.ado.query.IDataQuery;
 import net.simpleframework.ctx.service.IBaseService;
 
@@ -33,5 +33,5 @@ public interface IADOBeanService<T> extends IBaseService {
 	 */
 	IDataQuery<T> queryAll();
 
-	void addListener(IADOListener listener);
+	void addListener(IDbEntityListener<T> listener);
 }

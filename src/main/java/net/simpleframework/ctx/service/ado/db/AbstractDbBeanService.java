@@ -9,17 +9,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import net.simpleframework.ado.ADOException;
 import net.simpleframework.ado.ColumnData;
 import net.simpleframework.ado.EOrder;
 import net.simpleframework.ado.FilterItem;
 import net.simpleframework.ado.FilterItems;
-import net.simpleframework.ado.IADOListener;
 import net.simpleframework.ado.IADOManagerFactoryAware;
 import net.simpleframework.ado.IParamsValue;
-import net.simpleframework.ado.IParamsValue.AbstractParamsValue;
 import net.simpleframework.ado.bean.AbstractIdBean;
 import net.simpleframework.ado.bean.IDomainBeanAware;
 import net.simpleframework.ado.bean.IIdBeanAware;
@@ -28,7 +25,6 @@ import net.simpleframework.ado.db.DbManagerFactory;
 import net.simpleframework.ado.db.DbTableColumn;
 import net.simpleframework.ado.db.IDbDataQuery;
 import net.simpleframework.ado.db.IDbEntityManager;
-import net.simpleframework.ado.db.IDbManager;
 import net.simpleframework.ado.db.IDbQueryManager;
 import net.simpleframework.ado.db.common.ExpressionValue;
 import net.simpleframework.ado.db.event.DbEntityAdapter;
@@ -38,6 +34,7 @@ import net.simpleframework.ado.query.IDataQuery;
 import net.simpleframework.common.BeanUtils;
 import net.simpleframework.common.ID;
 import net.simpleframework.common.coll.ArrayUtils;
+import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.common.object.ObjectFactory;
 import net.simpleframework.common.th.NotImplementedException;
 import net.simpleframework.ctx.IModuleContext;
@@ -271,7 +268,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	}
 
 	@Override
-	public void addListener(final IADOListener listener) {
+	public void addListener(final IDbEntityListener<T> listener) {
 		getEntityManager().addListener(listener);
 	}
 
@@ -319,24 +316,15 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		return mgr;
 	}
 
-	protected Map<String, Integer> COUNT_STATS = new ConcurrentHashMap<String, Integer>();
+	protected static class DbEntityAdapterEx<T> extends DbEntityAdapter<T> {
 
-	protected class DbEntityAdapterEx extends DbEntityAdapter {
-
-		protected Collection<T> coll(final IParamsValue paramsValue) {
-			return ((AbstractParamsValue<?>) paramsValue).getAttrCache("coll",
-					new CacheV<Collection<T>>() {
-						@Override
-						public Collection<T> get() {
-							return DataQueryUtils.toList(getEntityManager().queryBeans(paramsValue));
-						}
-					});
-		}
-
-		@Override
-		protected void doAfterEvent(final IDbManager service, final Object params) {
-			super.doAfterEvent(service, params);
-			COUNT_STATS.clear();
+		protected Collection<T> coll(final IDbEntityManager<T> service, final IParamsValue paramsValue) {
+			return ((ObjectEx) paramsValue).getAttrCache("coll", new CacheV<Collection<T>>() {
+				@Override
+				public Collection<T> get() {
+					return DataQueryUtils.toList(service.queryBeans(paramsValue));
+				}
+			});
 		}
 	}
 
@@ -392,13 +380,13 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		return null;
 	}
 
-	private final IDbEntityListener CONTEXT_LISTENER = new DbEntityAdapterEx() {
+	private final IDbEntityListener<T> CONTEXT_LISTENER = new DbEntityAdapterEx<T>() {
 		@Override
-		public void onBeforeInsert(final IDbEntityManager<?> manager, final Object[] beans)
+		public void onBeforeInsert(final IDbEntityManager<T> manager, final T[] beans)
 				throws Exception {
 			super.onBeforeInsert(manager, beans);
 			Integer _domain = null;
-			for (final Object t : beans) {
+			for (final T t : beans) {
 				IDomainBeanAware bean;
 				if (t instanceof IDomainBeanAware && (bean = (IDomainBeanAware) t).getDomain() == 0) {
 					if (_domain == null) {
@@ -419,14 +407,13 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		super.onInit();
 
 		if (this instanceof ITreeBeanServiceAware) {
-			addListener(new DbEntityAdapterEx() {
-				@SuppressWarnings("unchecked")
+			addListener(new DbEntityAdapterEx<T>() {
 				@Override
-				public void onBeforeUpdate(final IDbEntityManager<?> manager, final String[] columns,
-						final Object[] beans) throws Exception {
+				public void onBeforeUpdate(final IDbEntityManager<T> manager, final String[] columns,
+						final T[] beans) throws Exception {
 					super.onBeforeUpdate(manager, columns, beans);
-					for (final Object o : beans) {
-						assertParentId((T) o);
+					for (final T o : beans) {
+						assertParentId(o);
 					}
 				}
 			});
