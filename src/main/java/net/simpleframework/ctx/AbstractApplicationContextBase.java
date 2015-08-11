@@ -28,10 +28,16 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 	public void onInit() throws Exception {
 		ApplicationContextFactory.get().setApplicationContextBase(this);
 
+		// i18n
+		final String[] packages = getScanPackageNames();
+		for (final String packageName : packages) {
+			ClassUtils.scanResources(packageName, I18n.getBasenamesCallback());
+		}
+
 		// 初始化应用程序
 		onBeforeInit();
 		// 初始化资源
-		doInternalInit(getScanPackageNames());
+		doInternalInit(packages);
 		// 初始化应用程序
 		onAfterInit();
 	}
@@ -50,8 +56,6 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 	protected abstract Class<? extends IPermissionHandler> getPagePermissionHandler();
 
 	protected void doInternalInit(final String[] packageNames) throws Exception {
-		// i18n
-		final IScanResourcesCallback i18nCallback = I18n.getBasenamesCallback();
 		// 启动类
 		final IApplicationContext application = (IApplicationContext) this;
 		final IScanResourcesCallback startupCallback = new ScanClassResourcesCallback() {
@@ -66,7 +70,6 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 		};
 
 		for (final String packageName : packageNames) {
-			ClassUtils.scanResources(packageName, i18nCallback);
 			ClassUtils.scanResources(packageName, startupCallback);
 		}
 
