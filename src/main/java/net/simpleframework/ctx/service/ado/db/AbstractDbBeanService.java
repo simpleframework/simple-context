@@ -69,9 +69,28 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		return (T) ObjectFactory.newInstance(getBeanClass());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public T getBean(final Object id) {
-		return getEntityManager().getBean(id);
+		if (id == null) {
+			return null;
+		}
+		if (getBeanClass().isAssignableFrom(id.getClass())) {
+			return (T) id;
+		}
+		return getEntityManager().getBean(getIdParam(id));
+	}
+
+	protected Object getIdParam(final Object bean) {
+		if (bean instanceof String || bean instanceof ID) {
+			return bean;
+		} else if (bean instanceof IIdBeanAware) {
+			return ((AbstractIdBean) bean).getId();
+		} else if (bean != null) {
+			final Object id = BeanUtils.getProperty(bean, "id");
+			return id != null ? id : bean;
+		}
+		return null;
 	}
 
 	public T getBean(final CharSequence expr, final Object... params) {
@@ -366,18 +385,6 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	protected ID getLoginId() {
 		final LoginWrapper lw = LoginUser.get();
 		return lw != null ? lw.getUserId() : null;
-	}
-
-	protected Object getIdParam(final Object bean) {
-		if (bean instanceof String || bean instanceof ID) {
-			return bean;
-		} else if (bean instanceof IIdBeanAware) {
-			return ((AbstractIdBean) bean).getId();
-		} else if (bean != null) {
-			final Object id = BeanUtils.getProperty(bean, "id");
-			return id != null ? id : bean;
-		}
-		return null;
 	}
 
 	private final IDbEntityListener<T> CONTEXT_LISTENER = new DbEntityAdapterEx<T>() {
