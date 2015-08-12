@@ -41,6 +41,10 @@ public class PermissionDept extends PermissionEntity<PermissionDept> {
 		return getChildren().size() > 0;
 	}
 
+	public boolean isOrg() {
+		return false;
+	}
+
 	public List<PermissionDept> getChildren() {
 		return CollectionUtils.EMPTY_LIST();
 	}
