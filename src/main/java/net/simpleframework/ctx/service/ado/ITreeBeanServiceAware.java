@@ -1,12 +1,8 @@
 package net.simpleframework.ctx.service.ado;
 
-import java.util.Collection;
-import java.util.Map;
-
 import net.simpleframework.ado.ColumnData;
 import net.simpleframework.ado.bean.ITreeBeanAware;
 import net.simpleframework.ado.query.IDataQuery;
-import net.simpleframework.common.ID;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -26,13 +22,6 @@ public interface ITreeBeanServiceAware<T extends ITreeBeanAware> {
 	IDataQuery<T> queryChildren(T parent, ColumnData... orderColumns);
 
 	boolean hasChild(T parent);
-
-	/**
-	 * 用parentId和集合缓存树结构
-	 * 
-	 * @return
-	 */
-	Map<ID, Collection<T>> queryAllTree();
 
 	/**
 	 * 获取树节点的层次

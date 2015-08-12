@@ -6,7 +6,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -443,11 +442,6 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		return c > 0;
 	}
 
-	public Map<ID, Collection<T>> queryAllTree() {
-		assertTreeBean();
-		return toTreeMap(queryAll());
-	}
-
 	public int getLevel(final T node) {
 		assertTreeBean();
 		int l = 1;
@@ -456,21 +450,6 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 			l++;
 		}
 		return l;
-	}
-
-	protected Map<ID, Collection<T>> toTreeMap(final IDataQuery<T> dq) {
-		dq.setFetchSize(0);
-		final Map<ID, Collection<T>> _map = new HashMap<ID, Collection<T>>();
-		T t;
-		while ((t = dq.next()) != null) {
-			final ID k = ((ITreeBeanAware) t).getParentId();
-			Collection<T> coll = k != null ? _map.get(k) : _map.get(ID.NULL_ID);
-			if (coll == null) {
-				_map.put(k, coll = new ArrayList<T>());
-			}
-			coll.add(t);
-		}
-		return _map;
 	}
 
 	protected void assertTreeBean() {
