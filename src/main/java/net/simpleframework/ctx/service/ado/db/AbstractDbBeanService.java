@@ -238,13 +238,13 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	}
 
 	@Override
-	public Object exchange(final T bean1, final T bean2, final DbTableColumn order, final boolean up) {
-		return getEntityManager().exchange(bean1, bean2, order, up);
+	public void exchange(final DbTableColumn order, final T... beans) {
+		getEntityManager().exchange(order, beans);
 	}
 
 	@Override
-	public Object exchange(final T bean1, final T bean2, final boolean up) {
-		return exchange(bean1, bean2, new DbTableColumn("oorder"), up);
+	public void exchange(final T... beans) {
+		exchange(new DbTableColumn("oorder"), beans);
 	}
 
 	@Override
@@ -290,6 +290,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		getEntityManager().addListener(listener);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public Class<?> getBeanClass() {
 		Type superclass = getClass().getGenericSuperclass();

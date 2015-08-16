@@ -69,15 +69,14 @@ public interface IDbBeanService<T> extends IADOBeanService<T> {
 	Number avg(String column, CharSequence expr, Object... params);
 
 	/**
-	 * @param bean1
-	 * @param bean2
+	 * 交换位置
+	 * 
 	 * @param order
-	 * @param up
-	 * @return
+	 * @param beans
 	 */
-	Object exchange(T bean1, T bean2, DbTableColumn order, boolean up);
+	void exchange(DbTableColumn order, T... beans);
 
-	Object exchange(T bean1, T bean2, boolean up);
+	void exchange(T... beans);
 
 	/**
 	 * 获取实体表管理器
@@ -102,4 +101,6 @@ public interface IDbBeanService<T> extends IADOBeanService<T> {
 	IDbQueryManager getQueryManager();
 
 	String getTablename(Class<?> beanClass);
+
+	Class<?> getBeanClass();
 }
