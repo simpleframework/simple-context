@@ -333,7 +333,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		final Class<T> beanClass = (Class<T>) getBeanClass();
 		final IDbEntityManager<T> mgr = getEntityManager(beanClass);
 		if (mgr == null) {
-			throw ModuleContextException.of($m("AbstractDbBeanService.3"));
+			throw ModuleContextException.of($m("AbstractDbBeanService.3", beanClass.getName()));
 		}
 		return mgr;
 	}
