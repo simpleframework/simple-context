@@ -103,4 +103,12 @@ public interface IDbBeanService<T> extends IADOBeanService<T> {
 	String getTablename(Class<?> beanClass);
 
 	Class<?> getBeanClass();
+
+	// / sql
+
+	T getBean(CharSequence expr, Object... params);
+
+	IDataQuery<T> query(CharSequence expr, Object... params);
+
+	int deleteWith(String expr, Object... params);
 }

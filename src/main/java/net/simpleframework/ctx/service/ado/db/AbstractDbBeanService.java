@@ -92,10 +92,12 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 		return null;
 	}
 
+	@Override
 	public T getBean(final CharSequence expr, final Object... params) {
 		return getEntityManager().queryForBean(new ExpressionValue(expr, params));
 	}
 
+	@Override
 	public IDataQuery<T> query(final CharSequence expr, final Object... params) {
 		return getEntityManager().queryBeans(new ExpressionValue(expr, params));
 	}
@@ -266,6 +268,7 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	 * @param params
 	 * @return
 	 */
+	@Override
 	public int deleteWith(final String expr, final Object... params) {
 		return getEntityManager().delete(new ExpressionValue(expr, params));
 	}
