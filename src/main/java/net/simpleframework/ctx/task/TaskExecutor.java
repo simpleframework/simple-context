@@ -45,7 +45,7 @@ public class TaskExecutor extends ObjectEx implements ITaskExecutor {
 	}
 
 	@Override
-	public void addScheduledTask(final long initialDelay, final long period,
+	public void addScheduledTask(final int initialDelay, final int period,
 			final ExecutorRunnable task) {
 		final String taskname = task.getTaskname();
 		Collection<ScheduledFuture<?>> coll = scheduledTasksCache.get(taskname);

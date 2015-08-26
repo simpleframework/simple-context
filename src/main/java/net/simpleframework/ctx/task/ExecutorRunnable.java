@@ -1,9 +1,11 @@
 package net.simpleframework.ctx.task;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.simpleframework.common.DateUtils;
 import net.simpleframework.common.NumberUtils;
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.object.ObjectEx;
@@ -19,9 +21,9 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 	protected abstract void task(Map<String, Object> cache) throws Exception;
 
 	/* 延迟，单位秒 */
-	private long initialDelay;
+	private int initialDelay;
 	/* 周期，单位秒 */
-	private long period;
+	private int period;
 
 	private String taskname, tasktext;
 
@@ -54,22 +56,32 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 		return this;
 	}
 
-	public long getPeriod() {
+	public int getPeriod() {
 		return period;
 	}
 
-	public ExecutorRunnable setPeriod(final long period) {
+	public ExecutorRunnable setPeriod(final int period) {
 		this.period = period;
 		return this;
 	}
 
-	public long getInitialDelay() {
-		return initialDelay > 0 ? initialDelay : NumberUtils.randomLong(0, getPeriod());
+	public int getInitialDelay() {
+		return initialDelay > 0 ? initialDelay : NumberUtils.randomInt(0, getPeriod());
 	}
 
-	public ExecutorRunnable setInitialDelay(final long initialDelay) {
+	public ExecutorRunnable setInitialDelay(final int initialDelay) {
 		this.initialDelay = initialDelay;
 		return this;
+	}
+
+	protected int getZeroDelay() {
+		return getZeroDelay(NumberUtils.randomInt(0, 60 * 60));
+	}
+
+	protected int getZeroDelay(final int delay) {
+		final Calendar cal = DateUtils.getZeroPoint();
+		cal.add(Calendar.HOUR_OF_DAY, 24);
+		return (int) ((cal.getTimeInMillis() - System.currentTimeMillis()) / 1000) + delay;
 	}
 
 	protected boolean isRun(final Map<String, Object> cache) throws Exception {
