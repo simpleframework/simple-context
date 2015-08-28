@@ -62,6 +62,7 @@ public abstract class ContextUtils implements IContextSettingsConst {
 					try {
 						((IBaseService) o).onInit();
 					} catch (final Exception e) {
+						System.out.println("Service error: " + o.getClass());
 						throw ObjectInstanceException.of(e);
 					}
 				}
