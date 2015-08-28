@@ -107,6 +107,16 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 	}
 
 	protected <T> void doDataQuery(final IDataQuery<T> dq, final IDataRowCallback<T> callback) {
+		T t;
+		while ((t = dq.next()) != null) {
+			try {
+				if (callback != null) {
+					callback.doRow(t);
+				}
+			} catch (final Exception e) {
+				getLog().warn(e);
+			}
+		}
 	}
 
 	protected void prints(final Map<String, Object> cache, final Date n) {
