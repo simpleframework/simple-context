@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.simpleframework.ado.query.IDataQuery;
 import net.simpleframework.common.DateUtils;
 import net.simpleframework.common.NumberUtils;
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.object.ObjectEx;
+import net.simpleframework.ctx.IDataRowCallback;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -102,6 +104,9 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 		} catch (final Throwable ex) {
 			getLog().warn(ex);
 		}
+	}
+
+	protected <T> void doDataQuery(final IDataQuery<T> dq, final IDataRowCallback<T> callback) {
 	}
 
 	protected void prints(final Map<String, Object> cache, final Date n) {
