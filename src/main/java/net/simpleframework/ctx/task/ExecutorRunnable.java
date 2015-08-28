@@ -57,7 +57,7 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 	}
 
 	public int getPeriod() {
-		return period;
+		return period > 0 ? period : 60 * 5;
 	}
 
 	public ExecutorRunnable setPeriod(final int period) {
@@ -108,5 +108,21 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 	}
 
 	protected void printe(final Map<String, Object> cache, final Date n) {
+	}
+
+	protected String toTime(final int t) {
+		if (t > 3600) {
+			return t / 3600 + "h";
+		} else if (t > 60) {
+			return t / 60 + "m";
+		}
+		return t + "s";
+	}
+
+	@Override
+	public String toString() {
+		return new StringBuilder("[task: ").append(getTaskname()).append("] ").append(getTasktext())
+				.append(", initialDelay: ").append(toTime(initialDelay)).append(", period: ")
+				.append(toTime(period)).append(".").toString();
 	}
 }

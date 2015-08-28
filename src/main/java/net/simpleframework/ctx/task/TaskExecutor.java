@@ -1,7 +1,5 @@
 package net.simpleframework.ctx.task;
 
-import static net.simpleframework.common.I18n.$m;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -47,23 +45,18 @@ public class TaskExecutor extends ObjectEx implements ITaskExecutor {
 	}
 
 	@Override
-	public void addScheduledTask(final int initialDelay, int period, final ExecutorRunnable task) {
+	public void addScheduledTask(final int initialDelay, final int period,
+			final ExecutorRunnable task) {
 		final String taskname = task.getTaskname();
 		Collection<ScheduledFuture<?>> coll = scheduledTasksCache.get(taskname);
 		if (coll == null) {
 			scheduledTasksCache.put(taskname, coll = new ArrayList<ScheduledFuture<?>>());
 		}
-		if (period <= 0) {
-			period = getDefaultPeriod();
-			oprintln($m("TaskExecutor.0", task.getTaskname(), period));
-		}
+
 		coll.add(getExecutorService().scheduleAtFixedRate(
 				task.setPeriod(period).setInitialDelay(initialDelay), initialDelay, period,
 				TimeUnit.SECONDS));
-	}
-
-	protected int getDefaultPeriod() {
-		return 60 * 5;
+		oprintln(task);
 	}
 
 	@Override
