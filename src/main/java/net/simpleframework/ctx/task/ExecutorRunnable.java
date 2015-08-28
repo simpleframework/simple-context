@@ -121,8 +121,8 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 
 	@Override
 	public String toString() {
-		return new StringBuilder("[task: ").append(getTaskname()).append("] ").append(getTasktext())
-				.append(", initialDelay: ").append(toTime(initialDelay)).append(", period: ")
-				.append(toTime(period)).append(".").toString();
+		return new StringBuilder("[Task: ").append(getTaskname()).append("] ").append(getTasktext())
+				.append("\r                  initialDelay: ").append(toTime(initialDelay))
+				.append(", period: ").append(toTime(period)).append(".").toString();
 	}
 }
