@@ -102,6 +102,8 @@ public interface IDbBeanService<T> extends IADOBeanService<T> {
 
 	String getTablename(Class<?> beanClass);
 
+	String getTablename();
+
 	Class<?> getBeanClass();
 
 	// / sql

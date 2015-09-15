@@ -316,6 +316,11 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 	}
 
 	@Override
+	public String getTablename() {
+		return getTablename(getBeanClass());
+	}
+
+	@Override
 	public <P> IDbEntityManager<P> getEntityManager(final Class<P> beanClass) {
 		return ((DbManagerFactory) ((IADOManagerFactoryAware) getModuleContext())
 				.getADOManagerFactory()).getEntityManager(beanClass);
