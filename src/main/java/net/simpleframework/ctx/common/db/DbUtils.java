@@ -40,6 +40,7 @@ public abstract class DbUtils {
 
 		final String[] packageNames = application.getScanPackageNames();
 		if (packageNames != null) {
+			System.out.println();
 			ObjectEx.oprintln($m("DbUtils.0"));
 
 			final List<String> sqlFiles = new ArrayList<String>();

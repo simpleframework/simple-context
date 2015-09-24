@@ -105,7 +105,7 @@ public class PropertiesContextSettings extends ContextSettings {
 	private void print(final String key, final Object val) {
 		synchronized (mark) {
 			if (!IContextSettingsConst.CTX_LOCALE.equals(key) && mark.get(key) == null && val != null) {
-				System.out.println("[" + $m("PropertiesContextSettings.0") + "] " + key + " => " + val);
+				oprintln("[" + $m("PropertiesContextSettings.0") + "] " + key + " => " + val);
 				mark.put(key, Boolean.TRUE);
 			}
 		}

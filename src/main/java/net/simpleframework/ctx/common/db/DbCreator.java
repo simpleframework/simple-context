@@ -1,5 +1,7 @@
 package net.simpleframework.ctx.common.db;
 
+import static net.simpleframework.common.I18n.$m;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -28,7 +30,7 @@ import net.simpleframework.ctx.common.xml.XmlElement;
  * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
-public abstract class DbCreator {
+public abstract class DbCreator extends ObjectEx {
 	static Log log = LogFactory.getLogger(DbCreator.class);
 
 	static final String stateAttri = "state";
@@ -42,7 +44,7 @@ public abstract class DbCreator {
 			final String filepath) throws IOException {
 		SqlScriptDocument document;
 		try {
-			ObjectEx.oprintln("loading: " + filepath);
+			oprintln("[" + $m("DbCreator.0") + "] " + filepath);
 			document = new SqlScriptDocument(new File(filepath));
 		} catch (final Exception e) {
 			log.warn(e);

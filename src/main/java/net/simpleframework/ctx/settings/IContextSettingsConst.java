@@ -13,6 +13,9 @@ public interface IContextSettingsConst {
 	static final String DBPOOL = "dbpool";
 	static final String DBPOOL_ENTITYMANAGER = "entitymanager";
 
+	/* 是否打印sql，sql语句的执行时间大于该值显示，-1不显示 */
+	static final String PRINT_SQL_TIMEMILLIS = "print.sql.timemillis";
+
 	static final String CTX_CHARSET = "ctx.charset";
 	static final String CTX_LOCALE = "ctx.locale";
 	static final String CTX_RESOURCECOMPRESS = "ctx.resourcecompress";

@@ -22,7 +22,7 @@ import net.simpleframework.ctx.common.db.DbUtils;
  * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
-public class ModuleContextFactory {
+public class ModuleContextFactory extends ObjectEx {
 
 	public static IModuleContext get(final String module) {
 		return moduleCache.get(module);
@@ -74,6 +74,7 @@ public class ModuleContextFactory {
 			return;
 		}
 
+		System.out.println();
 		ObjectEx.oprintln($m("ModuleContextFactory.0"));
 		for (final String packageName : packageNames) {
 			ClassUtils.scanResources(packageName, new ScanClassResourcesCallback() {
@@ -103,8 +104,8 @@ public class ModuleContextFactory {
 				throw ModuleContextException.of(e);
 			}
 			final Module module = ctx.getModule();
-			System.out.println($m("ModuleContextFactory.1", module.getText(), module.getName(),
-					module.getOrder()));
+			oprintln($m("ModuleContextFactory.1", module.getOrder(), module.getText(),
+					module.getName(), ctx.getClass().getName()));
 		}
 
 		Runtime.getRuntime().addShutdownHook(new Thread() {
