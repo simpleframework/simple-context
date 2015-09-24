@@ -2,6 +2,7 @@ package net.simpleframework.ctx.service.ado.db;
 
 import static net.simpleframework.common.I18n.$m;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import net.simpleframework.ado.query.DataQueryUtils;
 import net.simpleframework.ado.query.IDataQuery;
 import net.simpleframework.common.BeanUtils;
 import net.simpleframework.common.ID;
+import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.coll.ArrayUtils;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.common.object.ObjectFactory;
@@ -49,8 +51,8 @@ import net.simpleframework.ctx.service.ado.ITreeBeanServiceAware;
  * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
-public abstract class AbstractDbBeanService<T> extends AbstractBaseService implements
-		IDbBeanService<T> {
+public abstract class AbstractDbBeanService<T extends Serializable> extends AbstractBaseService
+		implements IDbBeanService<T> {
 
 	@Override
 	public IModuleContext getModuleContext() {
@@ -120,27 +122,33 @@ public abstract class AbstractDbBeanService<T> extends AbstractBaseService imple
 				: orderColumns;
 		final StringBuilder sql = new StringBuilder();
 		if (!ArrayUtils.isEmpty(_orderColumns)) {
-			sql.append(" order by ");
 			int i = 0;
 			for (final ColumnData col : _orderColumns) {
+				final String alias = col.getAlias();
+				if (!StringUtils.hasText(alias)) {
+					continue;
+				}
 				if (i++ > 0) {
 					sql.append(", ");
 				}
-				sql.append(col.getAlias());
+				sql.append(alias);
 				final EOrder o = col.getOrder();
 				if (o != EOrder.normal) {
 					sql.append(" ").append(o);
 				}
 			}
 		}
+		if (sql.length() > 0) {
+			sql.insert(0, " order by ");
+		}
 		return sql.toString();
 	}
 
-	protected final ColumnData[] DEFAULT_ORDER = new ColumnData[] { ColumnData.DESC("createdate") };
+	protected final ColumnData[] ORDER_CREATEDATE = new ColumnData[] { ColumnData.DESC("createdate") };
 	protected final ColumnData[] ORDER_OORDER = new ColumnData[] { ColumnData.DESC("oorder") };
 
 	protected ColumnData[] getDefaultOrderColumns() {
-		return DEFAULT_ORDER;
+		return ORDER_CREATEDATE;
 	}
 
 	@Override
