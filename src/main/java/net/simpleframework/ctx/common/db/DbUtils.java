@@ -10,12 +10,9 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import net.simpleframework.ado.db.DbManagerFactory;
-import net.simpleframework.ado.db.IDbEntityTableRegistry;
 import net.simpleframework.ado.db.jdbc.JdbcUtils;
 import net.simpleframework.common.ClassUtils;
 import net.simpleframework.common.ClassUtils.IScanResourcesCallback;
-import net.simpleframework.common.ClassUtils.ScanClassResourcesCallback;
 import net.simpleframework.common.FileUtils;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.common.object.ObjectUtils;
@@ -82,28 +79,6 @@ public abstract class DbUtils {
 						.append(JdbcUtils.getDatabaseMetaData(dataSource).getDatabaseProductName())
 						.append(File.separator).append(SCRIPT_FILENAME).append(".xml");
 				DbCreator.executeSql(dataSource, sb.toString());
-			}
-		}
-	}
-
-	public static void doEntityTable(final IApplicationContext application) throws Exception {
-		final String[] packageNames = application.getScanPackageNames();
-		// 注册EntityTable
-		if (packageNames != null) {
-			for (final String packageName : packageNames) {
-				ClassUtils.scanResources(packageName, new ScanClassResourcesCallback() {
-					@Override
-					public void doResources(final String filepath, final boolean isDirectory)
-							throws Exception {
-						final IDbEntityTableRegistry registry = getInstance(loadClass(filepath),
-								IDbEntityTableRegistry.class);
-						Object mFactory = null;
-						if (registry != null
-								&& (mFactory = registry.getADOManagerFactory()) instanceof DbManagerFactory) {
-							((DbManagerFactory) mFactory).regist(registry.createEntityTables());
-						}
-					}
-				});
 			}
 		}
 	}

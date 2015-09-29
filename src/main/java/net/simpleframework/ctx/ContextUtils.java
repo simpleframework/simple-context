@@ -5,7 +5,6 @@ import static net.simpleframework.common.I18n.$m;
 import java.lang.reflect.Field;
 
 import net.simpleframework.common.ClassUtils;
-import net.simpleframework.common.ClassUtils.ScanClassResourcesCallback;
 import net.simpleframework.common.Convert;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.common.object.ObjectFactory;
@@ -15,7 +14,6 @@ import net.simpleframework.common.object.ObjectInstanceException;
 import net.simpleframework.common.object.ProxyUtils;
 import net.simpleframework.common.th.ClassException;
 import net.simpleframework.ctx.common.ConsoleThread;
-import net.simpleframework.ctx.common.IDataImportHandler;
 import net.simpleframework.ctx.common.db.DbUtils;
 import net.simpleframework.ctx.service.IBaseService;
 import net.simpleframework.ctx.settings.ContextSettings;
@@ -77,8 +75,6 @@ public abstract class ContextUtils implements IContextSettingsConst {
 
 		// 模块初始化
 		ModuleContextFactory.doInit(application);
-		// others
-		doUtils(application);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -98,26 +94,6 @@ public abstract class ContextUtils implements IContextSettingsConst {
 				} catch (final Exception e) {
 					throw ClassException.of(e);
 				}
-			}
-		}
-	}
-
-	public static void doUtils(final IApplicationContext application) throws Exception {
-		final String[] packageNames = application.getScanPackageNames();
-		if (packageNames != null) {
-			for (final String packageName : packageNames) {
-				// IDataImportHandler
-				ClassUtils.scanResources(packageName, new ScanClassResourcesCallback() {
-					@Override
-					public void doResources(final String filepath, final boolean isDirectory)
-							throws Exception {
-						final IDataImportHandler iHandler = getInstance(loadClass(filepath),
-								IDataImportHandler.class);
-						if (iHandler != null && iHandler.isEnable()) {
-							iHandler.doImport(application);
-						}
-					}
-				});
 			}
 		}
 	}

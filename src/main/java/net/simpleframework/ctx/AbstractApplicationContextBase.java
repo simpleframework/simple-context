@@ -6,12 +6,13 @@ import java.util.Map;
 import java.util.Set;
 
 import net.simpleframework.common.ClassUtils;
-import net.simpleframework.common.ClassUtils.IScanResourcesCallback;
 import net.simpleframework.common.ClassUtils.ScanClassResourcesCallback;
 import net.simpleframework.common.I18n;
 import net.simpleframework.common.Version;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.common.th.ThrowableUtils;
+import net.simpleframework.ctx.hdl.IApplicationStartupHandler;
+import net.simpleframework.ctx.hdl.IScanHandlerAware;
 import net.simpleframework.ctx.permission.IPermissionHandler;
 import net.simpleframework.ctx.permission.PermissionFactory;
 
@@ -29,17 +30,33 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 		ApplicationContextFactory.get().setApplicationContextBase(this);
 
 		// i18n
-		final String[] packages = getScanPackageNames();
-		for (final String packageName : packages) {
+		final String[] packageNames = getScanPackageNames();
+		for (final String packageName : packageNames) {
 			ClassUtils.scanResources(packageName, I18n.getBasenamesCallback());
 		}
 
 		// 初始化应用程序
 		onBeforeInit();
 		// 初始化资源
-		doInternalInit(packages);
+		doInternalInit(packageNames);
 		// 初始化应用程序
 		onAfterInit();
+
+		// 处理扫描类
+		final IApplicationContext application = (IApplicationContext) this;
+		for (final String packageName : packageNames) {
+			ClassUtils.scanResources(packageName, new ScanClassResourcesCallback() {
+				@Override
+				public void doResources(final String filepath, final boolean isDirectory)
+						throws Exception {
+					final IScanHandlerAware hAware = getInstance(loadClass(filepath),
+							IScanHandlerAware.class);
+					if (hAware != null) {
+						hAware.onScan(application);
+					}
+				}
+			});
+		}
 	}
 
 	protected void onBeforeInit() throws Exception {
@@ -48,34 +65,33 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 	protected void onAfterInit() throws Exception {
 	}
 
+	protected void doInternalInit(final String[] packageNames) throws Exception {
+		final IApplicationContext application = (IApplicationContext) this;
+		// 处理扫描类
+		for (final String packageName : packageNames) {
+			ClassUtils.scanResources(packageName, new ScanClassResourcesCallback() {
+				@Override
+				public void doResources(final String filepath, final boolean isDirectory)
+						throws Exception {
+					final IApplicationStartupHandler sHandler = getInstance(loadClass(filepath),
+							IApplicationStartupHandler.class);
+					if (sHandler != null) {
+						sHandler.onStartup(application);
+					}
+				}
+			});
+		}
+
+		// 设置权限的实现类
+		PermissionFactory.set(getPagePermissionHandler().getName());
+	}
+
 	@Override
 	public IPermissionHandler getPermission() {
 		return PermissionFactory.get();
 	}
 
 	protected abstract Class<? extends IPermissionHandler> getPagePermissionHandler();
-
-	protected void doInternalInit(final String[] packageNames) throws Exception {
-		// 启动类
-		final IApplicationContext application = (IApplicationContext) this;
-		final IScanResourcesCallback startupCallback = new ScanClassResourcesCallback() {
-			@Override
-			public void doResources(final String filepath, final boolean isDirectory) throws Exception {
-				final IApplicationStartup startupHdl = getInstance(loadClass(filepath),
-						IApplicationStartup.class);
-				if (startupHdl != null) {
-					startupHdl.onStartup(application);
-				}
-			}
-		};
-
-		for (final String packageName : packageNames) {
-			ClassUtils.scanResources(packageName, startupCallback);
-		}
-
-		// 设置权限的实现类
-		PermissionFactory.set(getPagePermissionHandler().getName());
-	}
 
 	private String[] scanPackageNames;
 

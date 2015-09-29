@@ -14,7 +14,6 @@ import net.simpleframework.common.ClassUtils.ScanClassResourcesCallback;
 import net.simpleframework.common.logger.Log;
 import net.simpleframework.common.logger.LogFactory;
 import net.simpleframework.common.object.ObjectEx;
-import net.simpleframework.ctx.common.db.DbUtils;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -93,9 +92,6 @@ public class ModuleContextFactory extends ObjectEx {
 				}
 			});
 		}
-
-		// 注册EntityTable
-		DbUtils.doEntityTable(application);
 
 		for (final IModuleContext ctx : allModules()) {
 			try {
