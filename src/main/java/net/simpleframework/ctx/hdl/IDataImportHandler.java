@@ -16,6 +16,4 @@ public interface IDataImportHandler extends IScanHandlerAware {
 	 * @throws Exception
 	 */
 	void doImport(IApplicationContext application) throws Exception;
-
-	boolean isEnable();
 }
