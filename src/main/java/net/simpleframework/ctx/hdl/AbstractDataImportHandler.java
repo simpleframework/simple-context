@@ -1,5 +1,6 @@
 package net.simpleframework.ctx.hdl;
 
+import static net.simpleframework.common.I18n.$m;
 import net.simpleframework.ctx.IApplicationContext;
 
 /**
@@ -13,5 +14,10 @@ public abstract class AbstractDataImportHandler implements IDataImportHandler {
 	@Override
 	public void onScan(final IApplicationContext application) throws Exception {
 		doImport(application);
+	}
+
+	@Override
+	public String toString() {
+		return $m("AbstractDataImportHandler.0") + ": " + getClass().getName();
 	}
 }

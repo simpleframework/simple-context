@@ -53,6 +53,7 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 							IScanHandlerAware.class);
 					if (hAware != null) {
 						hAware.onScan(application);
+						oprintln("[扫描接口] " + hAware.toString());
 					}
 				}
 			});
