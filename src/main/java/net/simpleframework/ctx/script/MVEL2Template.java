@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import net.simpleframework.common.AlgorithmUtils;
 import net.simpleframework.common.ClassUtils;
+import net.simpleframework.common.coll.KVMap;
 import net.simpleframework.lib.org.mvel2.templates.CompiledTemplate;
 import net.simpleframework.lib.org.mvel2.templates.SimpleTemplateRegistry;
 import net.simpleframework.lib.org.mvel2.templates.TemplateCompiler;
@@ -57,6 +58,10 @@ public abstract class MVEL2Template {
 		} catch (final IOException e) {
 			throw ScriptEvalException.of(e);
 		}
+	}
+
+	public static String replace(final Class<?> resourceClazz, final String filename) {
+		return replace(new KVMap(), resourceClazz, filename);
 	}
 
 	public static interface INamedTemplate {
