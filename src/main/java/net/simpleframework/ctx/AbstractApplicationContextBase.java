@@ -1,5 +1,7 @@
 package net.simpleframework.ctx;
 
+import static net.simpleframework.common.I18n.$m;
+
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -43,6 +45,8 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 		onAfterInit();
 
 		// 处理扫描类
+		oprintln();
+		oprintln($m("AbstractApplicationContextBase.0"));
 		final IApplicationContext application = (IApplicationContext) this;
 		for (final String packageName : packageNames) {
 			ClassUtils.scanResources(packageName, new ScanClassResourcesCallback() {
@@ -53,7 +57,7 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 							IScanHandlerAware.class);
 					if (hAware != null) {
 						hAware.onScan(application);
-						oprintln("[扫描接口] " + hAware.toString());
+						oprintln("[" + $m("AbstractApplicationContextBase.1") + "] " + hAware);
 					}
 				}
 			});

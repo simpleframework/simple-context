@@ -9,7 +9,8 @@ import net.simpleframework.ctx.IApplicationContext;
  * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
-public abstract class AbstractDataImportHandler implements IDataImportHandler {
+public abstract class AbstractDataImportHandler extends AbstractScanHandler implements
+		IDataImportHandler {
 
 	@Override
 	public void onScan(final IApplicationContext application) throws Exception {
@@ -18,6 +19,6 @@ public abstract class AbstractDataImportHandler implements IDataImportHandler {
 
 	@Override
 	public String toString() {
-		return $m("AbstractDataImportHandler.0") + ": " + getClass().getName();
+		return $m("AbstractDataImportHandler.0") + " - " + getClass().getName();
 	}
 }
