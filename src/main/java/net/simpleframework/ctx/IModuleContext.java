@@ -111,5 +111,5 @@ public interface IModuleContext {
 	 * 
 	 * @return
 	 */
-	int getDomain();
+	String getDomain();
 }

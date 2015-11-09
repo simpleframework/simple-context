@@ -157,7 +157,7 @@ public abstract class AbstractModuleContext extends ObjectEx implements IModuleC
 	}
 
 	@Override
-	public int getDomain() {
+	public String getDomain() {
 		return application.getDomain();
 	}
 

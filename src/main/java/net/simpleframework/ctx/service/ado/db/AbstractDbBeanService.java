@@ -408,14 +408,11 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 		public void onBeforeInsert(final IDbEntityManager<T> manager, final T[] beans)
 				throws Exception {
 			super.onBeforeInsert(manager, beans);
-			Integer _domain = null;
 			for (final T t : beans) {
 				IDomainBeanAware bean;
-				if (t instanceof IDomainBeanAware && (bean = (IDomainBeanAware) t).getDomain() == 0) {
-					if (_domain == null) {
-						_domain = getModuleContext().getDomain();
-					}
-					bean.setDomain(_domain);
+				if (t instanceof IDomainBeanAware
+						&& (bean = (IDomainBeanAware) t).getDomainId() == null) {
+					bean.setDomainId(ID.of(getModuleContext().getDomain()));
 				}
 			}
 		}

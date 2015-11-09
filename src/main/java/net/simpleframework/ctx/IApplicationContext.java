@@ -75,5 +75,5 @@ public interface IApplicationContext extends IApplicationContextBase {
 	 * 
 	 * @return
 	 */
-	int getDomain();
+	String getDomain();
 }
