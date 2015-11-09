@@ -18,7 +18,6 @@ import net.simpleframework.ado.FilterItems;
 import net.simpleframework.ado.IADOManagerFactoryAware;
 import net.simpleframework.ado.IParamsValue;
 import net.simpleframework.ado.bean.AbstractIdBean;
-import net.simpleframework.ado.bean.IDomainBeanAware;
 import net.simpleframework.ado.bean.IIdBeanAware;
 import net.simpleframework.ado.bean.ITreeBeanAware;
 import net.simpleframework.ado.db.DbManagerFactory;
@@ -403,24 +402,26 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 		return lw != null ? lw.getUserId() : null;
 	}
 
-	private final IDbEntityListener<T> CONTEXT_LISTENER = new DbEntityAdapterEx<T>() {
-		@Override
-		public void onBeforeInsert(final IDbEntityManager<T> manager, final T[] beans)
-				throws Exception {
-			super.onBeforeInsert(manager, beans);
-			for (final T t : beans) {
-				IDomainBeanAware bean;
-				if (t instanceof IDomainBeanAware
-						&& (bean = (IDomainBeanAware) t).getDomainId() == null) {
-					bean.setDomainId(ID.of(getModuleContext().getDomain()));
-				}
-			}
-		}
-	};
-
-	{
-		addListener(CONTEXT_LISTENER);
-	}
+	// private final IDbEntityListener<T> CONTEXT_LISTENER = new
+	// DbEntityAdapterEx<T>() {
+	// @Override
+	// public void onBeforeInsert(final IDbEntityManager<T> manager, final T[]
+	// beans)
+	// throws Exception {
+	// super.onBeforeInsert(manager, beans);
+	// for (final T t : beans) {
+	// IDomainBeanAware bean;
+	// if (t instanceof IDomainBeanAware
+	// && (bean = (IDomainBeanAware) t).getDomainId() == null) {
+	// bean.setDomainId(ID.of(getModuleContext().getDomain()));
+	// }
+	// }
+	// }
+	// };
+	//
+	// {
+	// addListener(CONTEXT_LISTENER);
+	// }
 
 	@Override
 	public void onInit() throws Exception {
