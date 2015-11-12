@@ -25,4 +25,5 @@ public class PermissionConst {
 	public static final String VAR_USERID = "userId";
 	public static final String VAR_ROLEID = "roleId";
 	public static final String VAR_DEPTID = "deptId";
+	public static final String VAR_ORGID = "orgId";
 }

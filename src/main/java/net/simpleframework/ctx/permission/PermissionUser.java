@@ -97,6 +97,10 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 		return isManager(new KVMap().add(PermissionConst.VAR_USERID, this.getId()));
 	}
 
+	public boolean isAdmin() {
+		return PermissionConst.ADMIN.equals(getName());
+	}
+
 	/**
 	 * 用户存在多个角色，此函数返回用户的默认角色
 	 * 
