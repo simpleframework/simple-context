@@ -30,6 +30,7 @@ import net.simpleframework.ado.db.event.DbEntityAdapter;
 import net.simpleframework.ado.db.event.IDbEntityListener;
 import net.simpleframework.ado.query.DataQueryUtils;
 import net.simpleframework.ado.query.IDataQuery;
+import net.simpleframework.ado.trans.TransactionVoidCallback;
 import net.simpleframework.common.BeanUtils;
 import net.simpleframework.common.ID;
 import net.simpleframework.common.StringUtils;
@@ -348,6 +349,10 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 			throw ModuleContextException.of($m("AbstractDbBeanService.3", beanClass.getName()));
 		}
 		return mgr;
+	}
+
+	protected void doExecuteTransaction(final TransactionVoidCallback callback) {
+		getEntityManager().doExecuteTransaction(callback);
 	}
 
 	protected static class DbEntityAdapterEx<T> extends DbEntityAdapter<T> {
