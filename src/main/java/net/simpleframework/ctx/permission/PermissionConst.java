@@ -18,6 +18,8 @@ public class PermissionConst {
 	public static String ROLE_LOCK_ACCOUNT;
 	/* 当前部门用户 */
 	public static String ROLE_INDEPT;
+	/* 当前机构用户 */
+	public static String ROLE_INORG;
 	/* 系统管理员 */
 	public static String ROLE_MANAGER;
 
