@@ -3,6 +3,7 @@ package net.simpleframework.ctx.service.ado;
 import net.simpleframework.ado.ColumnData;
 import net.simpleframework.ado.bean.ITreeBeanAware;
 import net.simpleframework.ado.query.IDataQuery;
+import net.simpleframework.common.ID;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -16,9 +17,12 @@ public interface ITreeBeanServiceAware<T extends ITreeBeanAware> {
 	 * 获取孩子列表
 	 * 
 	 * @param parent
+	 * @param domainId
 	 * @param orderColumns
 	 * @return
 	 */
+	IDataQuery<T> queryChildren(T parent, ID domainId, ColumnData... orderColumns);
+
 	IDataQuery<T> queryChildren(T parent, ColumnData... orderColumns);
 
 	boolean hasChild(T parent);

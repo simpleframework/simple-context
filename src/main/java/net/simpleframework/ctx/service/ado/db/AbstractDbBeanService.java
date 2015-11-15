@@ -448,11 +448,27 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 
 	/*------------------------------ITreeBeanServiceAware--------------------------*/
 
-	public IDataQuery<T> queryChildren(final T parent, final ColumnData... orderColumns) {
+	public IDataQuery<T> queryChildren(final T parent, final ID domainId,
+			final ColumnData... orderColumns) {
 		assertTreeBean();
-		final FilterItems items = FilterItems.of().addEqual("parentid",
-				parent == null ? null : BeanUtils.getProperty(parent, "id"));
-		return queryByParams(items, orderColumns);
+		final StringBuilder sql = new StringBuilder();
+		final List<Object> params = new ArrayList<Object>();
+		if (parent == null) {
+			sql.append("parentid is null");
+		} else {
+			sql.append("parentid=?");
+			params.add(getIdParam(parent));
+		}
+		if (domainId != null) {
+			sql.append(" and (domainid=? or domainid is null)");
+			params.add(domainId);
+		}
+		sql.append(toOrderSQL(orderColumns));
+		return query(sql, params.toArray());
+	}
+
+	public IDataQuery<T> queryChildren(final T parent, final ColumnData... orderColumns) {
+		return queryChildren(parent, (ID) null, orderColumns);
 	}
 
 	public boolean hasChild(final T parent) {
