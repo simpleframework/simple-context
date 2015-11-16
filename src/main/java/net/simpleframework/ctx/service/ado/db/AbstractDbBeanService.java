@@ -453,16 +453,19 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 		assertTreeBean();
 		final StringBuilder sql = new StringBuilder();
 		final List<Object> params = new ArrayList<Object>();
+
 		if (parent == null) {
 			sql.append("parentid is null");
 		} else {
 			sql.append("parentid=?");
 			params.add(getIdParam(parent));
 		}
+
 		if (domainId != null) {
 			sql.append(" and (domainid=? or domainid is null)");
 			params.add(domainId);
 		}
+
 		sql.append(toOrderSQL(orderColumns));
 		return query(sql, params.toArray());
 	}
