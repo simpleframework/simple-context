@@ -35,7 +35,12 @@ public abstract class LoginUser {
 		set(new LoginWrapper(PermissionFactory.getAdmin()).setIp("127.0.0.1"));
 	}
 
-	public static void isAdmin() {
+	public static boolean isManager() {
+		return user().isManager();
+	}
+
+	public static boolean isAdmin() {
+		return user().isAdmin();
 	}
 
 	public static class LoginWrapper {
