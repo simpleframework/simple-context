@@ -15,11 +15,9 @@ import net.simpleframework.common.th.NotImplementedException;
  */
 public class DefaultPermissionHandler extends ObjectEx implements IPermissionHandler {
 
-	private static PermissionUser NULL_USER = new PermissionUser();
-
 	@Override
 	public PermissionUser getUser(final Object user) {
-		return NULL_USER;
+		return PermissionUser.NULL_USER;
 	}
 
 	@Override
@@ -32,18 +30,14 @@ public class DefaultPermissionHandler extends ObjectEx implements IPermissionHan
 		return users(role, null, variables);
 	}
 
-	private static PermissionRole NULL_ROLE = new PermissionRole();
-
 	@Override
 	public PermissionRole getRole(final Object role, final Map<String, Object> variables) {
-		return NULL_ROLE;
+		return PermissionRole.NULL_ROLE;
 	}
-
-	private static PermissionDept NULL_DEPT = new PermissionDept();
 
 	@Override
 	public PermissionDept getDept(final Object dept) {
-		return NULL_DEPT;
+		return PermissionDept.NULL_DEPT;
 	}
 
 	@Override

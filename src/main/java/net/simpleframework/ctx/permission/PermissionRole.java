@@ -8,5 +8,7 @@ package net.simpleframework.ctx.permission;
  */
 public class PermissionRole extends PermissionEntity<PermissionRole> {
 
+	public static PermissionRole NULL_ROLE = new PermissionRole();
+
 	private static final long serialVersionUID = 8929394091976218058L;
 }
