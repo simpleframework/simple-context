@@ -18,6 +18,7 @@ import net.simpleframework.ado.FilterItems;
 import net.simpleframework.ado.IADOManagerFactoryAware;
 import net.simpleframework.ado.IParamsValue;
 import net.simpleframework.ado.bean.AbstractIdBean;
+import net.simpleframework.ado.bean.IDomainBeanAware;
 import net.simpleframework.ado.bean.IIdBeanAware;
 import net.simpleframework.ado.bean.ITreeBeanAware;
 import net.simpleframework.ado.db.DbManagerFactory;
@@ -471,7 +472,11 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 	}
 
 	public IDataQuery<T> queryChildren(final T parent, final ColumnData... orderColumns) {
-		return queryChildren(parent, (ID) null, orderColumns);
+		ID domainId = null;
+		if (parent instanceof IDomainBeanAware) {
+			domainId = ((IDomainBeanAware) parent).getDomainId();
+		}
+		return queryChildren(parent, domainId, orderColumns);
 	}
 
 	public boolean hasChild(final T parent) {
