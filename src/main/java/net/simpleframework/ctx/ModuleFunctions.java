@@ -47,6 +47,9 @@ public class ModuleFunctions extends AbstractArrayListEx<ModuleFunctions, Module
 		if (!StringUtils.hasText(name)) {
 			return null;
 		}
+		if ("-".equals(name)) {
+			return null;
+		}
 		ModuleFunction function = funcCache.get(name);
 		if (function != null) {
 			return function;

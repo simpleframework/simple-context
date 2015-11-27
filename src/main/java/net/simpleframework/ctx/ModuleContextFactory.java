@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,12 +25,12 @@ import net.simpleframework.common.object.ObjectEx;
 public class ModuleContextFactory extends ObjectEx {
 
 	public static IModuleContext get(final String module) {
-		return moduleCache.get(module);
+		return modulesCache.get(module);
 	}
 
 	@SuppressWarnings("unchecked")
 	public static <T extends IModuleContext> T get(final Class<T> mClass) {
-		for (final IModuleContext context : moduleCache.values()) {
+		for (final IModuleContext context : modulesCache.values()) {
 			if (mClass.isAssignableFrom(context.getClass())) {
 				return (T) context;
 			}
@@ -37,20 +38,23 @@ public class ModuleContextFactory extends ObjectEx {
 		return null;
 	}
 
-	static Map<String, IModuleContext> moduleCache;
+	static Map<String, IModuleContext> modulesCache;
+	static List<IModuleContext> modulesSort;
 	static {
-		moduleCache = new ConcurrentHashMap<String, IModuleContext>();
+		modulesCache = new ConcurrentHashMap<String, IModuleContext>();
 	}
 
 	public static Collection<IModuleContext> allModules() {
-		final ArrayList<IModuleContext> modules = new ArrayList<IModuleContext>(moduleCache.values());
-		Collections.sort(modules, new Comparator<IModuleContext>() {
-			@Override
-			public int compare(final IModuleContext ctx1, final IModuleContext ctx2) {
-				return ctx1.getModule().getOrder() - ctx2.getModule().getOrder();
-			}
-		});
-		return modules;
+		if (modulesSort == null) {
+			modulesSort = new ArrayList<IModuleContext>(modulesCache.values());
+			Collections.sort(modulesSort, new Comparator<IModuleContext>() {
+				@Override
+				public int compare(final IModuleContext ctx1, final IModuleContext ctx2) {
+					return ctx1.getModule().getOrder() - ctx2.getModule().getOrder();
+				}
+			});
+		}
+		return modulesSort;
 	}
 
 	public static void registered(final IModuleContext context) {
@@ -60,9 +64,9 @@ public class ModuleContextFactory extends ObjectEx {
 		final Module module = context.getModule();
 		if (!module.isDisabled()) {
 			final String key = module.getName();
-			final IModuleContext context2 = moduleCache.get(key);
+			final IModuleContext context2 = modulesCache.get(key);
 			if (context2 == null || context2.getClass().isAssignableFrom(context.getClass())) {
-				moduleCache.put(key, context);
+				modulesCache.put(key, context);
 			}
 		}
 	}
