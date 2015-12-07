@@ -64,7 +64,7 @@ public class ModuleFunction extends AbstractModule<ModuleFunction> {
 		return null;
 	}
 
-	public static ModuleFunction getFunctionByName(final IModuleContext ctx,
+	static ModuleFunction getFunctionByName(final IModuleContext ctx,
 			final ModuleFunctions functions, final String name) {
 		if (functions == null) {
 			return null;
