@@ -81,7 +81,7 @@ public abstract class AbstractModuleContext extends ObjectEx implements IModuleC
 
 	@Override
 	public ModuleFunction getFunctionByName(final String name) {
-		return ModuleFunctions.getFunctionByName(this, getFunctions(), name);
+		return ModuleFunction.getFunctionByName(this, getFunctions(), name);
 	}
 
 	@Override
