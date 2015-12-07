@@ -41,10 +41,7 @@ public class ModuleFunction extends AbstractModule<ModuleFunction> {
 		return role;
 	}
 
-	private static Map<String, ModuleFunction> namesCache;
-	static {
-		namesCache = new ConcurrentHashMap<String, ModuleFunction>();
-	}
+	private static Map<String, ModuleFunction> namesCache = new ConcurrentHashMap<String, ModuleFunction>();
 
 	public static ModuleFunction getFunctionByName(final String name) {
 		if (!StringUtils.hasText(name)) {
@@ -59,12 +56,6 @@ public class ModuleFunction extends AbstractModule<ModuleFunction> {
 		}
 		for (final IModuleContext ctx : ModuleContextFactory.allModules()) {
 			function = getFunctionByName(ctx, ctx.getFunctions(null), name);
-			if (function == null) {
-				final ModuleFunction function2 = getFunctionByName(ctx.getModule().getDefaultFunction());
-				if (function2 != null && name.equals(function2.getName())) {
-					function = function2;
-				}
-			}
 			if (function != null) {
 				namesCache.put(name, function);
 				return function;
