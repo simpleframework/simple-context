@@ -145,8 +145,9 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 		return sql.toString();
 	}
 
-	protected final ColumnData[] ORDER_CREATEDATE = new ColumnData[] { ColumnData.DESC("createdate") };
-	protected final ColumnData[] ORDER_OORDER = new ColumnData[] { ColumnData.DESC("oorder") };
+	public static final ColumnData[] ORDER_CREATEDATE = new ColumnData[] { ColumnData
+			.DESC("createdate") };
+	public static final ColumnData[] ORDER_OORDER = new ColumnData[] { ColumnData.ASC("oorder") };
 
 	protected ColumnData[] getDefaultOrderColumns() {
 		return ORDER_CREATEDATE;
