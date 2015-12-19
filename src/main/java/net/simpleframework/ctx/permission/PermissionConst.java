@@ -19,8 +19,8 @@ public class PermissionConst {
 
 	/* 系统管理员 */
 	public static String ROLE_MANAGER;
-	/* 机构管理员角色 */
-	public static String ROLE_ORGANIZATION_MANAGER;
+	/* 域管理员角色 */
+	public static String ROLE_DOMAIN_MANAGER;
 	/* 缺省的模块管理员角色 */
 	public static String ROLE_MODULE_MANAGER;
 	// ROLE_MANAGER > ROLE_ORGANIZATION_MANAGER > ROLE_MODULE_MANAGER
