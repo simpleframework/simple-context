@@ -17,7 +17,7 @@ public class Module extends AbstractModule<Module> {
 
 	public Module() {
 		setRole(PermissionConst.ROLE_ALL_ACCOUNT);
-		setManagerRole(PermissionConst.ROLE_MANAGER);
+		setManagerRole(PermissionConst.ROLE_MODULE_MANAGER);
 	}
 
 	public String getDefaultFunction() {

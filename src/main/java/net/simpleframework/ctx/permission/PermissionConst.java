@@ -16,12 +16,19 @@ public class PermissionConst {
 	public static String ROLE_ALL_ACCOUNT;
 	/* 已锁定的注册用户 */
 	public static String ROLE_LOCK_ACCOUNT;
+
+	/* 系统管理员 */
+	public static String ROLE_MANAGER;
+	/* 机构管理员角色 */
+	public static String ROLE_ORGANIZATION_MANAGER;
+	/* 缺省的模块管理员角色 */
+	public static String ROLE_MODULE_MANAGER;
+	// ROLE_MANAGER > ROLE_ORGANIZATION_MANAGER > ROLE_MODULE_MANAGER
+
 	/* 当前部门用户 */
 	public static String ROLE_INDEPT;
 	/* 当前机构用户 */
 	public static String ROLE_INORG;
-	/* 系统管理员 */
-	public static String ROLE_MANAGER;
 
 	/* 环境变量key定义 */
 	public static final String VAR_USERID = "userId";
