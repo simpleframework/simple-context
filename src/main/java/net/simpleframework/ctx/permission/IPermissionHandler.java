@@ -22,6 +22,14 @@ public interface IPermissionHandler {
 	PermissionUser getUser(Object user);
 
 	/**
+	 * 获取权限部门对象
+	 * 
+	 * @param dept
+	 * @return
+	 */
+	PermissionDept getDept(Object dept);
+
+	/**
 	 * 获取指定角色名的所有用户
 	 * 
 	 * @param role
@@ -49,12 +57,4 @@ public interface IPermissionHandler {
 	 * @return
 	 */
 	Iterator<ID> roles(Object user, Map<String, Object> variables);
-
-	/**
-	 * 获取权限部门对象
-	 * 
-	 * @param dept
-	 * @return
-	 */
-	PermissionDept getDept(Object dept);
 }
