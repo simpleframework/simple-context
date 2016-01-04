@@ -80,7 +80,7 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	 * @return
 	 */
 	public boolean isMember(final Object role) {
-		return isMember(role, new KVMap().add(PermissionConst.VAR_USERID, this.getId()));
+		return isMember(role, new KVMap());
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	}
 
 	public boolean isManager() {
-		return isManager(new KVMap().add(PermissionConst.VAR_USERID, this.getId()));
+		return isManager(new KVMap());
 	}
 
 	public boolean isAdmin() {
