@@ -37,15 +37,19 @@ public class PermissionDept extends PermissionEntity<PermissionDept> {
 		return false;
 	}
 
-	public boolean hasChild() {
-		return getChildren().size() > 0;
-	}
-
 	public ID getParentId() {
 		return null;
 	}
 
+	public List<PermissionDept> getAllChildren() {
+		return CollectionUtils.EMPTY_LIST();
+	}
+
 	public List<PermissionDept> getChildren() {
+		return CollectionUtils.EMPTY_LIST();
+	}
+
+	public List<PermissionDept> getOrgChildren() {
 		return CollectionUtils.EMPTY_LIST();
 	}
 
