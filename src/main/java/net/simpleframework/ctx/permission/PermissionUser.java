@@ -37,6 +37,10 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 		return null;
 	}
 
+	public String getMobile() {
+		return null;
+	}
+
 	public String getSex() {
 		return null;
 	}
