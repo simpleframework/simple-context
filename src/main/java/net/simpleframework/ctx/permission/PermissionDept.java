@@ -1,5 +1,6 @@
 package net.simpleframework.ctx.permission;
 
+import java.util.Iterator;
 import java.util.List;
 
 import net.simpleframework.common.ID;
@@ -17,6 +18,11 @@ public class PermissionDept extends PermissionEntity<PermissionDept> {
 	/* 用户数 */
 	public int getUsers() {
 		return 0;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Iterator<PermissionUser> users() {
+		return CollectionUtils.EMPTY_ITERATOR;
 	}
 
 	public ID getDomainId() {
