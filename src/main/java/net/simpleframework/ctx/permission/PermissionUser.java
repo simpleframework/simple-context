@@ -62,6 +62,10 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 		return this;
 	}
 
+	public ID getDeptId() {
+		return getDept().getId();
+	}
+
 	public ID getDomainId() {
 		return getDept().getDomainId();
 	}

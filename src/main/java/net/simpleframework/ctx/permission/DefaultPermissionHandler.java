@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import net.simpleframework.common.ID;
+import net.simpleframework.common.coll.KVMap;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.common.th.NotImplementedException;
 
@@ -33,6 +34,11 @@ public class DefaultPermissionHandler extends ObjectEx implements IPermissionHan
 	@Override
 	public PermissionRole getRole(final Object role, final Map<String, Object> variables) {
 		return PermissionRole.NULL_ROLE;
+	}
+
+	@Override
+	public PermissionRole getRole(final Object role) {
+		return getRole(role, new KVMap());
 	}
 
 	@Override

@@ -10,5 +10,10 @@ public class PermissionRole extends PermissionEntity<PermissionRole> {
 
 	public static PermissionRole NULL_ROLE = new PermissionRole();
 
+	public PermissionDept getDept(final Object user) {
+		// 获取该用户在此角色的部门
+		return PermissionDept.NULL_DEPT;
+	}
+
 	private static final long serialVersionUID = 8929394091976218058L;
 }

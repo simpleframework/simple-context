@@ -49,6 +49,8 @@ public interface IPermissionHandler {
 	 */
 	PermissionRole getRole(Object role, Map<String, Object> variables);
 
+	PermissionRole getRole(Object role);
+
 	/**
 	 * 获取指定用户的所有角色
 	 * 

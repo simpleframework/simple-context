@@ -43,6 +43,7 @@ import net.simpleframework.ctx.IModuleContext;
 import net.simpleframework.ctx.ModuleContextException;
 import net.simpleframework.ctx.permission.LoginUser;
 import net.simpleframework.ctx.permission.LoginUser.LoginWrapper;
+import net.simpleframework.ctx.permission.PermissionEntity;
 import net.simpleframework.ctx.service.AbstractBaseService;
 import net.simpleframework.ctx.service.ado.ITreeBeanServiceAware;
 
@@ -88,6 +89,8 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 			return bean;
 		} else if (bean instanceof IIdBeanAware) {
 			return ((AbstractIdBean) bean).getId();
+		} else if (bean instanceof PermissionEntity) {
+			return ((PermissionEntity<?>) bean).getId();
 		} else if (bean != null) {
 			final Object id = BeanUtils.getProperty(bean, "id");
 			return id != null ? id : bean;
