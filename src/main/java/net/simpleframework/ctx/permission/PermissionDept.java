@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.simpleframework.common.ID;
-import net.simpleframework.common.coll.CollectionUtils;
+import net.simpleframework.common.th.NotImplementedException;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -20,9 +20,8 @@ public class PermissionDept extends PermissionEntity<PermissionDept> {
 		return 0;
 	}
 
-	@SuppressWarnings("unchecked")
 	public Iterator<PermissionUser> users() {
-		return CollectionUtils.EMPTY_ITERATOR;
+		throw NotImplementedException.of(getClass(), "users");
 	}
 
 	public ID getDomainId() {
@@ -42,15 +41,15 @@ public class PermissionDept extends PermissionEntity<PermissionDept> {
 	}
 
 	public List<PermissionDept> getAllChildren() {
-		return CollectionUtils.EMPTY_LIST();
+		throw NotImplementedException.of(getClass(), "getAllChildren");
 	}
 
 	public List<PermissionDept> getChildren() {
-		return CollectionUtils.EMPTY_LIST();
+		throw NotImplementedException.of(getClass(), "getChildren");
 	}
 
 	public List<PermissionDept> getOrgChildren() {
-		return CollectionUtils.EMPTY_LIST();
+		throw NotImplementedException.of(getClass(), "getOrgChildren");
 	}
 
 	private static final long serialVersionUID = -7302087646469559706L;

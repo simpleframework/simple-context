@@ -2,6 +2,7 @@ package net.simpleframework.ctx.permission;
 
 import java.io.InputStream;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Map;
 
 import net.simpleframework.common.ID;
@@ -118,6 +119,16 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	 */
 	public ID getRoleId() {
 		throw NotImplementedException.of(getClass(), "getRoleId");
+	}
+
+	/**
+	 * 获取指定用户的所有角色
+	 * 
+	 * @param variables
+	 * @return
+	 */
+	public Iterator<ID> roles(final Map<String, Object> variables) {
+		throw NotImplementedException.of(getClass(), "roles");
 	}
 
 	private static final long serialVersionUID = -7880069050882902556L;

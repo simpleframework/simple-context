@@ -6,7 +6,6 @@ import java.util.Map;
 import net.simpleframework.common.ID;
 import net.simpleframework.common.coll.KVMap;
 import net.simpleframework.common.object.ObjectEx;
-import net.simpleframework.common.th.NotImplementedException;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -19,16 +18,6 @@ public class DefaultPermissionHandler extends ObjectEx implements IPermissionHan
 	@Override
 	public PermissionUser getUser(final Object user) {
 		return PermissionUser.NULL_USER;
-	}
-
-	@Override
-	public Iterator<ID> users(final Object role, final ID deptId, final Map<String, Object> variables) {
-		throw NotImplementedException.of(getClass(), "users");
-	}
-
-	@Override
-	public Iterator<ID> users(final Object role, final Map<String, Object> variables) {
-		return users(role, null, variables);
 	}
 
 	@Override
@@ -46,8 +35,15 @@ public class DefaultPermissionHandler extends ObjectEx implements IPermissionHan
 		return PermissionDept.NULL_DEPT;
 	}
 
+	/*---------------------------wrapper---------------------------*/
+
 	@Override
-	public Iterator<ID> roles(final Object user, final Map<String, Object> variables) {
-		throw NotImplementedException.of(getClass(), "roles");
+	public Iterator<ID> users(final Object role, final ID deptId, final Map<String, Object> variables) {
+		return getRole(role, variables).users(deptId, variables);
+	}
+
+	@Override
+	public Iterator<ID> users(final Object role, final Map<String, Object> variables) {
+		return getRole(role, variables).users(variables);
 	}
 }
