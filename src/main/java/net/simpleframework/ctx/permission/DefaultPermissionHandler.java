@@ -38,12 +38,13 @@ public class DefaultPermissionHandler extends ObjectEx implements IPermissionHan
 	/*---------------------------wrapper---------------------------*/
 
 	@Override
-	public Iterator<ID> users(final Object role, final ID deptId, final Map<String, Object> variables) {
+	public Iterator<PermissionUser> users(final Object role, final ID deptId,
+			final Map<String, Object> variables) {
 		return getRole(role, variables).users(deptId, variables);
 	}
 
 	@Override
-	public Iterator<ID> users(final Object role, final Map<String, Object> variables) {
+	public Iterator<PermissionUser> users(final Object role, final Map<String, Object> variables) {
 		return getRole(role, variables).users(variables);
 	}
 }

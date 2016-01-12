@@ -47,7 +47,7 @@ public interface IPermissionHandler {
 	 * @param variables
 	 * @return
 	 */
-	Iterator<ID> users(Object role, ID deptId, Map<String, Object> variables);
+	Iterator<PermissionUser> users(Object role, ID deptId, Map<String, Object> variables);
 
-	Iterator<ID> users(Object role, Map<String, Object> variables);
+	Iterator<PermissionUser> users(Object role, Map<String, Object> variables);
 }

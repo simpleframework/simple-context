@@ -43,18 +43,6 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 		return null;
 	}
 
-	public PermissionDept getDept() {
-		return PermissionDept.NULL_DEPT;
-	}
-
-	public ID getDeptId() {
-		return getDept().getId();
-	}
-
-	public ID getDomainId() {
-		return getDept().getDomainId();
-	}
-
 	/**
 	 * 指定用户是否为某一指定角色的成员
 	 * 
@@ -95,14 +83,36 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 		return PermissionConst.ADMIN.equals(getName());
 	}
 
-	/**
-	 * 用户存在多个角色，此函数返回用户的默认角色
-	 * 
-	 * @param user
-	 * @return
-	 */
-	public ID getRoleId() {
-		return null;
+	/* 当前用户的角色 */
+	private PermissionRole _role;
+
+	public PermissionRole getRole() {
+		return _role != null ? _role : PermissionRole.NULL_ROLE;
+	}
+
+	public PermissionUser setRole(final PermissionRole role) {
+		_role = role;
+		return this;
+	}
+
+	/* 当前用户所在部门, 按角色 */
+	private PermissionDept _dept;
+
+	public PermissionDept getDept() {
+		return _dept != null ? _dept : PermissionDept.NULL_DEPT;
+	}
+
+	public PermissionUser setDept(final PermissionDept dept) {
+		_dept = dept;
+		return this;
+	}
+
+	public ID getDeptId() {
+		return getDept().getId();
+	}
+
+	public ID getDomainId() {
+		return getDept().getDomainId();
 	}
 
 	/**
@@ -111,7 +121,7 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	 * @param variables
 	 * @return
 	 */
-	public Iterator<ID> roles(final Map<String, Object> variables) {
+	public Iterator<PermissionRole> roles(final Map<String, Object> variables) {
 		return CollectionUtils.EMPTY_ITERATOR();
 	}
 

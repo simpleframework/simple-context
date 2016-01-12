@@ -16,9 +16,28 @@ public class PermissionRole extends PermissionEntity<PermissionRole> {
 
 	public static PermissionRole NULL_ROLE = new PermissionRole();
 
-	public PermissionDept getDept(final Object user) {
-		// 获取该用户在此角色的部门
-		return PermissionDept.NULL_DEPT;
+	/* 该角色当前的用户所在部门 */
+	private PermissionDept _dept;
+
+	public PermissionDept getDept() {
+		return _dept != null ? _dept : PermissionDept.NULL_DEPT;
+	}
+
+	public PermissionRole setDept(final PermissionDept dept) {
+		_dept = dept;
+		return this;
+	}
+
+	/* 该角色当前的用户 */
+	private PermissionUser _user;
+
+	public PermissionUser getUser() {
+		return _user != null ? _user : PermissionUser.NULL_USER;
+	}
+
+	public PermissionRole setUser(final PermissionUser user) {
+		_user = user;
+		return this;
 	}
 
 	/**
@@ -28,11 +47,11 @@ public class PermissionRole extends PermissionEntity<PermissionRole> {
 	 * @param variables
 	 * @return
 	 */
-	public Iterator<ID> users(final ID deptId, final Map<String, Object> variables) {
+	public Iterator<PermissionUser> users(final ID deptId, final Map<String, Object> variables) {
 		return CollectionUtils.EMPTY_ITERATOR();
 	}
 
-	public Iterator<ID> users(final Map<String, Object> variables) {
+	public Iterator<PermissionUser> users(final Map<String, Object> variables) {
 		return users(null, variables);
 	}
 
