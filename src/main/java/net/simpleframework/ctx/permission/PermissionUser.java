@@ -6,8 +6,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import net.simpleframework.common.ID;
+import net.simpleframework.common.coll.CollectionUtils;
 import net.simpleframework.common.coll.KVMap;
-import net.simpleframework.common.th.NotImplementedException;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -102,7 +102,7 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	 * @return
 	 */
 	public ID getRoleId() {
-		throw NotImplementedException.of(getClass(), "getRoleId");
+		return null;
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	 * @return
 	 */
 	public Iterator<ID> roles(final Map<String, Object> variables) {
-		throw NotImplementedException.of(getClass(), "roles");
+		return CollectionUtils.EMPTY_ITERATOR();
 	}
 
 	private static final long serialVersionUID = -7880069050882902556L;

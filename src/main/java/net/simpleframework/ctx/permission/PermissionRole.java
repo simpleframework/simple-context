@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import net.simpleframework.common.ID;
-import net.simpleframework.common.th.NotImplementedException;
+import net.simpleframework.common.coll.CollectionUtils;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -29,7 +29,7 @@ public class PermissionRole extends PermissionEntity<PermissionRole> {
 	 * @return
 	 */
 	public Iterator<ID> users(final ID deptId, final Map<String, Object> variables) {
-		throw NotImplementedException.of(getClass(), "users");
+		return CollectionUtils.EMPTY_ITERATOR();
 	}
 
 	public Iterator<ID> users(final Map<String, Object> variables) {
