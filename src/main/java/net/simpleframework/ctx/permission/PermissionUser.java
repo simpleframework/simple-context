@@ -19,21 +19,6 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 
 	public static PermissionUser NULL_USER = new PermissionUser();
 
-	/* 头像 */
-	private InputStream photoStream;
-
-	/* 部门 */
-	private PermissionDept dept;
-
-	public InputStream getPhotoStream() {
-		return photoStream;
-	}
-
-	public PermissionUser setPhotoStream(final InputStream photoStream) {
-		this.photoStream = photoStream;
-		return this;
-	}
-
 	public String getEmail() {
 		return null;
 	}
@@ -54,13 +39,12 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 		return null;
 	}
 
-	public PermissionDept getDept() {
-		return dept != null ? dept : PermissionDept.NULL_DEPT;
+	public InputStream getPhotoStream() {
+		return null;
 	}
 
-	public PermissionUser setDept(final PermissionDept dept) {
-		this.dept = dept;
-		return this;
+	public PermissionDept getDept() {
+		return PermissionDept.NULL_DEPT;
 	}
 
 	public ID getDeptId() {
