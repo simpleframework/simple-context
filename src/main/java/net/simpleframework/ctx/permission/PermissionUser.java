@@ -1,8 +1,9 @@
 package net.simpleframework.ctx.permission;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import net.simpleframework.common.ID;
@@ -121,8 +122,21 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 	 * @param variables
 	 * @return
 	 */
-	public Iterator<PermissionRole> roles(final Map<String, Object> variables) {
-		return CollectionUtils.EMPTY_ITERATOR();
+	public List<PermissionRole> roles(final Map<String, Object> variables) {
+		return CollectionUtils.EMPTY_LIST();
+	}
+
+	public List<PermissionRole> roles(final ID roleId, final Map<String, Object> variables) {
+		if (roleId == null) {
+			return roles(variables);
+		}
+		final ArrayList<PermissionRole> l = new ArrayList<PermissionRole>();
+		for (final PermissionRole r : roles(variables)) {
+			if (roleId.equals(r.getId())) {
+				l.add(r);
+			}
+		}
+		return l;
 	}
 
 	private static final long serialVersionUID = -7880069050882902556L;
