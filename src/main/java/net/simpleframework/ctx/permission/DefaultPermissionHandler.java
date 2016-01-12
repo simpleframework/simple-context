@@ -1,9 +1,11 @@
 package net.simpleframework.ctx.permission;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import net.simpleframework.common.ID;
+import net.simpleframework.common.coll.CollectionUtils;
 import net.simpleframework.common.coll.KVMap;
 import net.simpleframework.common.object.ObjectEx;
 
@@ -33,6 +35,11 @@ public class DefaultPermissionHandler extends ObjectEx implements IPermissionHan
 	@Override
 	public PermissionDept getDept(final Object dept) {
 		return PermissionDept.NULL_DEPT;
+	}
+
+	@Override
+	public List<PermissionDept> getRootChildren() {
+		return CollectionUtils.EMPTY_LIST();
 	}
 
 	/*---------------------------wrapper---------------------------*/

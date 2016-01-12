@@ -1,6 +1,7 @@
 package net.simpleframework.ctx.permission;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import net.simpleframework.common.ID;
@@ -28,6 +29,8 @@ public interface IPermissionHandler {
 	 * @return
 	 */
 	PermissionDept getDept(Object dept);
+
+	List<PermissionDept> getRootChildren();
 
 	/**
 	 * 得到权限角色对象
