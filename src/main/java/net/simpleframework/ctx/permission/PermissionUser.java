@@ -44,6 +44,10 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 		return null;
 	}
 
+	public int getOorder() {
+		return 0;
+	}
+
 	/**
 	 * 指定用户是否为某一指定角色的成员
 	 * 
