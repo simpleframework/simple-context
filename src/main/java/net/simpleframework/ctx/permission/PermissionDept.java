@@ -40,6 +40,10 @@ public class PermissionDept extends PermissionEntity<PermissionDept> {
 		return null;
 	}
 
+	public int getOorder() {
+		return 0;
+	}
+
 	public List<PermissionDept> getAllChildren() {
 		return CollectionUtils.EMPTY_LIST();
 	}
