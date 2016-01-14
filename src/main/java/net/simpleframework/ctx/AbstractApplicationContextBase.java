@@ -143,7 +143,7 @@ public abstract class AbstractApplicationContextBase extends ObjectEx implements
 	@Override
 	public Version getVersion() {
 		if (version == null) {
-			version = Version.getVersion("4.0");
+			version = Version.getVersion("4.0.0");
 		}
 		return version;
 	}
