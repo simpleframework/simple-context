@@ -33,7 +33,7 @@ public abstract class PermissionEntity<T extends PermissionEntity<T>> implements
 	}
 
 	public String getName() {
-		return name;
+		return name != null ? name.trim() : null;
 	}
 
 	public T setName(final String name) {
