@@ -16,12 +16,22 @@ public class PermissionDept extends PermissionEntity<PermissionDept> {
 	public static PermissionDept NULL_DEPT = new PermissionDept();
 
 	/* 用户数 */
-	public int getUsers() {
+	public int getUserCount() {
 		return 0;
 	}
 
-	public Iterator<PermissionUser> users() {
+	/**
+	 * 是否包含其他角色关联本部门的用户
+	 * 
+	 * @param all
+	 * @return
+	 */
+	public Iterator<PermissionUser> users(final boolean all) {
 		return CollectionUtils.EMPTY_ITERATOR();
+	}
+
+	public Iterator<PermissionUser> users() {
+		return users(false);
 	}
 
 	public ID getDomainId() {
