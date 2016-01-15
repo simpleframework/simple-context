@@ -26,7 +26,7 @@ public class PermissionDept extends PermissionEntity<PermissionDept> {
 	 * @param all
 	 * @return
 	 */
-	public Iterator<PermissionUser> users(final boolean all) {
+	public Iterator<PermissionUser> users(final boolean rolemember) {
 		return CollectionUtils.EMPTY_ITERATOR();
 	}
 
