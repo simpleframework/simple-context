@@ -71,7 +71,7 @@ public class PermissionDept extends PermissionEntity<PermissionDept> {
 		return CollectionUtils.EMPTY_LIST();
 	}
 
-	public List<PermissionDept> getChildren() {
+	public List<PermissionDept> getDeptChildren() {
 		return CollectionUtils.EMPTY_LIST();
 	}
 
