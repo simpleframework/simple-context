@@ -16,7 +16,7 @@ public class PermissionDept extends PermissionEntity<PermissionDept> {
 	public static PermissionDept NULL_DEPT = new PermissionDept();
 
 	/* 用户数 */
-	public int getUserCount() {
+	public int getUserCount(final boolean org) {
 		return 0;
 	}
 
