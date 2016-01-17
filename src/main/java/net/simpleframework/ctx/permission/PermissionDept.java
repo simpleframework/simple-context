@@ -59,6 +59,10 @@ public class PermissionDept extends PermissionEntity<PermissionDept> {
 		return null;
 	}
 
+	public int getLevel() {
+		return 0;
+	}
+
 	public int getOorder() {
 		return 0;
 	}
