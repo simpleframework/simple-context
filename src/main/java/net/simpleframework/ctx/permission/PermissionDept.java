@@ -34,6 +34,15 @@ public class PermissionDept extends PermissionEntity<PermissionDept> {
 		return users(false);
 	}
 
+	/**
+	 * 获取机构的所有用户
+	 * 
+	 * @return
+	 */
+	public Iterator<PermissionUser> orgUsers() {
+		return CollectionUtils.EMPTY_ITERATOR();
+	}
+
 	public ID getDomainId() {
 		return null;
 	}

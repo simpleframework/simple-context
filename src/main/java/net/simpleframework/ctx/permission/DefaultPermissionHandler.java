@@ -54,4 +54,9 @@ public class DefaultPermissionHandler extends ObjectEx implements IPermissionHan
 	public Iterator<PermissionUser> users(final Object role, final Map<String, Object> variables) {
 		return getRole(role, variables).users(variables);
 	}
+
+	@Override
+	public Iterator<PermissionUser> allUsers() {
+		return CollectionUtils.EMPTY_ITERATOR();
+	}
 }
