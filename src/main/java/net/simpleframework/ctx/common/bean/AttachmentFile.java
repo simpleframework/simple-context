@@ -19,7 +19,10 @@ import net.simpleframework.common.object.DescriptionObject;
  *         http://www.simpleframework.net
  */
 public class AttachmentFile extends DescriptionObject<AttachmentFile> implements Serializable {
-	private final File attachment;
+	protected File file;
+
+	/* 下载路径 */
+	private String durl;
 
 	/* 摘要值 */
 	private String md5;
@@ -47,18 +50,26 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 
 	private String id;
 
-	public AttachmentFile(final File attachment) throws IOException {
-		this(attachment, null);
+	public AttachmentFile(final File file) throws IOException {
+		this(file, null);
 	}
 
-	public AttachmentFile(final File attachment, final String md5) throws IOException {
-		this.attachment = attachment;
-		this.md5 = StringUtils.hasText(md5) ? md5 : AlgorithmUtils.md5Hex(new FileInputStream(
-				attachment));
+	public AttachmentFile(final File file, final String md5) {
+		this.file = file;
+		this.md5 = md5;
 	}
 
 	public File getAttachment() throws IOException {
-		return attachment;
+		return file;
+	}
+
+	public String getDurl() {
+		return durl;
+	}
+
+	public AttachmentFile setDurl(final String durl) {
+		this.durl = durl;
+		return this;
 	}
 
 	public String getTopic() {
@@ -132,6 +143,13 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 	}
 
 	public String getMd5() {
+		if (md5 == null) {
+			try {
+				md5 = AlgorithmUtils.md5Hex(new FileInputStream(getAttachment()));
+			} catch (final IOException e) {
+				getLog().warn(e);
+			}
+		}
 		return md5;
 	}
 
