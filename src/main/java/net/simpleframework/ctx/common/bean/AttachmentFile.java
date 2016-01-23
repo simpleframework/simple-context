@@ -170,8 +170,13 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 		return this;
 	}
 
-	public long getSize() throws IOException {
-		return size > 0 ? size : getAttachment().length();
+	public long getSize() {
+		try {
+			return size > 0 ? size : getAttachment().length();
+		} catch (final IOException e) {
+			getLog().warn(e);
+			return 0;
+		}
 	}
 
 	public AttachmentFile setSize(final long size) {
