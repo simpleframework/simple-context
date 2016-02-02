@@ -36,6 +36,10 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 		return null;
 	}
 
+	public String getNick() {
+		return null;
+	}
+
 	public String getDescription() {
 		return null;
 	}

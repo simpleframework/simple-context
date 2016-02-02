@@ -50,6 +50,10 @@ public abstract class PermissionEntity<T extends PermissionEntity<T>> implements
 		return (T) this;
 	}
 
+	public Object getProperty(final String property) {
+		return null;
+	}
+
 	@Override
 	public int hashCode() {
 		final ID id = getId();
