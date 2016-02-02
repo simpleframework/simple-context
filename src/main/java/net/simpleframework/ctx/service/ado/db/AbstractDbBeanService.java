@@ -38,12 +38,14 @@ import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.coll.ArrayUtils;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.common.object.ObjectFactory;
+import net.simpleframework.common.object.ObjectUtils;
 import net.simpleframework.common.th.NotImplementedException;
 import net.simpleframework.ctx.IModuleContext;
 import net.simpleframework.ctx.ModuleContextException;
 import net.simpleframework.ctx.permission.LoginUser;
 import net.simpleframework.ctx.permission.LoginUser.LoginWrapper;
 import net.simpleframework.ctx.permission.PermissionEntity;
+import net.simpleframework.ctx.permission.PermissionUser;
 import net.simpleframework.ctx.service.AbstractBaseService;
 import net.simpleframework.ctx.service.ado.ITreeBeanServiceAware;
 
@@ -448,6 +450,13 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 					}
 				}
 			});
+		}
+	}
+
+	protected void assetDomainId_delete(final ID domainId) {
+		final PermissionUser puser = LoginUser.user();
+		if (!puser.isManager() && !ObjectUtils.objectEquals(puser.getDomainId(), domainId)) {
+			throw ADOException.of($m("AbstractDbBeanService.5"));
 		}
 	}
 
