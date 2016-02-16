@@ -362,7 +362,7 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 		getEntityManager().doExecuteTransaction(callback);
 	}
 
-	protected static class DbEntityAdapterEx<T> extends DbEntityAdapter<T> {
+	public static class DbEntityAdapterEx<T> extends DbEntityAdapter<T> {
 
 		protected Collection<T> coll(final IDbEntityManager<T> service, final IParamsValue paramsValue) {
 			return ((ObjectEx) paramsValue).getAttrCache("coll", new CacheV<Collection<T>>() {
