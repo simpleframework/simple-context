@@ -2,6 +2,7 @@ package net.simpleframework.ctx.service;
 
 import net.simpleframework.ctx.AbstractModuleContextAware;
 import net.simpleframework.ctx.IApplicationContext;
+import net.simpleframework.ctx.permission.IPermissionHandler;
 import net.simpleframework.ctx.task.ITaskExecutor;
 
 /**
@@ -19,6 +20,10 @@ public abstract class AbstractBaseService extends AbstractModuleContextAware imp
 
 	protected IApplicationContext getApplicationContext() {
 		return getModuleContext().getApplicationContext();
+	}
+
+	protected IPermissionHandler getPermission() {
+		return getModuleContext().getPermission();
 	}
 
 	protected ITaskExecutor getTaskExecutor() {
