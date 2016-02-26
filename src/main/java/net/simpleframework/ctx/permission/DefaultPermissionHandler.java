@@ -23,6 +23,11 @@ public class DefaultPermissionHandler extends ObjectEx implements IPermissionHan
 	}
 
 	@Override
+	public PermissionUser getLogin() {
+		return LoginUser.get().getUser();
+	}
+
+	@Override
 	public PermissionRole getRole(final Object role, final Map<String, Object> variables) {
 		return PermissionRole.NULL_ROLE;
 	}

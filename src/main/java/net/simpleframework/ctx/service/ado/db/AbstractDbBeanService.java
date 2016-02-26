@@ -478,6 +478,10 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 		if (domainId != null) {
 			sql.append(" and (domainid=? or domainid is null)");
 			params.add(domainId);
+		} else {
+			if (!LoginUser.isManager()) {
+				sql.append(" and domainid is null");
+			}
 		}
 
 		sql.append(toOrderSQL(orderColumns));

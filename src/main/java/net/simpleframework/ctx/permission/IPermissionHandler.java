@@ -22,6 +22,8 @@ public interface IPermissionHandler {
 	 */
 	PermissionUser getUser(Object user);
 
+	PermissionUser getLogin();
+
 	/**
 	 * 获取权限部门对象
 	 * 
