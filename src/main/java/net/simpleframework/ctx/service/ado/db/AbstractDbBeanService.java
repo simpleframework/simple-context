@@ -479,7 +479,7 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 			sql.append(" and (domainid=? or domainid is null)");
 			params.add(domainId);
 		} else {
-			if (!LoginUser.isManager()) {
+			if (IDomainBeanAware.class.isAssignableFrom(getBeanClass()) && !LoginUser.isManager()) {
 				sql.append(" and domainid is null");
 			}
 		}
