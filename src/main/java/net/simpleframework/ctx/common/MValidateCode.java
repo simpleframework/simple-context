@@ -25,32 +25,33 @@ import net.simpleframework.ctx.task.ExecutorRunnableEx;
  */
 public class MValidateCode {
 
-	public static Code genCode() {
-		return genCode(0);
+	public static Code genCode(final String key) {
+		return genCode(key, 0);
 	}
 
-	public static Code genCode(final int timeout) {
+	public static Code genCode(final String key, final int timeout) {
 		final Code oCode = new Code();
-		final char[] text = new char[4];
+		final char[] val = new char[4];
 		for (int i = 0; i < 4; i++) {
-			text[i] = CONST_CODE.charAt(random.nextInt(CONST_CODE_LENGTH));
+			val[i] = CONST_CODE.charAt(random.nextInt(CONST_CODE_LENGTH));
 		}
-		oCode.code = new String(text);
+		oCode.val = new String(val);
 		if (timeout > 0) {
 			oCode.timeout = timeout;
 		}
+		_codes.put(key, oCode);
 		return oCode;
 	}
 
-	public static Code verifyCode(final String key, final String code) {
-		if (!StringUtils.hasText(code)) {
+	public static Code verifyCode(final String key, final String val) {
+		if (!StringUtils.hasText(val)) {
 			throw ModuleContextException.of($m("MValidateCode.1"));
 		}
 		final Code oCode = _codes.get(key);
 		if (oCode == null) {
 			throw ModuleContextException.of($m("MValidateCode.2"));
 		}
-		if (!oCode.code.equalsIgnoreCase(code)) {
+		if (!oCode.val.equalsIgnoreCase(val)) {
 			throw ModuleContextException.of($m("MValidateCode.3"));
 		}
 		return oCode;
@@ -63,7 +64,7 @@ public class MValidateCode {
 	static Map<String, Code> _codes = new HashMap<String, Code>();
 
 	public static class Code {
-		String code;
+		String val;
 
 		Date createDate = new Date();
 
@@ -74,6 +75,15 @@ public class MValidateCode {
 			cal.setTime(new Date());
 			cal.add(Calendar.SECOND, -timeout);
 			return createDate.before(cal.getTime());
+		}
+
+		public String val() {
+			return val;
+		}
+
+		@Override
+		public String toString() {
+			return val;
 		}
 	}
 
