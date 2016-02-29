@@ -91,6 +91,10 @@ public class MValidateCode {
 			return val;
 		}
 
+		public int timeout() {
+			return timeout;
+		}
+
 		@Override
 		public String toString() {
 			return val;
