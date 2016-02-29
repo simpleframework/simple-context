@@ -30,7 +30,17 @@ public class MValidateCode {
 	}
 
 	public static Code genCode(final String key, final int timeout) {
-		final Code oCode = new Code();
+		// 1分钟间隔内不允许重复发送
+		Code oCode = _codes.get(key);
+		if (oCode != null) {
+			final Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.MINUTE, -1);
+			if (oCode.createDate.after(cal.getTime())) {
+				throw ModuleContextException.of($m("MValidateCode.4"));
+			}
+		}
+
+		oCode = new Code();
 		final char[] val = new char[4];
 		for (int i = 0; i < 4; i++) {
 			val[i] = CONST_CODE.charAt(random.nextInt(CONST_CODE_LENGTH));
