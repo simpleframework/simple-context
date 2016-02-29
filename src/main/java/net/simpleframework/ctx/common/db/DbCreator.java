@@ -44,7 +44,7 @@ public abstract class DbCreator extends ObjectEx {
 			final String filepath) throws IOException {
 		SqlScriptDocument document;
 		try {
-			oprintln("[" + $m("DbCreator.0") + "] " + filepath);
+			log.info("[" + $m("DbCreator.0") + "] " + filepath);
 			document = new SqlScriptDocument(new File(filepath));
 		} catch (final Exception e) {
 			log.warn(e);
