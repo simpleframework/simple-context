@@ -24,6 +24,8 @@ public interface IPermissionHandler {
 
 	PermissionUser getLogin();
 
+	PermissionUser getAdmin();
+
 	/**
 	 * 获取权限部门对象
 	 * 
