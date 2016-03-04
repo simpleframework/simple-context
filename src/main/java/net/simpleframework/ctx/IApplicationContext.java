@@ -76,4 +76,11 @@ public interface IApplicationContext extends IApplicationContextBase {
 	 * @return
 	 */
 	String getDomain();
+
+	/**
+	 * PDF模块的引用
+	 * 
+	 * @return
+	 */
+	IModuleRef getPDFRef();
 }

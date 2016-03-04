@@ -13,7 +13,7 @@ public interface IModuleRef {
 	 * 
 	 * @param context
 	 */
-	void onInit(IModuleContext context) throws Exception;
+	void onInit(IContextBase context) throws Exception;
 
 	IModuleContext getModuleContext();
 }

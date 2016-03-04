@@ -22,6 +22,7 @@ public class DefaultPermissionHandler extends ObjectEx implements IPermissionHan
 		return PermissionUser.NULL_USER;
 	}
 
+	@Override
 	public PermissionUser getAdmin() {
 		return getUser(PermissionConst.ADMIN);
 	}

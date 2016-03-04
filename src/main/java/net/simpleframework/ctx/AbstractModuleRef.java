@@ -11,6 +11,6 @@ import net.simpleframework.common.object.ObjectEx;
 public abstract class AbstractModuleRef extends ObjectEx implements IModuleRef {
 
 	@Override
-	public void onInit(final IModuleContext refContext) throws Exception {
+	public void onInit(final IContextBase context) throws Exception {
 	}
 }
