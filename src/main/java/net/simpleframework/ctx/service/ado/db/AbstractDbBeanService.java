@@ -364,11 +364,11 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 
 	public static class DbEntityAdapterEx<T> extends DbEntityAdapter<T> {
 
-		protected Collection<T> coll(final IDbEntityManager<T> service, final IParamsValue paramsValue) {
+		protected Collection<T> coll(final IDbEntityManager<T> manager, final IParamsValue paramsValue) {
 			return ((ObjectEx) paramsValue).getAttrCache("coll", new CacheV<Collection<T>>() {
 				@Override
 				public Collection<T> get() {
-					return DataQueryUtils.toList(service.queryBeans(paramsValue));
+					return DataQueryUtils.toList(manager.queryBeans(paramsValue));
 				}
 			});
 		}
