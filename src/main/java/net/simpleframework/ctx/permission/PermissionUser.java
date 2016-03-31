@@ -116,6 +116,11 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 		return this;
 	}
 
+	/* 当前用户所有部门 */
+	public List<PermissionDept> depts() {
+		return CollectionUtils.EMPTY_LIST();
+	}
+
 	public ID getDomainId() {
 		return getDept().getDomainId();
 	}
