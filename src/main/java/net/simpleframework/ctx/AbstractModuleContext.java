@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import net.simpleframework.common.coll.KVMap;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.ctx.permission.IPermissionHandler;
 import net.simpleframework.ctx.script.IScriptEval;
@@ -40,7 +41,30 @@ public abstract class AbstractModuleContext extends ObjectEx implements IModuleC
 
 	private Module module;
 
-	protected abstract Module createModule();
+	protected Module createModule() {
+		final AbstractModuleContext ctx = this;
+		return new Module() {
+			@Override
+			public String getRole(final KVMap vars) {
+				final String role = ctx.getRole(vars);
+				return role != null ? role : super.getRole(vars);
+			}
+
+			@Override
+			public String getManagerRole(final KVMap vars) {
+				final String managerRole = ctx.getManagerRole(vars);
+				return managerRole != null ? managerRole : super.getManagerRole(vars);
+			}
+		};
+	}
+
+	protected String getRole(final KVMap vars) {
+		return null;
+	}
+
+	protected String getManagerRole(final KVMap vars) {
+		return null;
+	}
 
 	@Override
 	public Module getModule() {

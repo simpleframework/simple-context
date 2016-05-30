@@ -1,6 +1,7 @@
 package net.simpleframework.ctx;
 
 import net.simpleframework.common.StringUtils;
+import net.simpleframework.common.coll.KVMap;
 import net.simpleframework.common.object.IObjectOrderAware;
 import net.simpleframework.common.object.TextNamedObject;
 import net.simpleframework.ctx.permission.IPermissionHandler;
@@ -31,7 +32,7 @@ public abstract class AbstractModule<T extends AbstractModule<T>> extends TextNa
 	/* 是否有效 */
 	private boolean disabled;
 
-	public String getRole() {
+	public String getRole(final KVMap vars) {
 		return role;
 	}
 
@@ -40,7 +41,7 @@ public abstract class AbstractModule<T extends AbstractModule<T>> extends TextNa
 		return (T) this;
 	}
 
-	public String getManagerRole() {
+	public String getManagerRole(final KVMap vars) {
 		return managerRole;
 	}
 

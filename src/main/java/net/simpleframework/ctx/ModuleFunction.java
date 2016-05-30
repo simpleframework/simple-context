@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import net.simpleframework.common.StringUtils;
+import net.simpleframework.common.coll.KVMap;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -24,19 +25,19 @@ public class ModuleFunction extends AbstractModule<ModuleFunction> {
 	}
 
 	@Override
-	public String getRole() {
-		String role = super.getRole();
+	public String getRole(final KVMap vars) {
+		String role = super.getRole(vars);
 		if (role == null) {
-			role = getModuleContext().getModule().getRole();
+			role = getModuleContext().getModule().getRole(vars);
 		}
 		return role;
 	}
 
 	@Override
-	public String getManagerRole() {
-		String role = super.getManagerRole();
+	public String getManagerRole(final KVMap vars) {
+		String role = super.getManagerRole(vars);
 		if (role == null) {
-			role = getModuleContext().getModule().getManagerRole();
+			role = getModuleContext().getModule().getManagerRole(vars);
 		}
 		return role;
 	}

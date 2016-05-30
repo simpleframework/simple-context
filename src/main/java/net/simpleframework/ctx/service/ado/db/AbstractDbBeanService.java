@@ -378,7 +378,7 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 
 	protected boolean isManager(final Object user) {
 		final IModuleContext ctx = getModuleContext();
-		return ctx.getPermission().getUser(user).isMember(ctx.getModule().getManagerRole());
+		return ctx.getPermission().getUser(user).isMember(ctx.getModule().getManagerRole(null));
 	}
 
 	protected ExpressionValue toExpressionValue(final FilterItems params) {
