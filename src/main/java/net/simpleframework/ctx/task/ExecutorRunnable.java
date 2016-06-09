@@ -77,13 +77,21 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 	}
 
 	protected int getZeroDelay() {
-		return getZeroDelay(NumberUtils.randomInt(0, 60 * 60));
+		return getZeroDelay(1);
 	}
 
-	protected int getZeroDelay(final int delay) {
+	protected int getZeroDelay(final int hour) {
+		final int h = hour * 60 * 60;
+		// 0点到1点启动
 		final Calendar cal = DateUtils.getZeroPoint();
-		cal.add(Calendar.HOUR_OF_DAY, 24);
-		return (int) ((cal.getTimeInMillis() - System.currentTimeMillis()) / 1000) + delay;
+		final int delta = h - (int) ((System.currentTimeMillis() - cal.getTimeInMillis()) / 1000);
+		if (delta > 0) {
+			return NumberUtils.randomInt(0, delta);
+		} else {
+			cal.add(Calendar.HOUR_OF_DAY, 24);
+			return (int) ((cal.getTimeInMillis() - System.currentTimeMillis()) / 1000)
+					+ NumberUtils.randomInt(0, h);
+		}
 	}
 
 	protected boolean isRun(final Map<String, Object> cache) throws Exception {
