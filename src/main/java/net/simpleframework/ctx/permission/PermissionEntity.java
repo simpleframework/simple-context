@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import net.simpleframework.common.ID;
 import net.simpleframework.common.StringUtils;
+import net.simpleframework.common.object.ObjectEx;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -12,7 +13,8 @@ import net.simpleframework.common.StringUtils;
  *         http://www.simpleframework.net
  */
 @SuppressWarnings({ "unchecked", "serial" })
-public abstract class PermissionEntity<T extends PermissionEntity<T>> implements Serializable {
+public abstract class PermissionEntity<T extends PermissionEntity<T>> extends ObjectEx implements
+		Serializable {
 	private ID id;
 
 	private String text = "";
