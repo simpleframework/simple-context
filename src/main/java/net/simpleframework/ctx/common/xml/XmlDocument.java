@@ -1,9 +1,9 @@
 package net.simpleframework.ctx.common.xml;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -20,6 +20,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import net.simpleframework.common.FileUtils;
 import net.simpleframework.common.IoUtils;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.common.th.RuntimeExceptionEx;
@@ -159,15 +160,16 @@ public class XmlDocument extends ObjectEx {
 	}
 
 	public void saveToFile(final File targetFile) throws IOException {
-		FileWriter fWriter = null;
-		try {
-			fWriter = new FileWriter(targetFile);
-			fWriter.write(toString());
-		} finally {
-			if (fWriter != null) {
-				fWriter.close();
-			}
-		}
+		FileUtils.copyFile(new ByteArrayInputStream(toString().getBytes()), targetFile);
+		// FileWriter fWriter = null;
+		// try {
+		// fWriter = new FileWriter(targetFile);
+		// fWriter.write(toString());
+		// } finally {
+		// if (fWriter != null) {
+		// fWriter.close();
+		// }
+		// }
 	}
 
 	private static Reader toReader(final String xString) {
