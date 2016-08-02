@@ -20,6 +20,7 @@ import net.simpleframework.ado.IParamsValue;
 import net.simpleframework.ado.bean.AbstractIdBean;
 import net.simpleframework.ado.bean.IDomainBeanAware;
 import net.simpleframework.ado.bean.IIdBeanAware;
+import net.simpleframework.ado.bean.IOrderBeanAware;
 import net.simpleframework.ado.bean.ITreeBeanAware;
 import net.simpleframework.ado.db.DbManagerFactory;
 import net.simpleframework.ado.db.DbTableColumn;
@@ -155,7 +156,12 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 	public static final ColumnData[] ORDER_OORDER = new ColumnData[] { ColumnData.ASC("oorder") };
 
 	protected ColumnData[] getDefaultOrderColumns() {
-		return ORDER_CREATEDATE;
+		if (IOrderBeanAware.class.isAssignableFrom(getBeanClass())) {
+			return ORDER_OORDER;
+		} else if (BeanUtils.hasProperty(getBeanClass(), "createDate")) {
+			return ORDER_CREATEDATE;
+		}
+		return null;
 	}
 
 	@Override
