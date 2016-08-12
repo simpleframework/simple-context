@@ -580,4 +580,23 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 		}
 		return queryByParams(FilterItems.of("userid", userId));
 	}
+
+	protected void buildStatusSQL(final StringBuilder sql, final List<Object> params,
+			final String alias, final Enum<?>... status) {
+		if (status != null && status.length > 0) {
+			sql.append(" and (");
+			int i = 0;
+			for (final Enum<?> s : status) {
+				if (i++ > 0) {
+					sql.append(" or ");
+				}
+				if (alias != null) {
+					sql.append(alias).append(".");
+				}
+				sql.append("status=?");
+				params.add(s);
+			}
+			sql.append(")");
+		}
+	}
 }
