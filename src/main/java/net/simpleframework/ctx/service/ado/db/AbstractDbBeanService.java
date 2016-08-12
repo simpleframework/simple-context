@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.simpleframework.ado.ADOException;
 import net.simpleframework.ado.ColumnData;
@@ -37,6 +38,7 @@ import net.simpleframework.common.BeanUtils;
 import net.simpleframework.common.ID;
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.coll.ArrayUtils;
+import net.simpleframework.common.coll.KVMap;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.common.object.ObjectFactory;
 import net.simpleframework.common.object.ObjectUtils;
@@ -258,6 +260,19 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 
 	public Object queryFor(final String column, final String expr, final Object... params) {
 		return getEntityManager().queryFor(column, new ExpressionValue(expr, params));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void update(final T bean, final Map<String, Object> attris) {
+		BeanUtils.setProperties(bean, attris);
+		final Set<String> keys = attris.keySet();
+		update(keys.toArray(new String[keys.size()]), bean);
+	}
+
+	@Override
+	public void update(final T bean, final String attri, final Object val) {
+		update(bean, new KVMap().add(attri, val));
 	}
 
 	@Override

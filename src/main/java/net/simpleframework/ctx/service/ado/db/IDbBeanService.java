@@ -2,6 +2,7 @@ package net.simpleframework.ctx.service.ado.db;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import net.simpleframework.ado.ColumnData;
 import net.simpleframework.ado.FilterItems;
@@ -46,6 +47,16 @@ public interface IDbBeanService<T extends Serializable> extends IADOBeanService<
 	void update(T... beans);
 
 	void update(String[] columns, T... beans);
+
+	/**
+	 * 更新多个属性
+	 * 
+	 * @param bean
+	 * @param attris
+	 */
+	void update(T bean, Map<String, Object> attris);
+
+	void update(T bean, String attri, Object val);
 
 	/**
 	 * 插入
