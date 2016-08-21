@@ -55,7 +55,8 @@ import net.simpleframework.ctx.service.ado.ITreeBeanServiceAware;
 /**
  * Licensed under the Apache License, Version 2.0
  * 
- * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
+ * @author 陈侃(cknet@126.com, 13910090885)
+ *         https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
 public abstract class AbstractDbBeanService<T extends Serializable> extends AbstractBaseService
@@ -434,27 +435,6 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 		final LoginWrapper lw = LoginUser.get();
 		return lw != null ? lw.getUserId() : null;
 	}
-
-	// private final IDbEntityListener<T> CONTEXT_LISTENER = new
-	// DbEntityAdapterEx<T>() {
-	// @Override
-	// public void onBeforeInsert(final IDbEntityManager<T> manager, final T[]
-	// beans)
-	// throws Exception {
-	// super.onBeforeInsert(manager, beans);
-	// for (final T t : beans) {
-	// IDomainBeanAware bean;
-	// if (t instanceof IDomainBeanAware
-	// && (bean = (IDomainBeanAware) t).getDomainId() == null) {
-	// bean.setDomainId(ID.of(getModuleContext().getDomain()));
-	// }
-	// }
-	// }
-	// };
-	//
-	// {
-	// addListener(CONTEXT_LISTENER);
-	// }
 
 	@Override
 	public void onInit() throws Exception {
