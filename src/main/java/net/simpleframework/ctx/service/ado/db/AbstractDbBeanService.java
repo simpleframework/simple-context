@@ -7,6 +7,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,6 +30,7 @@ import net.simpleframework.ado.db.IDbDataQuery;
 import net.simpleframework.ado.db.IDbEntityManager;
 import net.simpleframework.ado.db.IDbQueryManager;
 import net.simpleframework.ado.db.common.ExpressionValue;
+import net.simpleframework.ado.db.common.SQLValue;
 import net.simpleframework.ado.db.event.DbEntityAdapter;
 import net.simpleframework.ado.db.event.IDbEntityListener;
 import net.simpleframework.ado.query.DataQueryUtils;
@@ -458,6 +460,16 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 		final PermissionUser puser = LoginUser.user();
 		if (!puser.isManager() && !ObjectUtils.objectEquals(puser.getDomainId(), domainId)) {
 			throw ADOException.of($m("AbstractDbBeanService.5"));
+		}
+	}
+
+	protected void assertTimeInterval(final int second) {
+		final Date createdate = (Date) getEntityManager().queryFor("dd",
+				new SQLValue("select max(createdate) as dd from " + getTablename()));
+		if (createdate != null) {
+			if (System.currentTimeMillis() - createdate.getTime() < second * 1000l) {
+				throw ModuleContextException.of($m("AbstractDbBeanService.6", second));
+			}
 		}
 	}
 
