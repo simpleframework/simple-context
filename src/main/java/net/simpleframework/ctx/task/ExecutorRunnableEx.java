@@ -8,20 +8,15 @@ import java.util.Map;
 
 import net.simpleframework.common.Convert;
 import net.simpleframework.common.StringUtils;
-import net.simpleframework.ctx.ApplicationContextFactory;
-import net.simpleframework.ctx.IApplicationContext;
-import net.simpleframework.ctx.settings.ContextSettings;
 
 /**
  * Licensed under the Apache License, Version 2.0
  * 
- * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
+ * @author 陈侃(cknet@126.com, 13910090885)
+ *         https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
 public abstract class ExecutorRunnableEx extends ExecutorRunnable {
-
-	final static ContextSettings settings = ((IApplicationContext) ApplicationContextFactory.ctx())
-			.getContextSettings();
 
 	public ExecutorRunnableEx(final String taskname, final String tasktext) {
 		super(taskname, tasktext);
@@ -42,7 +37,11 @@ public abstract class ExecutorRunnableEx extends ExecutorRunnable {
 
 	@Override
 	protected boolean isRun(final Map<String, Object> cache) throws Exception {
-		return !Convert.toBool(settings.getProperty("task." + getTaskname() + ".disabled"));
+		final String disabled = settings.getProperty("task." + getTaskname() + ".disabled");
+		if (StringUtils.hasText(disabled)) {
+			return !Convert.toBool(disabled);
+		}
+		return super.isRun(cache);
 	}
 
 	@Override

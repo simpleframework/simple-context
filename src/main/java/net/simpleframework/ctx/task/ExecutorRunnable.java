@@ -6,19 +6,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.simpleframework.ado.query.IDataQuery;
+import net.simpleframework.common.Convert;
 import net.simpleframework.common.DateUtils;
 import net.simpleframework.common.NumberUtils;
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.object.ObjectEx;
+import net.simpleframework.ctx.ApplicationContextFactory;
+import net.simpleframework.ctx.IApplicationContext;
 import net.simpleframework.ctx.IDataRowCallback;
+import net.simpleframework.ctx.settings.ContextSettings;
 
 /**
  * Licensed under the Apache License, Version 2.0
  * 
- * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
+ * @author 陈侃(cknet@126.com, 13910090885)
+ *         https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
 public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
+
+	final static ContextSettings settings = ((IApplicationContext) ApplicationContextFactory.ctx())
+			.getContextSettings();
 
 	protected abstract void task(Map<String, Object> cache) throws Exception;
 
@@ -95,7 +103,7 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 	}
 
 	protected boolean isRun(final Map<String, Object> cache) throws Exception {
-		return true;
+		return !Convert.toBool(settings.getProperty("task.disabled"));
 	}
 
 	@Override
