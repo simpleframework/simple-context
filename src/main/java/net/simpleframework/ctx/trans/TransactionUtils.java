@@ -66,7 +66,8 @@ public abstract class TransactionUtils {
 					IADOManagerFactory factory;
 					final IModuleContext context = ModuleContextFactory.get(ctxClass);
 					if (context instanceof IADOManagerFactoryAware
-							&& (factory = ((IADOManagerFactoryAware) context).getADOManagerFactory()) instanceof DbManagerFactory) {
+							&& (factory = ((IADOManagerFactoryAware) context)
+									.getADOManagerFactory()) instanceof DbManagerFactory) {
 						return new MethodResult(((DbManagerFactory) factory).getQueryManager()
 								.doExecuteTransaction(callback(obj, args, proxy)));
 					}

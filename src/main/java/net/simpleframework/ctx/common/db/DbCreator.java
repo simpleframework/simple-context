@@ -54,8 +54,9 @@ public abstract class DbCreator extends ObjectEx {
 		update(dataSource, callback, document);
 
 		// 运行sql补丁
-		final File[] patchArr = new File(document.configFile.getParentFile().getAbsolutePath()
-				+ File.separator + "patch").listFiles();
+		final File[] patchArr = new File(
+				document.configFile.getParentFile().getAbsolutePath() + File.separator + "patch")
+						.listFiles();
 		if (patchArr != null) {
 			final Version version = document.getVersion();
 			for (final File patchFile : patchArr) {
@@ -106,8 +107,9 @@ public abstract class DbCreator extends ObjectEx {
 						if (callback != null) {
 							callback.execute(sqlText, 0, e, element.elementText("description"));
 						}
-						element.addAttribute(stateAttri, SQLSyntaxErrorException.class.isAssignableFrom(e
-								.getClass()) ? "ignore" : "exception");
+						element.addAttribute(stateAttri,
+								SQLSyntaxErrorException.class.isAssignableFrom(e.getClass()) ? "ignore"
+										: "exception");
 					}
 				}
 			}

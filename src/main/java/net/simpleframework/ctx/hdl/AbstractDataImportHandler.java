@@ -1,6 +1,7 @@
 package net.simpleframework.ctx.hdl;
 
 import static net.simpleframework.common.I18n.$m;
+
 import net.simpleframework.ctx.IApplicationContext;
 
 /**
@@ -9,8 +10,8 @@ import net.simpleframework.ctx.IApplicationContext;
  * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
-public abstract class AbstractDataImportHandler extends AbstractScanHandler implements
-		IDataImportHandler {
+public abstract class AbstractDataImportHandler extends AbstractScanHandler
+		implements IDataImportHandler {
 
 	@Override
 	public void onScan(final IApplicationContext application) throws Exception {

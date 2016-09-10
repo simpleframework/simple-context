@@ -24,7 +24,8 @@ public abstract class ScriptEvalUtils {
 		script = script.trim();
 		final char[] charArray = script.toCharArray();
 		final int length = charArray.length;
-		if (length > 3 && charArray[0] == '$' && charArray[1] == '{' && charArray[length - 1] == '}') {
+		if (length > 3 && charArray[0] == '$' && charArray[1] == '{'
+				&& charArray[length - 1] == '}') {
 			script = script.substring(2, script.length() - 1);
 		}
 		return script;
@@ -42,8 +43,8 @@ public abstract class ScriptEvalUtils {
 				if (matcher.matches()) {
 					final MatchResult result = matcher.toMatchResult();
 					final String group = result.group(1);
-					expr = expr.substring(0, result.start(1))
-							+ StringUtils.blank(scriptEval.eval(group)) + expr.substring(result.end(1));
+					expr = expr.substring(0, result.start(1)) + StringUtils.blank(scriptEval.eval(group))
+							+ expr.substring(result.end(1));
 				} else {
 					break;
 				}

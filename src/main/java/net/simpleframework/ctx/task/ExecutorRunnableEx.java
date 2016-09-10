@@ -46,8 +46,8 @@ public abstract class ExecutorRunnableEx extends ExecutorRunnable {
 
 	@Override
 	protected void prints(final Map<String, Object> cache, final Date n) {
-		final boolean disabled = Convert.toBool(settings.getProperty("task." + getTaskname()
-				+ ".print.disabled"));
+		final boolean disabled = Convert
+				.toBool(settings.getProperty("task." + getTaskname() + ".print.disabled"));
 		if (disabled) {
 			cache.put("disabled", Boolean.TRUE);
 			return;

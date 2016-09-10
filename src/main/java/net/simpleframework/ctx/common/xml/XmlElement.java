@@ -2,16 +2,16 @@ package net.simpleframework.ctx.common.xml;
 
 import java.util.Iterator;
 
-import net.simpleframework.common.StringUtils;
-import net.simpleframework.common.coll.CollectionUtils.AbstractIterator;
-import net.simpleframework.common.object.ObjectEx;
-
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+
+import net.simpleframework.common.StringUtils;
+import net.simpleframework.common.coll.CollectionUtils.AbstractIterator;
+import net.simpleframework.common.object.ObjectEx;
 
 /**
  * Licensed under the Apache License, Version 2.0

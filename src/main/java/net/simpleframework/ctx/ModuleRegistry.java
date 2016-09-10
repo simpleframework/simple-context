@@ -40,8 +40,8 @@ public abstract class ModuleRegistry {
 		registered(iClass.getName(), obj);
 	}
 
-	public static <T> void registered(final String[] packageNames, final Class<T> iClass, final T obj)
-			throws Exception {
+	public static <T> void registered(final String[] packageNames, final Class<T> iClass,
+			final T obj) throws Exception {
 		if (packageNames == null || iClass == null) {
 			return;
 		}

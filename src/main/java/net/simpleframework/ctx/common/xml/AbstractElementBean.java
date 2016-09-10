@@ -191,7 +191,8 @@ public abstract class AbstractElementBean extends ObjectEx {
 		setBeanFromElementAttributes(null, attributes);
 	}
 
-	public void setBeanFromElementAttributes(final IScriptEval scriptEval, final String[] attributes) {
+	public void setBeanFromElementAttributes(final IScriptEval scriptEval,
+			final String[] attributes) {
 		if (attributes == null) {
 			return;
 		}

@@ -68,8 +68,8 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 	public IModuleContext getModuleContext() {
 		final IModuleContext context = super.getModuleContext();
 		if (context == null) {
-			throw ModuleContextException.of("[" + getClass().getSimpleName() + "] "
-					+ $m("AbstractDbBeanService.4"));
+			throw ModuleContextException
+					.of("[" + getClass().getSimpleName() + "] " + $m("AbstractDbBeanService.4"));
 		}
 		return context;
 	}
@@ -156,8 +156,8 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 		return sql.toString();
 	}
 
-	public static final ColumnData[] ORDER_CREATEDATE = new ColumnData[] { ColumnData
-			.DESC("createdate") };
+	public static final ColumnData[] ORDER_CREATEDATE = new ColumnData[] {
+			ColumnData.DESC("createdate") };
 	public static final ColumnData[] ORDER_OORDER = new ColumnData[] { ColumnData.ASC("oorder") };
 
 	protected ColumnData[] getDefaultOrderColumns() {
@@ -183,8 +183,8 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 	 * @return
 	 */
 	public List<Object> list(final String column, final String expr, final Object... params) {
-		final IDataQuery<Map<String, Object>> qs = getEntityManager().queryMapSet(
-				new String[] { column }, new ExpressionValue(expr, params));
+		final IDataQuery<Map<String, Object>> qs = getEntityManager()
+				.queryMapSet(new String[] { column }, new ExpressionValue(expr, params));
 		final ArrayList<Object> al = new ArrayList<Object>();
 		Map<String, Object> kv;
 		while ((kv = qs.next()) != null) {
@@ -388,7 +388,8 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 
 	public static class DbEntityAdapterEx<T> extends DbEntityAdapter<T> {
 
-		protected Collection<T> coll(final IDbEntityManager<T> manager, final IParamsValue paramsValue) {
+		protected Collection<T> coll(final IDbEntityManager<T> manager,
+				final IParamsValue paramsValue) {
 			return ((ObjectEx) paramsValue).getAttrCache("coll", new CacheV<Collection<T>>() {
 				@Override
 				public Collection<T> get() {
@@ -464,11 +465,11 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 	}
 
 	protected void assertTimeInterval(final ExpressionValue eVal, final int second) {
-		final Date createdate = (Date) getEntityManager().queryFor(
-				"dd",
+		final Date createdate = (Date) getEntityManager().queryFor("dd",
 				new SQLValue("select max(createdate) as dd from " + getTablename() + " where "
 						+ eVal.getExpression(), eVal.getValues()));
-		if (createdate != null && System.currentTimeMillis() - createdate.getTime() < second * 1000l) {
+		if (createdate != null
+				&& System.currentTimeMillis() - createdate.getTime() < second * 1000l) {
 			throw ModuleContextException.of($m("AbstractDbBeanService.6", second));
 		}
 	}
@@ -511,8 +512,8 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 
 	public boolean hasChild(final T parent) {
 		assertTreeBean();
-		final int c = parent == null ? count("parentid is null") : count("parentid=?",
-				BeanUtils.getProperty(parent, "id"));
+		final int c = parent == null ? count("parentid is null")
+				: count("parentid=?", BeanUtils.getProperty(parent, "id"));
 		return c > 0;
 	}
 
@@ -528,8 +529,8 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 
 	protected void assertTreeBean() {
 		if (!ITreeBeanAware.class.isAssignableFrom(getBeanClass())) {
-			throw NotImplementedException.of($m("AbstractDbBeanService.2",
-					ITreeBeanAware.class.getName()));
+			throw NotImplementedException
+					.of($m("AbstractDbBeanService.2", ITreeBeanAware.class.getName()));
 		}
 	}
 

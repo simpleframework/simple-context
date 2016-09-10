@@ -13,8 +13,8 @@ import net.simpleframework.common.object.ObjectEx;
  *         http://www.simpleframework.net
  */
 @SuppressWarnings({ "unchecked", "serial" })
-public abstract class PermissionEntity<T extends PermissionEntity<T>> extends ObjectEx implements
-		Serializable {
+public abstract class PermissionEntity<T extends PermissionEntity<T>> extends ObjectEx
+		implements Serializable {
 	private ID id;
 
 	private String text = "";

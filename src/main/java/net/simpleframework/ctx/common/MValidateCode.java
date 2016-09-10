@@ -102,8 +102,8 @@ public class MValidateCode {
 	}
 
 	static {
-		((IApplicationContext) ApplicationContextFactory.ctx()).getTaskExecutor().addScheduledTask(
-				new ExecutorRunnableEx("mvalidate_code", $m("MValidateCode.0")) {
+		((IApplicationContext) ApplicationContextFactory.ctx()).getTaskExecutor()
+				.addScheduledTask(new ExecutorRunnableEx("mvalidate_code", $m("MValidateCode.0")) {
 					@Override
 					public int getPeriod() {
 						return 30;

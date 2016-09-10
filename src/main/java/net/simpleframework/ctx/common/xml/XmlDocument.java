@@ -20,17 +20,17 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import net.simpleframework.common.FileUtils;
-import net.simpleframework.common.IoUtils;
-import net.simpleframework.common.object.ObjectEx;
-import net.simpleframework.common.th.RuntimeExceptionEx;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import net.simpleframework.common.FileUtils;
+import net.simpleframework.common.IoUtils;
+import net.simpleframework.common.object.ObjectEx;
+import net.simpleframework.common.th.RuntimeExceptionEx;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -67,8 +67,8 @@ public class XmlDocument extends ObjectEx {
 					this.document = parse(new InputSource(inputStream));
 				} catch (final Exception e) {
 					// 按utf-8再尝试一次
-					this.document = parse(new InputSource(toReader(IoUtils.getStringFromInputStream(
-							inputStream, "UTF-8"))));
+					this.document = parse(new InputSource(
+							toReader(IoUtils.getStringFromInputStream(inputStream, "UTF-8"))));
 				}
 			}
 		} catch (final Throwable e) {
@@ -84,8 +84,8 @@ public class XmlDocument extends ObjectEx {
 		this(file.exists() ? new FileInputStream(file) : (InputStream) null);
 	}
 
-	private Document parse(final InputSource inputSource) throws ParserConfigurationException,
-			SAXException, IOException {
+	private Document parse(final InputSource inputSource)
+			throws ParserConfigurationException, SAXException, IOException {
 		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		final DocumentBuilder builder = factory.newDocumentBuilder();
 		if (inputSource == null) {
