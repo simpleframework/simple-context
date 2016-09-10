@@ -15,18 +15,19 @@ import net.simpleframework.common.ClassUtils;
 import net.simpleframework.common.ClassUtils.IScanResourcesCallback;
 import net.simpleframework.common.FileUtils;
 import net.simpleframework.common.object.ObjectEx;
-import net.simpleframework.common.object.ObjectUtils;
 import net.simpleframework.ctx.IApplicationContext;
+import net.simpleframework.ctx.common.DeployUtils;
 import net.simpleframework.ctx.settings.ContextSettings;
 
 /**
  * Licensed under the Apache License, Version 2.0
  * 
- * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
+ * @author 陈侃(cknet@126.com, 13910090885)
+ *         https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
 public abstract class DbUtils {
-	private static final String RESOURCE_NAME = "$resource";
+
 	private static final String SCRIPT_FILENAME = "sql-script";
 
 	public static void doExecuteSql(final IApplicationContext application) throws Exception {
@@ -56,11 +57,11 @@ public abstract class DbUtils {
 										.replace('/', '.');
 								final ContextSettings settings = application.getContextSettings();
 								if (!settings.isDebug()) {
-									packageName = ObjectUtils.hashStr(packageName);
+									packageName = DeployUtils.getShortPackage(packageName);
 								}
 								final StringBuilder sb = new StringBuilder();
-								sb.append("/").append(RESOURCE_NAME).append("/").append(packageName)
-										.append("/").append(SCRIPT_FILENAME);
+								sb.append("/").append(DeployUtils.RESOURCE_NAME).append("/")
+										.append(packageName).append("/").append(SCRIPT_FILENAME);
 								final String target = settings.getHomeFileDir().getAbsoluteFile()
 										+ sb.toString().replace("/", File.separator);
 								if (!new File(target).exists()) {
