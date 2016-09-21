@@ -575,19 +575,29 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 	}
 
 	protected void buildStatusSQL(final StringBuilder sql, final List<Object> params,
-			final String alias, final Enum<?>... status) {
-		if (status != null && status.length > 0) {
+			final Enum<?>... vals) {
+		buildStatusSQL(sql, params, null, vals);
+	}
+
+	protected void buildStatusSQL(final StringBuilder sql, final List<Object> params,
+			final String alias, final Enum<?>... vals) {
+		buildEnumsSQL(sql, params, alias, "status", vals);
+	}
+
+	protected void buildEnumsSQL(final StringBuilder sql, final List<Object> params,
+			final String alias, final String key, final Enum<?>... vals) {
+		if (vals != null && vals.length > 0) {
 			sql.append(" and (");
 			int i = 0;
-			for (final Enum<?> s : status) {
+			for (final Enum<?> val : vals) {
 				if (i++ > 0) {
 					sql.append(" or ");
 				}
 				if (alias != null) {
 					sql.append(alias).append(".");
 				}
-				sql.append("status=?");
-				params.add(s);
+				sql.append(key).append("=?");
+				params.add(val);
 			}
 			sql.append(")");
 		}
