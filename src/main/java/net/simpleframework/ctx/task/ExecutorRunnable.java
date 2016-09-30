@@ -67,7 +67,11 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 	}
 
 	public int getPeriod() {
-		return period > 0 ? period : 60 * 5;
+		return period > 0 ? period : getDefaultPeriod();
+	}
+
+	protected int getDefaultPeriod() {
+		return 60 * 5;
 	}
 
 	public ExecutorRunnable setPeriod(final int period) {

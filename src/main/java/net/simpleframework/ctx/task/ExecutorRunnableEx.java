@@ -28,16 +28,24 @@ public abstract class ExecutorRunnableEx extends ExecutorRunnable {
 
 	@Override
 	public int getPeriod() {
-		final String period = settings.getProperty("task." + getTaskname() + ".period");
+		final String period = getSettings_period();
 		if (StringUtils.hasText(period)) {
 			return Convert.toInt(period);
 		}
 		return super.getPeriod();
 	}
 
+	protected String getSettings_period() {
+		return settings.getProperty("task." + getTaskname() + ".period");
+	}
+
+	protected String getSettings_disabled() {
+		return settings.getProperty("task." + getTaskname() + ".disabled");
+	}
+
 	@Override
 	protected boolean isRun(final Map<String, Object> cache) throws Exception {
-		final String disabled = settings.getProperty("task." + getTaskname() + ".disabled");
+		final String disabled = getSettings_disabled();
 		if (StringUtils.hasText(disabled)) {
 			return !Convert.toBool(disabled);
 		}
