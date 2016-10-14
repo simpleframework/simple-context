@@ -20,7 +20,8 @@ import net.simpleframework.ctx.script.ScriptEvalUtils;
  * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
-public abstract class AbstractElementBean extends ObjectEx {
+@SuppressWarnings("serial")
+public abstract class AbstractElementBean extends ObjectEx implements java.io.Serializable {
 
 	private XmlElement _element;
 

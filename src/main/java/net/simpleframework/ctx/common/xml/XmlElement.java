@@ -19,7 +19,8 @@ import net.simpleframework.common.object.ObjectEx;
  * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
-public class XmlElement extends ObjectEx {
+public class XmlElement extends ObjectEx implements java.io.Serializable {
+
 	private final Element _element;
 
 	public XmlElement(final Element element) {
@@ -190,4 +191,6 @@ public class XmlElement extends ObjectEx {
 	public String toString() {
 		return XmlDocument.toString(getElement());
 	}
+
+	private static final long serialVersionUID = 6172731084262953407L;
 }

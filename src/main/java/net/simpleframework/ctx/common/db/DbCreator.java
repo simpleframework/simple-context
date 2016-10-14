@@ -139,6 +139,8 @@ public abstract class DbCreator extends ObjectEx {
 	}
 
 	static class SqlScriptDocument extends XmlDocument {
+		private static final long serialVersionUID = 3285599944229036171L;
+
 		final File configFile;
 
 		public SqlScriptDocument(final File configFile) throws FileNotFoundException {

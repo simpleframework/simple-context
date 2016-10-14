@@ -38,7 +38,7 @@ import net.simpleframework.common.th.RuntimeExceptionEx;
  * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
-public class XmlDocument extends ObjectEx {
+public class XmlDocument extends ObjectEx implements java.io.Serializable {
 
 	protected Document document;
 
@@ -205,4 +205,6 @@ public class XmlDocument extends ObjectEx {
 			return _of(XmlDocumentException.class, null, throwable);
 		}
 	}
+
+	private static final long serialVersionUID = 4369298335478898560L;
 }
