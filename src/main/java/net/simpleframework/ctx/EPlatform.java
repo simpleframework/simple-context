@@ -6,15 +6,40 @@ package net.simpleframework.ctx;
  *         http://www.simpleframework.net
  */
 public enum EPlatform {
-	pc,
+	pc {
+		@Override
+		public String toString() {
+			return "电脑端";
+		}
+	},
 
-	mobile,
+	mobile {
+		@Override
+		public String toString() {
+			return "移动端";
+		}
+	},
 
-	mobile_android,
+	mobile_android {
+		@Override
+		public String toString() {
+			return "android";
+		}
+	},
 
-	mobile_ios,
+	mobile_ios {
+		@Override
+		public String toString() {
+			return "ios";
+		}
+	},
 
-	weixin;
+	weixin {
+		@Override
+		public String toString() {
+			return "weixin";
+		}
+	};
 
 	public static EPlatform get() {
 		return pc;
