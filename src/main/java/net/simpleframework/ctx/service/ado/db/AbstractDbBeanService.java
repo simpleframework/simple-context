@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +38,7 @@ import net.simpleframework.ado.query.DataQueryUtils;
 import net.simpleframework.ado.query.IDataQuery;
 import net.simpleframework.ado.trans.TransactionVoidCallback;
 import net.simpleframework.common.BeanUtils;
+import net.simpleframework.common.DateUtils;
 import net.simpleframework.common.ID;
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.coll.ArrayUtils;
@@ -471,6 +473,15 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 		if (createdate != null
 				&& System.currentTimeMillis() - createdate.getTime() < second * 1000l) {
 			throw ModuleContextException.of($m("AbstractDbBeanService.6", second));
+		}
+	}
+
+	protected void assertMaxPost(final ID userId, final int max) {
+		final Calendar[] cal = DateUtils.getTodayInterval();
+		final int count = count("userid=? and (createdate>? and createdate<?)", userId,
+				cal[0].getTime(), cal[1].getTime());
+		if (count >= max) {
+			throw ADOException.of($m("AbstractDbBeanService.7", max));
 		}
 	}
 
