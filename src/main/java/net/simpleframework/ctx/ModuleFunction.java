@@ -1,6 +1,8 @@
 package net.simpleframework.ctx;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import net.simpleframework.common.StringUtils;
@@ -43,6 +45,7 @@ public class ModuleFunction extends AbstractModule<ModuleFunction> {
 	}
 
 	private static Map<String, ModuleFunction> namesCache = new ConcurrentHashMap<String, ModuleFunction>();
+	private static Set<String> NULL_MODULES = new HashSet<String>();
 
 	public static ModuleFunction getFunctionByName(final String name) {
 		if (!StringUtils.hasText(name)) {
@@ -55,12 +58,15 @@ public class ModuleFunction extends AbstractModule<ModuleFunction> {
 		if (function != null) {
 			return function;
 		}
-		for (final IModuleContext ctx : ModuleContextFactory.allModules()) {
-			function = getFunctionByName(ctx, ctx.getFunctions(null), name);
-			if (function != null) {
-				namesCache.put(name, function);
-				return function;
+		if (!NULL_MODULES.contains(name)) {
+			for (final IModuleContext ctx : ModuleContextFactory.allModules()) {
+				function = getFunctionByName(ctx, ctx.getFunctions(null), name);
+				if (function != null) {
+					namesCache.put(name, function);
+					return function;
+				}
 			}
+			NULL_MODULES.add(name);
 		}
 		return null;
 	}
