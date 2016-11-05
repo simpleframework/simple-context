@@ -613,4 +613,27 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 			sql.append(")");
 		}
 	}
+
+	protected void buildEnumsFilterItems(final FilterItems items, final String key,
+			final Enum<?>... vals) {
+		if (vals != null && vals.length > 0) {
+			if (vals.length > 1) {
+				int i = 0;
+				for (final Enum<?> val : vals) {
+					FilterItem item;
+					if (i++ == 0) {
+						item = new FilterItem(key, val).setLbracket(true);
+					} else {
+						item = FilterItem.or(key, val);
+						if (i == vals.length) {
+							item.setRbracket(true);
+						}
+					}
+					items.add(item);
+				}
+			} else {
+				items.addEqual(key, vals[0]);
+			}
+		}
+	}
 }
