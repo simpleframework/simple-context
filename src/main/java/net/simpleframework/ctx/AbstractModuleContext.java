@@ -1,6 +1,5 @@
 package net.simpleframework.ctx;
 
-import java.io.File;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -142,20 +141,6 @@ public abstract class AbstractModuleContext extends ObjectEx implements IModuleC
 	@Override
 	public IScriptEval createScriptEval(final Map<String, Object> variables) {
 		return application.createScriptEval(variables);
-	}
-
-	private String tmpdir;
-
-	@Override
-	public String getTmpdir() {
-		if (tmpdir == null) {
-			final StringBuilder sb = new StringBuilder();
-			final String fs = File.separator;
-			sb.append(getContextSettings().getTmpFiledir().getAbsolutePath());
-			sb.append(fs).append(getModule().getName()).append(fs);
-			tmpdir = sb.toString();
-		}
-		return tmpdir;
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Locale;
 
 import net.simpleframework.common.FileUtils;
+import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.common.th.NotImplementedException;
 import net.simpleframework.ctx.IApplicationContext;
@@ -19,7 +20,10 @@ public abstract class ContextSettings extends ObjectEx {
 
 	protected ContextSettings applicationSettings;
 
+	protected IApplicationContext context;
+
 	public void onInit(final IApplicationContext context) throws Exception {
+		this.context = context;
 	}
 
 	public void setApplicationSettings(final ContextSettings applicationSettings) {
@@ -53,14 +57,16 @@ public abstract class ContextSettings extends ObjectEx {
 		return applicationSettings != null ? applicationSettings.getCharset() : "UTF-8";
 	}
 
-	protected File homeDir, tmpDir;
+	public static String HOME_PATH = "/";
+
+	protected File homeDir;
 
 	public File getHomeFileDir() {
 		if (applicationSettings != null) {
 			return applicationSettings.getHomeFileDir();
 		} else {
 			if (homeDir == null) {
-				homeDir = new File(System.getProperty("java.home"));
+				homeDir = createDefaultHomeFileDir();
 				if (!homeDir.exists()) {
 					FileUtils.createDirectoryRecursively(homeDir);
 				}
@@ -69,12 +75,23 @@ public abstract class ContextSettings extends ObjectEx {
 		}
 	}
 
-	public void setHomeFileDir(final File homeDir) {
-		if (applicationSettings != null) {
-			applicationSettings.setHomeFileDir(homeDir);
-		} else {
-			this.homeDir = homeDir;
+	protected File createDefaultHomeFileDir() {
+		return context.getRootDir();
+	}
+
+	public File getHomeFile(final String path) {
+		return getHomeFile(path, null);
+	}
+
+	public File getHomeFile(final String path, final String file) {
+		final File tmpFile = getHomeFileDir();
+		final File tFile = new File(tmpFile.getAbsolutePath()
+				+ StringUtils.replace(path, "/", File.separator));
+		if (!tFile.exists()) {
+			FileUtils.createDirectoryRecursively(tFile);
 		}
+		return StringUtils.hasText(file) ? new File(tFile.getAbsoluteFile() + File.separator + file)
+				: tFile;
 	}
 
 	/**
@@ -82,20 +99,27 @@ public abstract class ContextSettings extends ObjectEx {
 	 * 
 	 * @return
 	 */
-	public File getTmpFiledir() {
-		if (applicationSettings != null) {
-			return applicationSettings.getTmpFiledir();
-		} else {
-			if (tmpDir == null) {
-				tmpDir = new File(
-						getHomeFileDir().getAbsoluteFile() + File.separator + "$temp" + File.separator);
-				if (!tmpDir.exists()) {
-					FileUtils.createDirectoryRecursively(tmpDir);
-				}
-			}
-			return tmpDir;
-		}
-	}
+	// public File getTmpFiledir() {
+	// if (applicationSettings != null) {
+	// return applicationSettings.getTmpFiledir();
+	// } else {
+	// if (tmpDir == null) {
+	// tmpDir = new File(getHomeFileDir().getAbsoluteFile() + File.separator +
+	// "$temp"
+	// + File.separator);
+	// if (!tmpDir.exists()) {
+	// FileUtils.createDirectoryRecursively(tmpDir);
+	// }
+	// }
+	// return tmpDir;
+	// }
+	// }
+
+	// public File getTmpFiledir(final String path) {
+	// final File tmpFile = getTmpFiledir();
+	// return new File(tmpFile.getAbsolutePath() + StringUtils.replace(path, "/",
+	// File.separator));
+	// }
 
 	/**
 	 * 获取缺省的访问角色

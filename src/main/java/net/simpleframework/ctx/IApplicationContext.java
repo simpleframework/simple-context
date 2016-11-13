@@ -1,5 +1,6 @@
 package net.simpleframework.ctx;
 
+import java.io.File;
 import java.util.Collection;
 
 import javax.sql.DataSource;
@@ -83,4 +84,6 @@ public interface IApplicationContext extends IApplicationContextBase {
 	 * @return
 	 */
 	IModuleRef getPDFRef();
+
+	File getRootDir();
 }

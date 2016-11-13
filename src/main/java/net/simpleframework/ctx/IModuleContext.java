@@ -101,13 +101,6 @@ public interface IModuleContext extends IContextBase {
 	IScriptEval createScriptEval(Map<String, Object> variables);
 
 	/**
-	 * 获取模块的临时路径
-	 * 
-	 * @return
-	 */
-	String getTmpdir();
-
-	/**
 	 * 获取模块所在的域
 	 * 
 	 * @return

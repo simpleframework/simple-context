@@ -14,7 +14,8 @@ import net.simpleframework.common.Convert;
 /**
  * Licensed under the Apache License, Version 2.0
  * 
- * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
+ * @author 陈侃(cknet@126.com, 13910090885)
+ *         https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
 public class PropertiesContextSettings extends ContextSettings {
@@ -104,8 +105,7 @@ public class PropertiesContextSettings extends ContextSettings {
 
 	private void print(final String key, final Object val) {
 		synchronized (mark) {
-			if (!IContextSettingsConst.CTX_LOCALE.equals(key) && mark.get(key) == null
-					&& val != null) {
+			if (!IContextSettingsConst.CTX_LOCALE.equals(key) && mark.get(key) == null && val != null) {
 				oprintln("[" + $m("PropertiesContextSettings.0") + "] " + key + " => " + val);
 				mark.put(key, Boolean.TRUE);
 			}

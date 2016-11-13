@@ -62,7 +62,7 @@ public abstract class DbUtils {
 								final StringBuilder sb = new StringBuilder();
 								sb.append("/").append(DeployUtils.RESOURCE_NAME).append("/")
 										.append(packageName).append("/").append(SCRIPT_FILENAME);
-								final String target = settings.getHomeFileDir().getAbsoluteFile()
+								final String target = application.getRootDir().getAbsoluteFile()
 										+ sb.toString().replace("/", File.separator);
 								if (!new File(target).exists()) {
 									FileUtils.unzip(inputStream, target, false);
