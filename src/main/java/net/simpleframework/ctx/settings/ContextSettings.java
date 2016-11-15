@@ -90,36 +90,17 @@ public abstract class ContextSettings extends ObjectEx {
 		if (!tFile.exists()) {
 			FileUtils.createDirectoryRecursively(tFile);
 		}
-		return StringUtils.hasText(file) ? new File(tFile.getAbsoluteFile() + File.separator + file)
+		return StringUtils.hasText(file) ? new File(tFile.getAbsolutePath() + File.separator + file)
 				: tFile;
 	}
 
-	/**
-	 * 获取系统的临时目录
-	 * 
-	 * @return
-	 */
-	// public File getTmpFiledir() {
-	// if (applicationSettings != null) {
-	// return applicationSettings.getTmpFiledir();
-	// } else {
-	// if (tmpDir == null) {
-	// tmpDir = new File(getHomeFileDir().getAbsoluteFile() + File.separator +
-	// "$temp"
-	// + File.separator);
-	// if (!tmpDir.exists()) {
-	// FileUtils.createDirectoryRecursively(tmpDir);
-	// }
-	// }
-	// return tmpDir;
-	// }
-	// }
+	public File getAttachDir() {
+		return getAttachDir(null);
+	}
 
-	// public File getTmpFiledir(final String path) {
-	// final File tmpFile = getTmpFiledir();
-	// return new File(tmpFile.getAbsolutePath() + StringUtils.replace(path, "/",
-	// File.separator));
-	// }
+	public File getAttachDir(final String filename) {
+		return getHomeFile("/attach/", filename);
+	}
 
 	/**
 	 * 获取缺省的访问角色
