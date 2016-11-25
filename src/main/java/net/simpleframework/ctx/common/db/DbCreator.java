@@ -21,13 +21,14 @@ import net.simpleframework.common.logger.Log;
 import net.simpleframework.common.logger.LogFactory;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.ctx.common.xml.XmlDocument;
-import net.simpleframework.ctx.common.xml.XmlDocument.XmlDocumentException;
+import net.simpleframework.ctx.common.xml.XmlDocumentException;
 import net.simpleframework.ctx.common.xml.XmlElement;
 
 /**
  * Licensed under the Apache License, Version 2.0
  * 
- * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
+ * @author 陈侃(cknet@126.com, 13910090885)
+ *         https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
 public abstract class DbCreator extends ObjectEx {

@@ -30,12 +30,12 @@ import org.xml.sax.SAXException;
 import net.simpleframework.common.FileUtils;
 import net.simpleframework.common.IoUtils;
 import net.simpleframework.common.object.ObjectEx;
-import net.simpleframework.common.th.RuntimeExceptionEx;
 
 /**
  * Licensed under the Apache License, Version 2.0
  * 
- * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
+ * @author 陈侃(cknet@126.com, 13910090885)
+ *         https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
 public class XmlDocument extends ObjectEx implements java.io.Serializable {
@@ -192,18 +192,6 @@ public class XmlDocument extends ObjectEx implements java.io.Serializable {
 			}
 		}
 		return out.toString();
-	}
-
-	public static class XmlDocumentException extends RuntimeExceptionEx {
-		private static final long serialVersionUID = 3959123626087714493L;
-
-		public XmlDocumentException(final String msg, final Throwable cause) {
-			super(msg, cause);
-		}
-
-		public static XmlDocumentException of(final Throwable throwable) {
-			return _of(XmlDocumentException.class, null, throwable);
-		}
 	}
 
 	private static final long serialVersionUID = 4369298335478898560L;
