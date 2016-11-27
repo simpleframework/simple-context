@@ -3,6 +3,8 @@ package net.simpleframework.ctx;
 import java.lang.reflect.Field;
 
 import net.simpleframework.common.ClassUtils;
+import net.simpleframework.common.logger.Log;
+import net.simpleframework.common.logger.LogFactory;
 import net.simpleframework.common.object.ObjectEx;
 
 /**
@@ -36,4 +38,6 @@ public class AbstractModuleContextAware extends ObjectEx {
 	public void setModuleContext(final IModuleContext context) {
 		_context = context;
 	}
+
+	protected Log log = LogFactory.getLogger(getClass());
 }
