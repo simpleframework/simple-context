@@ -87,11 +87,15 @@ public abstract class ContextSettings extends ObjectEx {
 		final File tmpFile = getHomeFileDir();
 		final File tFile = new File(
 				tmpFile.getAbsolutePath() + StringUtils.replace(path, "/", File.separator));
-		if (!tFile.exists()) {
-			FileUtils.createDirectoryRecursively(tFile);
+		return getFile(tFile, file);
+	}
+
+	protected File getFile(final File dir, final String file) {
+		if (!dir.exists()) {
+			FileUtils.createDirectoryRecursively(dir);
 		}
-		return StringUtils.hasText(file) ? new File(tFile.getAbsolutePath() + File.separator + file)
-				: tFile;
+		return StringUtils.hasText(file) ? new File(dir.getAbsolutePath() + File.separator + file)
+				: dir;
 	}
 
 	public File getAttachDir() {
