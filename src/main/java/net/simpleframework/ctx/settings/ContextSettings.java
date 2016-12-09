@@ -84,6 +84,9 @@ public abstract class ContextSettings extends ObjectEx {
 	}
 
 	public File getHomeFile(final String path, final String file) {
+		if (applicationSettings != null) {
+			return applicationSettings.getHomeFile(path, file);
+		}
 		final File tmpFile = getHomeFileDir();
 		final File tFile = new File(
 				tmpFile.getAbsolutePath() + StringUtils.replace(path, "/", File.separator));
@@ -103,7 +106,8 @@ public abstract class ContextSettings extends ObjectEx {
 	}
 
 	public File getAttachDir(final String filename) {
-		return getHomeFile("/attach/", filename);
+		return applicationSettings != null ? applicationSettings.getAttachDir(filename)
+				: getHomeFile("/attach/", filename);
 	}
 
 	/**
