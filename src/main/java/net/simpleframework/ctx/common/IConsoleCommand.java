@@ -1,15 +1,21 @@
 package net.simpleframework.ctx.common;
 
 import java.io.PrintStream;
+import java.util.Collection;
 
+import net.simpleframework.ado.db.DbManagerFactory;
+import net.simpleframework.ado.db.IDbEntityManager;
 import net.simpleframework.common.FileUtils;
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.object.ObjectEx;
+import net.simpleframework.ctx.ApplicationContextFactory;
+import net.simpleframework.ctx.IApplicationContext;
 
 /**
  * Licensed under the Apache License, Version 2.0
  * 
- * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
+ * @author 陈侃(cknet@126.com, 13910090885)
+ *         https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
 public interface IConsoleCommand {
@@ -61,18 +67,19 @@ public interface IConsoleCommand {
 		public boolean execute(final String command) {
 			final String[] cmds = StringUtils.split(command, " ");
 			if (cmds[0].equalsIgnoreCase("db") && cmds.length > 1) {
-				// final Map<Class<?>, IDbEntityManager> cache =
-				// DataManagerFactory.entityManagerCache;
-				// final PrintStream stream =
-				// ConsoleThread.console.getPrintStream();
+				final IApplicationContext ctx = (IApplicationContext) ApplicationContextFactory.ctx();
+				final DbManagerFactory dbFactory = (DbManagerFactory) ctx.getADOManagerFactory();
+				final Collection<IDbEntityManager<?>> cache = dbFactory.allEntityManager();
+				final PrintStream stream = ConsoleThread.console.getPrintStream();
 				if (cmds[1].equalsIgnoreCase("-list")) {
-					// for (final IDbEntityManager service : cache.values()) {
-					// stream.println(service);
-					// }
+					for (final IDbEntityManager<?> service : cache) {
+						stream.println(service);
+					}
 				} else if (cmds[1].equalsIgnoreCase("-reset")) {
-					// for (final IDbEntityManager service : cache.values()) {
-					// service.reset();
-					// }
+					for (final IDbEntityManager<?> service : cache) {
+						service.reset();
+						stream.println(service);
+					}
 				}
 			}
 			return false;
