@@ -64,6 +64,11 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 		return file;
 	}
 
+	public AttachmentFile setAttachment(final File file) {
+		this.file = file;
+		return this;
+	}
+
 	public String getDurl() {
 		return durl;
 	}
