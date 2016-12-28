@@ -150,10 +150,18 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 
 	public String getMd5() {
 		if (md5 == null) {
+			FileInputStream fStream = null;
 			try {
-				md5 = AlgorithmUtils.md5Hex(new FileInputStream(getAttachment()));
+				md5 = AlgorithmUtils.md5Hex(fStream = new FileInputStream(getAttachment()));
 			} catch (final IOException e) {
 				getLog().warn(e);
+			} finally {
+				if (fStream != null) {
+					try {
+						fStream.close();
+					} catch (final IOException e) {
+					}
+				}
 			}
 		}
 		return md5;
