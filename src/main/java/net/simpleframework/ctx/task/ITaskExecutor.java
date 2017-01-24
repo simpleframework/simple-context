@@ -9,12 +9,15 @@ package net.simpleframework.ctx.task;
  */
 public interface ITaskExecutor {
 
+	void execute(ExecutorRunnable task);
+
 	/**
 	 * 执行任务
 	 * 
 	 * @param task
+	 * @param initialDelay
 	 */
-	void execute(ExecutorRunnable task);
+	void schedule(int initialDelay, ExecutorRunnable task);
 
 	/**
 	 * 

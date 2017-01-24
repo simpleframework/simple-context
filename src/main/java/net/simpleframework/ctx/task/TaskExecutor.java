@@ -41,6 +41,11 @@ public class TaskExecutor extends ObjectEx implements ITaskExecutor {
 	}
 
 	@Override
+	public void schedule(final int initialDelay, final ExecutorRunnable task) {
+		getExecutorService().schedule(task, initialDelay, TimeUnit.SECONDS);
+	}
+
+	@Override
 	public void execute(final ExecutorRunnable task) {
 		getExecutorService().execute(task);
 	}
