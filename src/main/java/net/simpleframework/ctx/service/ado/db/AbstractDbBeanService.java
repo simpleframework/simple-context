@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -65,6 +66,15 @@ import net.simpleframework.ctx.service.ado.ITreeBeanServiceAware;
  */
 public abstract class AbstractDbBeanService<T extends Serializable> extends AbstractBaseService
 		implements IDbBeanService<T> {
+
+	protected Map<String, Object> _lockmap;
+
+	protected Map<String, Object> lock() {
+		if (_lockmap == null) {
+			_lockmap = new Hashtable<String, Object>();
+		}
+		return _lockmap;
+	}
 
 	@Override
 	public IModuleContext getModuleContext() {
