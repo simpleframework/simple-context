@@ -3,7 +3,8 @@ package net.simpleframework.ctx.permission;
 /**
  * Licensed under the Apache License, Version 2.0
  * 
- * @author 陈侃(cknet@126.com, 13910090885) https://github.com/simpleframework
+ * @author 陈侃(cknet@126.com, 13910090885)
+ *         https://github.com/simpleframework
  *         http://www.simpleframework.net
  */
 public class PermissionConst {
@@ -31,6 +32,7 @@ public class PermissionConst {
 	public static String ROLE_INORG;
 
 	/* 环境变量key定义 */
+	public static final String VAR_DISABLE_MANAGER = "disableManager";
 	public static final String VAR_USERID = "userId";
 	public static final String VAR_ROLEID = "roleId";
 	public static final String VAR_DEPTID = "deptId";
