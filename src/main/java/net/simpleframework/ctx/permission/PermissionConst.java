@@ -33,6 +33,7 @@ public class PermissionConst {
 
 	/* 环境变量key定义 */
 	public static final String VAR_DISABLE_MANAGER = "disableManager";
+	public static final String VAR_DISABLE_DOMAIN_MANAGER = "disableDomainManager";
 	public static final String VAR_USERID = "userId";
 	public static final String VAR_ROLEID = "roleId";
 	public static final String VAR_DEPTID = "deptId";
