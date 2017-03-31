@@ -98,6 +98,8 @@ public interface IDbBeanService<T extends Serializable> extends IADOBeanService<
 	 */
 	IDbEntityManager<T> getEntityManager();
 
+	boolean inTrans();
+
 	/**
 	 * 获取ADO模块的实体bean管理器
 	 * 

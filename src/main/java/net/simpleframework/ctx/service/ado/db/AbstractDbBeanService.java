@@ -394,6 +394,11 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 		return mgr;
 	}
 
+	@Override
+	public boolean inTrans() {
+		return getEntityManager().getJdbcProvider().inTrans();
+	}
+
 	protected void doExecuteTransaction(final TransactionVoidCallback callback) {
 		getEntityManager().doExecuteTransaction(callback);
 	}
