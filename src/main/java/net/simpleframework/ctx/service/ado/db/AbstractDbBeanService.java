@@ -321,7 +321,12 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 	 */
 	@Override
 	public int deleteWith(final String expr, final Object... params) {
-		return getEntityManager().delete(new ExpressionValue(expr, params));
+		return delete(new ExpressionValue(expr, params));
+	}
+
+	@Override
+	public int delete(final IParamsValue paramsValue) {
+		return getEntityManager().delete(paramsValue);
 	}
 
 	@Override

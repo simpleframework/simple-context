@@ -6,6 +6,7 @@ import java.util.Map;
 
 import net.simpleframework.ado.ColumnData;
 import net.simpleframework.ado.FilterItems;
+import net.simpleframework.ado.IParamsValue;
 import net.simpleframework.ado.db.DbTableColumn;
 import net.simpleframework.ado.db.IDbEntityManager;
 import net.simpleframework.ado.db.IDbQueryManager;
@@ -126,6 +127,8 @@ public interface IDbBeanService<T extends Serializable> extends IADOBeanService<
 	T getBean(CharSequence expr, Object... params);
 
 	IDataQuery<T> query(CharSequence expr, Object... params);
+
+	int delete(IParamsValue paramsValue);
 
 	int deleteWith(String expr, Object... params);
 }
