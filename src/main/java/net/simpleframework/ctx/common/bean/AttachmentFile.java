@@ -1,10 +1,13 @@
 package net.simpleframework.ctx.common.bean;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import net.simpleframework.common.AlgorithmUtils;
 import net.simpleframework.common.FileUtils;
@@ -205,6 +208,31 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 			topic += ext;
 		}
 		return topic;
+	}
+
+	public void addZipEntry(final String base, final ZipOutputStream zos) throws IOException {
+		FileInputStream fis = null;
+		BufferedInputStream bis = null;
+		try {
+			final byte[] buffer = new byte[1024 * 10];
+			final File aFile = getAttachment();
+			fis = new FileInputStream(aFile);
+			bis = new BufferedInputStream(fis, buffer.length);
+			zos.putNextEntry(new ZipEntry(
+					base + getTopic() + "." + FileUtils.getFilenameExtension(aFile.getName())));
+			int read = 0;
+			while ((read = bis.read(buffer, 0, buffer.length)) != -1) {
+				zos.write(buffer, 0, read);
+			}
+			zos.closeEntry();
+		} finally {
+			if (fis != null) {
+				fis.close();
+			}
+			if (bis != null) {
+				bis.close();
+			}
+		}
 	}
 
 	private static final long serialVersionUID = -7838133087121815920L;
