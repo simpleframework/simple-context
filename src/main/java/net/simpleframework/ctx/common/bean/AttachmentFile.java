@@ -210,7 +210,8 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 		return topic;
 	}
 
-	public void addZipEntry(final String base, final ZipOutputStream zos) throws IOException {
+	public void addZipEntry(final String base, final String topic, final ZipOutputStream zos)
+			throws IOException {
 		FileInputStream fis = null;
 		BufferedInputStream bis = null;
 		try {
@@ -218,8 +219,8 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 			final File aFile = getAttachment();
 			fis = new FileInputStream(aFile);
 			bis = new BufferedInputStream(fis, buffer.length);
-			zos.putNextEntry(new ZipEntry(
-					base + getTopic() + "." + FileUtils.getFilenameExtension(aFile.getName())));
+			zos.putNextEntry(
+					new ZipEntry(base + (topic != null ? topic : getTopic() + "." + getExt())));
 			int read = 0;
 			while ((read = bis.read(buffer, 0, buffer.length)) != -1) {
 				zos.write(buffer, 0, read);
