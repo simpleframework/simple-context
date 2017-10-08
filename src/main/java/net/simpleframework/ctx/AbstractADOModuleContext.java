@@ -33,7 +33,7 @@ public abstract class AbstractADOModuleContext extends AbstractModuleContext
 	@Override
 	public IADOManagerFactory getADOManagerFactory() {
 		if (adoManagerFactory == null) {
-			adoManagerFactory = application.getADOManagerFactory(getDataSource());
+			return application.getADOManagerFactory(getDataSource());
 		}
 		return adoManagerFactory;
 	}

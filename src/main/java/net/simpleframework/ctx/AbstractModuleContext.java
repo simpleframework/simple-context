@@ -99,7 +99,7 @@ public abstract class AbstractModuleContext extends ObjectEx implements IModuleC
 	@Override
 	public DataSource getDataSource() {
 		if (dataSource == null) {
-			dataSource = application.getDataSource();
+			return application.getDataSource();
 		}
 		return dataSource;
 	}
@@ -112,7 +112,7 @@ public abstract class AbstractModuleContext extends ObjectEx implements IModuleC
 	@Override
 	public ContextSettings getContextSettings() {
 		if (settings == null) {
-			settings = application.getContextSettings();
+			return application.getContextSettings();
 		}
 		return settings;
 	}
@@ -130,7 +130,7 @@ public abstract class AbstractModuleContext extends ObjectEx implements IModuleC
 	@Override
 	public ITaskExecutor getTaskExecutor() {
 		if (taskExecutor == null) {
-			taskExecutor = application.getTaskExecutor();
+			return application.getTaskExecutor();
 		}
 		return taskExecutor;
 	}
