@@ -1,5 +1,10 @@
 package net.simpleframework.ctx;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
 import net.simpleframework.ado.IADOManagerFactory;
 import net.simpleframework.ado.IADOManagerFactoryAware;
 import net.simpleframework.ado.db.DbEntityTable;
@@ -20,20 +25,27 @@ public abstract class AbstractADOModuleContext extends AbstractModuleContext
 	@Override
 	public void onInit(final IApplicationContext application) throws Exception {
 		super.onInit(application);
-
-		final Object mFactory = getADOManagerFactory();
-		if (mFactory instanceof DbManagerFactory) {
-			final DbEntityTable[] tbls = createEntityTables();
-			if (tbls != null) {
-				((DbManagerFactory) mFactory).regist(tbls);
-			}
-		}
+		// init ado
+		getADOManagerFactory();
 	}
+
+	private final Map<DataSource, Boolean> aLoaded = new HashMap<DataSource, Boolean>();
 
 	@Override
 	public IADOManagerFactory getADOManagerFactory() {
 		if (adoManagerFactory == null) {
-			return application.getADOManagerFactory(getDataSource());
+			final DataSource dataSource = getDataSource();
+			final IADOManagerFactory mFactory = application.getADOManagerFactory(dataSource);
+			if (aLoaded.get(dataSource) == null) {
+				if (mFactory instanceof DbManagerFactory) {
+					final DbEntityTable[] tbls = createEntityTables();
+					if (tbls != null) {
+						((DbManagerFactory) mFactory).regist(tbls);
+					}
+				}
+				aLoaded.put(dataSource, Boolean.TRUE);
+			}
+			return mFactory;
 		}
 		return adoManagerFactory;
 	}
