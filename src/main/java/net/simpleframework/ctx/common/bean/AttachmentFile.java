@@ -69,6 +69,7 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 
 	public AttachmentFile setAttachment(final File file) {
 		this.file = file;
+		this.md5 = null;
 		return this;
 	}
 
