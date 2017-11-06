@@ -55,7 +55,7 @@ public abstract class ModuleRefUtils extends ObjectEx {
 		}
 	}
 
-	static final Map<String, Boolean> ERRs = new HashMap<String, Boolean>();
+	static final Map<String, Boolean> ERRs = new HashMap<>();
 
 	static Log log = LogFactory.getLogger(BeanUtils.class);
 }

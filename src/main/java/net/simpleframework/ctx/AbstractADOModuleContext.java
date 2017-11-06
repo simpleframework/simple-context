@@ -29,7 +29,7 @@ public abstract class AbstractADOModuleContext extends AbstractModuleContext
 		getADOManagerFactory();
 	}
 
-	private final Map<DataSource, Boolean> aLoaded = new HashMap<DataSource, Boolean>();
+	private final Map<DataSource, Boolean> aLoaded = new HashMap<>();
 
 	@Override
 	public IADOManagerFactory getADOManagerFactory() {

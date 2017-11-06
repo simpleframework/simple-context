@@ -14,7 +14,7 @@ public abstract class DeployUtils {
 
 	public static final String RESOURCE_NAME = "$resource";
 
-	static Map<String, Integer> SHORTPACKAGEs = new HashMap<String, Integer>();
+	static Map<String, Integer> SHORTPACKAGEs = new HashMap<>();
 	static int COUNTER = 0;
 
 	public static String getShortPackage(final String packageName) {

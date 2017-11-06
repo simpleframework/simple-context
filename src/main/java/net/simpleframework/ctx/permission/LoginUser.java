@@ -13,7 +13,7 @@ public abstract class LoginUser {
 
 	private static final ThreadLocal<LoginWrapper> USER_LOCAL;
 	static {
-		USER_LOCAL = new ThreadLocal<LoginWrapper>();
+		USER_LOCAL = new ThreadLocal<>();
 	}
 
 	public static LoginWrapper get() {

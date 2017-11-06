@@ -71,7 +71,7 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 
 	protected Map<String, Object> lock() {
 		if (_lockmap == null) {
-			_lockmap = new Hashtable<String, Object>();
+			_lockmap = new Hashtable<>();
 		}
 		return _lockmap;
 	}
@@ -197,7 +197,7 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 	public List<Object> list(final String column, final String expr, final Object... params) {
 		final IDataQuery<Map<String, Object>> qs = getEntityManager()
 				.queryMapSet(new String[] { column }, new ExpressionValue(expr, params));
-		final ArrayList<Object> al = new ArrayList<Object>();
+		final ArrayList<Object> al = new ArrayList<>();
 		Map<String, Object> kv;
 		while ((kv = qs.next()) != null) {
 			al.add(kv.get(column));
@@ -436,7 +436,7 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 			return new ExpressionValue("1=1");
 		}
 		final StringBuilder sql = new StringBuilder();
-		final ArrayList<Object> al = new ArrayList<Object>();
+		final ArrayList<Object> al = new ArrayList<>();
 		int i = 0;
 		for (final FilterItem item : params) {
 			final ExpressionValue ev = ExpressionValue.toExpressionValue(item);
@@ -511,7 +511,7 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 			final ColumnData... orderColumns) {
 		assertTreeBean();
 		final StringBuilder sql = new StringBuilder();
-		final List<Object> params = new ArrayList<Object>();
+		final List<Object> params = new ArrayList<>();
 
 		if (parent == null) {
 			sql.append("parentid is null");

@@ -41,7 +41,7 @@ public abstract class DbUtils {
 			ObjectEx.oprintln();
 			ObjectEx.oprintln($m("DbUtils.0"));
 
-			final List<String> sqlFiles = new ArrayList<String>();
+			final List<String> sqlFiles = new ArrayList<>();
 			for (final String packageName : packageNames) {
 				ClassUtils.scanResources(packageName, new IScanResourcesCallback() {
 					@Override

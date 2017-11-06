@@ -18,7 +18,7 @@ public abstract class ModuleRegistry {
 
 	static Map<String, Object> registryCache;
 	static {
-		registryCache = new ConcurrentHashMap<String, Object>();
+		registryCache = new ConcurrentHashMap<>();
 	}
 
 	public static Object get(final String key) {

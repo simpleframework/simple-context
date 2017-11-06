@@ -26,7 +26,7 @@ public class ConsoleThread extends Thread {
 
 	public static void doInit() {
 		if ((System.in != null) && (System.out != null)) {
-			commands = new ConcurrentHashMap<Class<?>, IConsoleCommand>();
+			commands = new ConcurrentHashMap<>();
 			registered(new IConsoleCommand.QuitCommand(), new IConsoleCommand.GcCommand(),
 					new IConsoleCommand.DBCommand());
 

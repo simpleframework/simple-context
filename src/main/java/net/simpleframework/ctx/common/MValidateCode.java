@@ -71,7 +71,7 @@ public class MValidateCode {
 	static final String CONST_CODE = "0123456789"; // ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 	static final int CONST_CODE_LENGTH = CONST_CODE.length();
 
-	static Map<String, Code> _codes = new HashMap<String, Code>();
+	static Map<String, Code> _codes = new HashMap<>();
 
 	public static class Code {
 		String val;
@@ -111,7 +111,7 @@ public class MValidateCode {
 
 					@Override
 					protected void task(final Map<String, Object> cache) throws Exception {
-						final List<String> removes = new ArrayList<String>();
+						final List<String> removes = new ArrayList<>();
 						for (final Map.Entry<String, Code> e : _codes.entrySet()) {
 							if (e.getValue().isExpaired()) {
 								removes.add(e.getKey());

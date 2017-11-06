@@ -16,13 +16,13 @@ public abstract class BeanDefaults {
 	// 存放缺省属性
 	private static Map<Class<?>, Map<String, Object>> defaultsCache;
 	static {
-		defaultsCache = new ConcurrentHashMap<Class<?>, Map<String, Object>>();
+		defaultsCache = new ConcurrentHashMap<>();
 	}
 
 	public static void set(final Class<?> beanClass, final String key, final Object val) {
 		Map<String, Object> defaults = defaultsCache.get(beanClass);
 		if (defaults == null) {
-			defaultsCache.put(beanClass, defaults = new HashMap<String, Object>());
+			defaultsCache.put(beanClass, defaults = new HashMap<>());
 		}
 		defaults.put(key, val);
 	}

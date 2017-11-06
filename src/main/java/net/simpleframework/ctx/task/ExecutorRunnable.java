@@ -113,7 +113,7 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 	@Override
 	public void run() {
 		try {
-			final Map<String, Object> cache = new HashMap<String, Object>();
+			final Map<String, Object> cache = new HashMap<>();
 			if (!isRun(cache)) {
 				return;
 			}

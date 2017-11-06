@@ -103,7 +103,7 @@ public abstract class AbstractApplicationContextBase extends ObjectEx
 
 	@Override
 	public String[] getScanPackageNames() {
-		final Set<String> set = new LinkedHashSet<String>();
+		final Set<String> set = new LinkedHashSet<>();
 		set.add("net.simpleframework");
 		if (scanPackageNames != null) {
 			for (final String packageName : scanPackageNames) {
@@ -127,7 +127,7 @@ public abstract class AbstractApplicationContextBase extends ObjectEx
 
 	protected void addThrowableMessage(final Class<? extends Throwable> cls, final String message) {
 		if (msgs == null) {
-			msgs = new HashMap<Class<? extends Throwable>, String>();
+			msgs = new HashMap<>();
 		}
 		if (message != null) {
 			msgs.put(cls, message);

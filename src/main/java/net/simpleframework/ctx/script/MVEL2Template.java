@@ -22,7 +22,7 @@ import net.simpleframework.lib.org.mvel2.templates.TemplateRuntime;
 public abstract class MVEL2Template {
 	private final static Map<String, CompiledTemplate> templateCompilerCache;
 	static {
-		templateCompilerCache = new ConcurrentHashMap<String, CompiledTemplate>();
+		templateCompilerCache = new ConcurrentHashMap<>();
 	}
 
 	private static CompiledTemplate getCompiledTemplate(final String expr) {

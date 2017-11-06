@@ -56,7 +56,7 @@ public class TaskExecutor extends ObjectEx implements ITaskExecutor {
 		final String taskname = task.getTaskname();
 		Collection<ScheduledFuture<?>> coll = scheduledTasksCache.get(taskname);
 		if (coll == null) {
-			scheduledTasksCache.put(taskname, coll = new ArrayList<ScheduledFuture<?>>());
+			scheduledTasksCache.put(taskname, coll = new ArrayList<>());
 		}
 
 		coll.add(getExecutorService().scheduleAtFixedRate(
@@ -85,7 +85,7 @@ public class TaskExecutor extends ObjectEx implements ITaskExecutor {
 
 	private final Map<String, Collection<ScheduledFuture<?>>> scheduledTasksCache;
 	{
-		scheduledTasksCache = new ConcurrentHashMap<String, Collection<ScheduledFuture<?>>>();
+		scheduledTasksCache = new ConcurrentHashMap<>();
 	}
 
 	@Override

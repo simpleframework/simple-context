@@ -172,7 +172,7 @@ public abstract class AbstractElementBean extends ObjectEx implements java.io.Se
 				getLog().warn(e);
 				if (isRemoveErrorAttribute()) {
 					if (removes == null) {
-						removes = new ArrayList<XmlAttri>();
+						removes = new ArrayList<>();
 					}
 					removes.add(attribute);
 				}

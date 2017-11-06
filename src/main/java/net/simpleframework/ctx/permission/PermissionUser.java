@@ -144,7 +144,7 @@ public class PermissionUser extends PermissionEntity<PermissionUser> {
 		if (roleId == null) {
 			return roles(variables);
 		}
-		final ArrayList<PermissionRole> l = new ArrayList<PermissionRole>();
+		final ArrayList<PermissionRole> l = new ArrayList<>();
 		for (final PermissionRole r : roles(variables)) {
 			if (roleId.equals(r.getId())) {
 				l.add(r);

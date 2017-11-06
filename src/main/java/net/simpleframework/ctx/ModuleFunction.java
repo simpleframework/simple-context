@@ -45,8 +45,8 @@ public class ModuleFunction extends AbstractModule<ModuleFunction> {
 		return role;
 	}
 
-	private static Map<String, ModuleFunction> namesCache = new ConcurrentHashMap<String, ModuleFunction>();
-	private static Set<String> NULL_MODULES = new HashSet<String>();
+	private static Map<String, ModuleFunction> namesCache = new ConcurrentHashMap<>();
+	private static Set<String> NULL_MODULES = new HashSet<>();
 
 	public static ModuleFunction getFunctionByName(final String name) {
 		if (!StringUtils.hasText(name)) {

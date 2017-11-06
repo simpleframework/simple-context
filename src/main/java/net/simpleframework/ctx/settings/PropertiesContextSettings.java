@@ -113,5 +113,5 @@ public class PropertiesContextSettings extends ContextSettings {
 		}
 	}
 
-	private final Map<String, Boolean> mark = new HashMap<String, Boolean>();
+	private final Map<String, Boolean> mark = new HashMap<>();
 }

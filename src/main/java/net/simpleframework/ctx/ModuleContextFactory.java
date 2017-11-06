@@ -42,12 +42,12 @@ public class ModuleContextFactory extends ObjectEx {
 	static Map<String, IModuleContext> modulesCache;
 	static List<IModuleContext> modulesSort;
 	static {
-		modulesCache = new ConcurrentHashMap<String, IModuleContext>();
+		modulesCache = new ConcurrentHashMap<>();
 	}
 
 	public static Collection<IModuleContext> allModules() {
 		if (modulesSort == null) {
-			modulesSort = new ArrayList<IModuleContext>(modulesCache.values());
+			modulesSort = new ArrayList<>(modulesCache.values());
 			Collections.sort(modulesSort, new Comparator<IModuleContext>() {
 				@Override
 				public int compare(final IModuleContext ctx1, final IModuleContext ctx2) {
