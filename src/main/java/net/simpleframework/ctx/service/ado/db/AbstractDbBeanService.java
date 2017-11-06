@@ -486,6 +486,10 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 		}
 	}
 
+	protected void assertTimeInterval(final ExpressionValue eVal) {
+		assertTimeInterval(eVal, 1);
+	}
+
 	protected void assertTimeInterval(final ExpressionValue eVal, final int second) {
 		final Date createdate = (Date) getEntityManager().queryFor("dd",
 				new SQLValue("select max(createdate) as dd from " + getTablename() + " where "
