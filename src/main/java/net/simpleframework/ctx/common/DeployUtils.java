@@ -22,6 +22,6 @@ public abstract class DeployUtils {
 		if (i == null) {
 			SHORTPACKAGEs.put(packageName, (i = COUNTER++));
 		}
-		return String.valueOf(i);
+		return "s" + i;
 	}
 }
