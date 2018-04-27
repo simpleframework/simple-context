@@ -131,4 +131,9 @@ public interface IDbBeanService<T extends Serializable> extends IADOBeanService<
 	int delete(IParamsValue paramsValue);
 
 	int deleteWith(String expr, Object... params);
+
+	/**
+	 * 设置当前查询禁止使用cache，具体看实现
+	 */
+	void setQueryNoCache();
 }

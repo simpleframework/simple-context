@@ -660,4 +660,17 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 			}
 		}
 	}
+
+	protected ThreadLocal<Boolean> QUERY_NOCACHE = new ThreadLocal<Boolean>();
+
+	@Override
+	public void setQueryNoCache() {
+		QUERY_NOCACHE.set(true);
+	}
+
+	protected boolean isQueryNoCache() {
+		final Boolean b = QUERY_NOCACHE.get();
+		QUERY_NOCACHE.remove();
+		return b != null && b.booleanValue();
+	}
 }
