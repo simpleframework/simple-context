@@ -104,6 +104,10 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 		return getEntityManager().getBean(getIdParam(id));
 	}
 
+	protected T get(final T t) {
+		return getBean(getIdParam(t));
+	}
+
 	protected Object getIdParam(final Object bean) {
 		if (bean instanceof String || bean instanceof ID) {
 			return bean;
