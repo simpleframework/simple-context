@@ -94,6 +94,7 @@ public class XmlDocument extends ObjectEx implements java.io.Serializable {
 
 		factory.setNamespaceAware(isNamespaceAware());
 		factory.setValidating(isValidating());
+		factory.setExpandEntityReferences(false);
 		final EntityResolver resolver = getEntityResolver();
 		if (resolver != null) {
 			builder.setEntityResolver(resolver);
