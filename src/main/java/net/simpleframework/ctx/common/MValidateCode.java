@@ -50,6 +50,7 @@ public class MValidateCode {
 			oCode.timeout = timeout;
 		}
 		_codes.put(key, oCode);
+		System.out.println("genCode: " + key + ", " + oCode.val);
 		return oCode;
 	}
 
