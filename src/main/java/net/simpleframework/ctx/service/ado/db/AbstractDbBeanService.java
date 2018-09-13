@@ -268,6 +268,16 @@ public abstract class AbstractDbBeanService<T extends Serializable> extends Abst
 	}
 
 	@Override
+	public Number min(final String column, final CharSequence expr, final Object... params) {
+		return getEntityManager().min(column, new ExpressionValue(expr, params));
+	}
+
+	@Override
+	public Number min(final String column) {
+		return min(column, "1=1");
+	}
+
+	@Override
 	public Number avg(final String column, final CharSequence expr, final Object... params) {
 		return getEntityManager().avg(column, new ExpressionValue(expr, params));
 	}

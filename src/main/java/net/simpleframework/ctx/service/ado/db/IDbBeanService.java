@@ -78,6 +78,10 @@ public interface IDbBeanService<T extends Serializable> extends IADOBeanService<
 
 	Number max(String column);
 
+	Number min(String column, CharSequence expr, Object... params);
+
+	Number min(String column);
+
 	Number avg(String column);
 
 	Number avg(String column, CharSequence expr, Object... params);
