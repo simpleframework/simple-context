@@ -33,6 +33,10 @@ public class MValidateCode {
 		return _codes.get(key);
 	}
 
+	public static void removeCode(final String key) {
+		_codes.remove(key);
+	}
+
 	public static Code genCode(final String key, final int timeout) {
 		// 1分钟间隔内不允许重复发送
 		Code oCode = getCode(key);
@@ -123,7 +127,7 @@ public class MValidateCode {
 							}
 						}
 						for (final String k : removes) {
-							_codes.remove(k);
+							removeCode(k);
 						}
 					}
 				});
