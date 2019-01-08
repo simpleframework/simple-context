@@ -29,9 +29,13 @@ public class MValidateCode {
 		return genCode(key, 0);
 	}
 
+	public static Code getCode(final String key) {
+		return _codes.get(key);
+	}
+
 	public static Code genCode(final String key, final int timeout) {
 		// 1分钟间隔内不允许重复发送
-		Code oCode = _codes.get(key);
+		Code oCode = getCode(key);
 		if (oCode != null) {
 			final Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.MINUTE, -1);
@@ -58,7 +62,7 @@ public class MValidateCode {
 		if (!StringUtils.hasText(val)) {
 			throw ModuleContextException.of($m("MValidateCode.1"));
 		}
-		final Code oCode = _codes.get(key);
+		final Code oCode = getCode(key);
 		if (oCode == null) {
 			throw ModuleContextException.of($m("MValidateCode.2"));
 		}
