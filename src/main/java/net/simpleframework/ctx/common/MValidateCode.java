@@ -73,6 +73,7 @@ public class MValidateCode {
 		if (!oCode.val.equalsIgnoreCase(val)) {
 			throw ModuleContextException.of($m("MValidateCode.3"));
 		}
+		oCode.verify = true;
 		return oCode;
 	}
 
@@ -83,6 +84,8 @@ public class MValidateCode {
 	static Map<String, Code> _codes = new HashMap<>();
 
 	public static class Code {
+		boolean verify = false;
+
 		String val;
 
 		Date createDate = new Date();
@@ -102,6 +105,10 @@ public class MValidateCode {
 
 		public int timeout() {
 			return timeout;
+		}
+
+		public boolean verify() {
+			return verify;
 		}
 
 		@Override
