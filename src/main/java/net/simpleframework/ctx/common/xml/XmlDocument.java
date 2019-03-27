@@ -143,17 +143,16 @@ public class XmlDocument extends ObjectEx implements java.io.Serializable {
 	static String toString(final Node node) {
 		try {
 			final TransformerFactory tf = TransformerFactory.newInstance();
-			tf.setAttribute("indent-number", new Integer(2));
+			// tf.setAttribute("indent-number", new Integer(2));
 
 			final Transformer trans = tf.newTransformer();
 			trans.setOutputProperty(OutputKeys.METHOD, "xml");
 			trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 			trans.setOutputProperty(OutputKeys.INDENT, "yes");
+			trans.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 
 			final StringWriter sWriter = new StringWriter();
-			final StreamResult result = new StreamResult(sWriter);
-			final DOMSource source = new DOMSource(node);
-			trans.transform(source, result);
+			trans.transform(new DOMSource(node), new StreamResult(sWriter));
 			return sWriter.toString();
 		} catch (final Throwable e) {
 			throw XmlDocumentException.of(e);
