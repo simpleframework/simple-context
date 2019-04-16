@@ -66,6 +66,7 @@ public class XmlDocument extends ObjectEx implements java.io.Serializable {
 				try {
 					this.document = parse(new InputSource(inputStream));
 				} catch (final Exception e) {
+					getLog().warn(e);
 					// 按utf-8再尝试一次
 					this.document = parse(new InputSource(
 							toReader(IoUtils.getStringFromInputStream(inputStream, "UTF-8"))));
