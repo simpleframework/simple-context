@@ -59,20 +59,19 @@ public class XmlDocument extends ObjectEx implements java.io.Serializable {
 	}
 
 	public XmlDocument(final InputStream inputStream) {
+		String xmlString = null;
 		try {
 			if (inputStream == null) {
 				this.document = parse(null);
 			} else {
-				try {
-					this.document = parse(new InputSource(inputStream));
-				} catch (final Exception e) {
-					getLog().warn(e);
-					// 按utf-8再尝试一次
-					this.document = parse(new InputSource(
-							toReader(IoUtils.getStringFromInputStream(inputStream, "UTF-8"))));
-				}
+				// 按utf-8读取
+				this.document = parse(new InputSource(
+						toReader(xmlString = IoUtils.getStringFromInputStream(inputStream))));
 			}
 		} catch (final Throwable e) {
+			if (xmlString != null) {
+				getLog().warn(xmlString);
+			}
 			throw XmlDocumentException.of(e);
 		}
 	}
