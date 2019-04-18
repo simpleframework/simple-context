@@ -111,6 +111,10 @@ public class AttachmentFile extends DescriptionObject<AttachmentFile> implements
 	public String getExt() {
 		if (ext == null) {
 			ext = FileUtils.getFilenameExtension(getTopic()).toLowerCase();
+			int p;
+			if ((p = ext.indexOf("-")) > 0) {
+				ext = ext.substring(0, p);
+			}
 		}
 		return ext;
 	}
