@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.simpleframework.ado.query.IDataQuery;
-import net.simpleframework.common.Convert;
 import net.simpleframework.common.DateUtils;
 import net.simpleframework.common.NumberUtils;
 import net.simpleframework.common.StringUtils;
@@ -107,7 +106,7 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 	}
 
 	protected boolean isRun(final Map<String, Object> cache) throws Exception {
-		return !Convert.toBool(settings.getProperty("task.disabled"));
+		return true;
 	}
 
 	@Override

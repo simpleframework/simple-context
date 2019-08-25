@@ -49,7 +49,7 @@ public abstract class ExecutorRunnableEx extends ExecutorRunnable {
 		if (StringUtils.hasText(disabled)) {
 			return !Convert.toBool(disabled);
 		}
-		return super.isRun(cache);
+		return !Convert.toBool(settings.getProperty("task.disabled"));
 	}
 
 	@Override
