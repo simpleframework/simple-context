@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import net.simpleframework.common.object.ObjectEx;
@@ -54,14 +53,15 @@ public class TaskExecutor extends ObjectEx implements ITaskExecutor {
 	public void addScheduledTask(final int initialDelay, final int period,
 			final ExecutorRunnable task) {
 		final String taskname = task.getTaskname();
-		Collection<ScheduledFuture<?>> coll = scheduledTasksCache.get(taskname);
+		Collection<ScheduledTask> coll = scheduledTasksCache.get(taskname);
 		if (coll == null) {
 			scheduledTasksCache.put(taskname, coll = new ArrayList<>());
 		}
 
-		coll.add(getExecutorService().scheduleAtFixedRate(
-				task.setPeriod(period).setInitialDelay(initialDelay), initialDelay, period,
-				TimeUnit.SECONDS));
+		coll.add(new ScheduledTask(task,
+				getExecutorService().scheduleAtFixedRate(
+						task.setPeriod(period).setInitialDelay(initialDelay), initialDelay, period,
+						TimeUnit.SECONDS)));
 		oprintln(task);
 	}
 
@@ -75,17 +75,21 @@ public class TaskExecutor extends ObjectEx implements ITaskExecutor {
 		if (task == null) {
 			return;
 		}
-		final Collection<ScheduledFuture<?>> coll = scheduledTasksCache.remove(task.getTaskname());
+		final Collection<ScheduledTask> coll = scheduledTasksCache.remove(task.getTaskname());
 		if (coll != null) {
-			for (final ScheduledFuture<?> future : coll) {
-				future.cancel(false);
+			for (final ScheduledTask stask : coll) {
+				stask.future.cancel(false);
 			}
 		}
 	}
 
-	private final Map<String, Collection<ScheduledFuture<?>>> scheduledTasksCache;
+	private final Map<String, Collection<ScheduledTask>> scheduledTasksCache;
 	{
 		scheduledTasksCache = new ConcurrentHashMap<>();
+	}
+
+	public Map<String, Collection<ScheduledTask>> getScheduledTasksCache() {
+		return scheduledTasksCache;
 	}
 
 	@Override

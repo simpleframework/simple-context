@@ -36,6 +36,8 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 
 	private String taskname, tasktext;
 
+	private final Date createDate = new Date();
+
 	public ExecutorRunnable() {
 	}
 
@@ -151,6 +153,10 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 			return t / 60 + "m";
 		}
 		return t + "s";
+	}
+
+	public Date getCreateDate() {
+		return createDate;
 	}
 
 	@Override

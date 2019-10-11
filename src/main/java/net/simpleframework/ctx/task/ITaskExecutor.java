@@ -1,5 +1,9 @@
 package net.simpleframework.ctx.task;
 
+import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ScheduledFuture;
+
 /**
  * Licensed under the Apache License, Version 2.0
  * 
@@ -34,4 +38,21 @@ public interface ITaskExecutor {
 	void removeScheduledTask(ExecutorRunnable task);
 
 	void close();
+
+	/**
+	 * 获取调度任务缓存
+	 * 
+	 * @return
+	 */
+	Map<String, Collection<ScheduledTask>> getScheduledTasksCache();
+
+	public static class ScheduledTask {
+		public ExecutorRunnable task;
+		ScheduledFuture<?> future;
+
+		ScheduledTask(final ExecutorRunnable task, final ScheduledFuture<?> future) {
+			this.task = task;
+			this.future = future;
+		}
+	}
 }
