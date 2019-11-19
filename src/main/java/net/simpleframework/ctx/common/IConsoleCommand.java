@@ -26,12 +26,12 @@ public interface IConsoleCommand {
 	 * @param command
 	 * @return
 	 */
-	boolean execute(String command);
+	boolean execute(ConsoleThread thread, String command);
 
 	static class QuitCommand implements IConsoleCommand {
 
 		@Override
-		public boolean execute(final String command) {
+		public boolean execute(final ConsoleThread thread, final String command) {
 			if (command.equalsIgnoreCase("quit") || command.equalsIgnoreCase("exit")) {
 				System.exit(0);
 				return true;
@@ -43,10 +43,10 @@ public interface IConsoleCommand {
 	static class GcCommand implements IConsoleCommand {
 
 		@Override
-		public boolean execute(final String command) {
+		public boolean execute(final ConsoleThread thread, final String command) {
 			if (command.equalsIgnoreCase("gc")) {
 				String size = FileUtils.toFileSize(Runtime.getRuntime().totalMemory());
-				final PrintStream stream = ConsoleThread.console.getPrintStream();
+				final PrintStream stream = thread.getPrintStream();
 				stream.println("total memory: " + size);
 				size = FileUtils.toFileSize(Runtime.getRuntime().freeMemory());
 				stream.println("free memory before gc: " + size);
@@ -64,22 +64,24 @@ public interface IConsoleCommand {
 
 	static class DBCommand implements IConsoleCommand {
 		@Override
-		public boolean execute(final String command) {
+		public boolean execute(final ConsoleThread thread, final String command) {
 			final String[] cmds = StringUtils.split(command, " ");
 			if (cmds[0].equalsIgnoreCase("db") && cmds.length > 1) {
 				final IApplicationContext ctx = (IApplicationContext) ApplicationContextFactory.ctx();
 				final DbManagerFactory dbFactory = (DbManagerFactory) ctx.getADOManagerFactory();
 				final Collection<IDbEntityManager<?>> cache = dbFactory.allEntityManager();
-				final PrintStream stream = ConsoleThread.console.getPrintStream();
+				final PrintStream stream = thread.getPrintStream();
 				if (cmds[1].equalsIgnoreCase("-list")) {
 					for (final IDbEntityManager<?> service : cache) {
 						stream.println(service);
 					}
+					return true;
 				} else if (cmds[1].equalsIgnoreCase("-reset")) {
 					for (final IDbEntityManager<?> service : cache) {
 						service.reset();
 						stream.println(service);
 					}
+					return true;
 				}
 			}
 			return false;

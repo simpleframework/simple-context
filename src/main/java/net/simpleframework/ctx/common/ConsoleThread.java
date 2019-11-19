@@ -20,7 +20,7 @@ import net.simpleframework.common.logger.LogFactory;
  *         http://www.simpleframework.net
  */
 public class ConsoleThread extends Thread {
-	static ConsoleThread console;
+	public static ConsoleThread console;
 
 	private static Map<Class<?>, IConsoleCommand> commands;
 
@@ -63,7 +63,7 @@ public class ConsoleThread extends Thread {
 				}
 				for (final IConsoleCommand command : commands.values()) {
 					text = text.trim().replaceAll("  +", " ");
-					if (command.execute(text)) {
+					if (command.execute(this, text)) {
 						break;
 					}
 				}
