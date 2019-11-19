@@ -22,14 +22,14 @@ import net.simpleframework.common.logger.LogFactory;
 public class ConsoleThread extends Thread {
 	public static ConsoleThread console;
 
-	private static Map<Class<?>, IConsoleCommand> commands;
+	private static Map<Class<?>, IConsoleCommand> commands = new ConcurrentHashMap<>();
+	static {
+		registered(new IConsoleCommand.QuitCommand(), new IConsoleCommand.GcCommand(),
+				new IConsoleCommand.DBCommand());
+	}
 
 	public static void doInit() {
 		if ((System.in != null) && (System.out != null)) {
-			commands = new ConcurrentHashMap<>();
-			registered(new IConsoleCommand.QuitCommand(), new IConsoleCommand.GcCommand(),
-					new IConsoleCommand.DBCommand());
-
 			console = new ConsoleThread(System.in);
 			console.setPrintStream(System.out);
 			console.start();
