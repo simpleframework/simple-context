@@ -79,6 +79,10 @@ public abstract class ContextSettings extends ObjectEx {
 		return context.getRootDir();
 	}
 
+	public File getIndexDB(final String path) {
+		return getHomeFile("/storage/indexdb" + path, null);
+	}
+
 	public File getHomeFile(final String path) {
 		return getHomeFile(path, null);
 	}
