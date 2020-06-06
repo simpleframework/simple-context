@@ -59,7 +59,7 @@ public abstract class ContextSettings extends ObjectEx {
 
 	public static String HOME_PATH = "/";
 
-	public String getHomeUri(String path) {
+	public String wrapHomeUri(String path) {
 		String home = HOME_PATH;
 		if (!home.endsWith("/")) {
 			home += "/";
