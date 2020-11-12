@@ -4,12 +4,15 @@ import static net.simpleframework.common.I18n.$m;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
 import net.simpleframework.common.ClassUtils;
+import net.simpleframework.common.ClassUtils.IScanResourcesCallback;
 import net.simpleframework.common.ClassUtils.ScanClassResourcesCallback;
 import net.simpleframework.common.I18n;
+import net.simpleframework.common.I18n.ILocaleHandler;
 import net.simpleframework.common.Version;
 import net.simpleframework.common.object.ObjectEx;
 import net.simpleframework.common.th.ThrowableUtils;
@@ -17,6 +20,7 @@ import net.simpleframework.ctx.hdl.IApplicationStartupHandler;
 import net.simpleframework.ctx.hdl.IScanHandlerAware;
 import net.simpleframework.ctx.permission.IPermissionHandler;
 import net.simpleframework.ctx.permission.PermissionFactory;
+import net.simpleframework.ctx.settings.ContextSettings;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -31,11 +35,19 @@ public abstract class AbstractApplicationContextBase extends ObjectEx
 	@Override
 	public void onInit() throws Exception {
 		ApplicationContextFactory.get().setApplicationContextBase(this);
+		final ContextSettings settings = ((IApplicationContext) this).getContextSettings();
+		I18n.setLocaleHandler(new ILocaleHandler() {
+			@Override
+			public Locale getLocale() {
+				return settings.getLocale();
+			}
+		});
 
 		// i18n
 		final String[] packageNames = getScanPackageNames();
+		final IScanResourcesCallback callback = I18n.getBasenamesCallback();
 		for (final String packageName : packageNames) {
-			ClassUtils.scanResources(packageName, I18n.getBasenamesCallback());
+			ClassUtils.scanResources(packageName, callback);
 		}
 
 		// 初始化应用程序
