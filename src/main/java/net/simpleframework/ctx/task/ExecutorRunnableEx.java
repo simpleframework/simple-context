@@ -8,6 +8,9 @@ import java.util.Map;
 
 import net.simpleframework.common.Convert;
 import net.simpleframework.common.StringUtils;
+import net.simpleframework.ctx.ApplicationContextFactory;
+import net.simpleframework.ctx.IApplicationContext;
+import net.simpleframework.ctx.settings.ContextSettings;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -17,6 +20,9 @@ import net.simpleframework.common.StringUtils;
  *         http://www.simpleframework.net
  */
 public abstract class ExecutorRunnableEx extends ExecutorRunnable {
+
+	final static ContextSettings settings = ((IApplicationContext) ApplicationContextFactory.ctx())
+			.getContextSettings();
 
 	public ExecutorRunnableEx(final String taskname, final String tasktext) {
 		super(taskname, tasktext);

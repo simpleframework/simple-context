@@ -10,10 +10,7 @@ import net.simpleframework.common.DateUtils;
 import net.simpleframework.common.NumberUtils;
 import net.simpleframework.common.StringUtils;
 import net.simpleframework.common.object.ObjectEx;
-import net.simpleframework.ctx.ApplicationContextFactory;
-import net.simpleframework.ctx.IApplicationContext;
 import net.simpleframework.ctx.IDataRowCallback;
-import net.simpleframework.ctx.settings.ContextSettings;
 
 /**
  * Licensed under the Apache License, Version 2.0
@@ -23,9 +20,6 @@ import net.simpleframework.ctx.settings.ContextSettings;
  *         http://www.simpleframework.net
  */
 public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
-
-	final static ContextSettings settings = ((IApplicationContext) ApplicationContextFactory.ctx())
-			.getContextSettings();
 
 	protected abstract void task(Map<String, Object> cache) throws Exception;
 
