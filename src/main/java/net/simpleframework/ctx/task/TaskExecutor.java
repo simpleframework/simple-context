@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import net.simpleframework.common.object.ObjectEx;
@@ -52,17 +53,37 @@ public class TaskExecutor extends ObjectEx implements ITaskExecutor {
 	@Override
 	public void addScheduledTask(final int initialDelay, final int period,
 			final ExecutorRunnable task) {
+		// final String taskname = task.getTaskname();
+		// Collection<ScheduledTask> coll = scheduledTasksCache.get(taskname);
+		// if (coll == null) {
+		// 	scheduledTasksCache.put(taskname, coll = new ArrayList<>());
+		// }
+
+		// coll.add(new ScheduledTask(task, getExecutorService().scheduleAtFixedRate(
+		// 		task.setPeriod(period).setInitialDelay(initialDelay), initialDelay, period, TimeUnit.SECONDS)));
+		// oprintln(task);
+		putScheduledTask(initialDelay, period, task);
+	}
+	
+	@Override
+	public ScheduledFuture<?> putScheduledTask(final int initialDelay, final int period,
+			final ExecutorRunnable task) {
 		final String taskname = task.getTaskname();
 		Collection<ScheduledTask> coll = scheduledTasksCache.get(taskname);
 		if (coll == null) {
 			scheduledTasksCache.put(taskname, coll = new ArrayList<>());
 		}
-
-		coll.add(new ScheduledTask(task,
-				getExecutorService().scheduleAtFixedRate(
-						task.setPeriod(period).setInitialDelay(initialDelay), initialDelay, period,
-						TimeUnit.SECONDS)));
+		ScheduledFuture<?> future = null;
+		if (period == 0) {
+			future =  getExecutorService()
+					.schedule(task.setPeriod(0).setInitialDelay(initialDelay), initialDelay, TimeUnit.SECONDS);
+		} else {
+			future = getExecutorService().scheduleAtFixedRate(
+					task.setPeriod(period).setInitialDelay(initialDelay), initialDelay, period, TimeUnit.SECONDS);
+		}
+		coll.add(new ScheduledTask(task, future));
 		oprintln(task);
+		return future;
 	}
 
 	@Override
@@ -75,7 +96,14 @@ public class TaskExecutor extends ObjectEx implements ITaskExecutor {
 		if (task == null) {
 			return;
 		}
-		final Collection<ScheduledTask> coll = scheduledTasksCache.remove(task.getTaskname());
+		removeScheduledTask(task.getTaskname());
+	}
+
+	public void removeScheduledTask(final String taskname) {
+		if (taskname == null) {
+			return;
+		}
+		final Collection<ScheduledTask> coll = scheduledTasksCache.remove(taskname);
 		if (coll != null) {
 			for (final ScheduledTask stask : coll) {
 				stask.future.cancel(false);

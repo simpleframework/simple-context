@@ -33,9 +33,14 @@ public interface ITaskExecutor {
 	 */
 	void addScheduledTask(int initialDelay, int period, ExecutorRunnable task);
 
+	ScheduledFuture<?> putScheduledTask(final int initialDelay, final int period,
+			final ExecutorRunnable task);
+
 	void addScheduledTask(ExecutorRunnable task);
 
 	void removeScheduledTask(ExecutorRunnable task);
+
+	void removeScheduledTask(String taskname);
 
 	void close();
 
