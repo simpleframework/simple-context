@@ -107,6 +107,7 @@ public class TaskExecutor extends ObjectEx implements ITaskExecutor {
 		if (coll != null) {
 			for (final ScheduledTask stask : coll) {
 				stask.future.cancel(false);
+				stask.task.stop();
 			}
 		}
 	}

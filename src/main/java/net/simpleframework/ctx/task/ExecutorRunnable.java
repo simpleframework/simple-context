@@ -105,6 +105,9 @@ public abstract class ExecutorRunnable extends ObjectEx implements Runnable {
 		return true;
 	}
 
+	public void stop() {
+	}
+
 	@Override
 	public void run() {
 		try {
