@@ -103,7 +103,7 @@ public class PropertiesContextSettings extends ContextSettings {
 		return getBoolProperty(key, false);
 	}
 
-	private void print(final String key, final Object val) {
+	protected void print(final String key, final Object val) {
 		synchronized (mark) {
 			if (!IContextSettingsConst.CTX_LOCALE.equals(key) && mark.get(key) == null
 					&& val != null) {
